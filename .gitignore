@@ -1,0 +1,36 @@
+# build output
+out/
+cache/
+broadcast/*/dry-run/
+node_modules/
+.next/
+dist/
+*.tsbuildinfo
+
+# local environment
+.env
+.env.*
+!.env.example
+*.key
+keystore/
+
+# scratch and local notes
+scratch/
+notes/
+*-backup*
+*.bundle
+
+# design exploration, not part of the shipped app
+ui-prototypes/
+mockups/
+design-ref/
+variants/
+
+# third-party sources pulled by install scripts
+dcap/lib/
+dcap/out/
+dcap/cache/
+dcap/broadcast/
+
+# media renders
+video/

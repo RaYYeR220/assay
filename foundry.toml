@@ -1,0 +1,22 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+test = "test"
+solc = "0.8.28"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 200
+via_ir = true
+fs_permissions = [{ access = "read-write", path = "./" }]
+gas_reports = ["AssayOracle", "AttestationRegistry", "AssayVault"]
+
+[rpc_endpoints]
+xlayer = "https://rpc.xlayer.tech"
+xlayer_testnet = "https://testrpc.xlayer.tech"
+
+[fmt]
+line_length = 110
+tab_width = 4
+bracket_spacing = false
+int_types = "long"

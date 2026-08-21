@@ -47,14 +47,18 @@ const attestations = {};
 const policies = {};
 const blocks = {};
 
+/** Settlement transactions, read back off the chain, per network. */
+const settlements = {};
+
 for (const file of jsonFiles(RECORDED)) {
-  const match = /^(attestation|policy|blocks)\.(\d+)\.json$/.exec(file);
+  const match = /^(attestation|policy|blocks|vault)\.(\d+)\.json$/.exec(file);
   if (!match) continue;
   const [, kind, id] = match;
   const chainId = Number(id);
   const data = readJson(join(RECORDED, file));
   if (kind === 'attestation') attestations[chainId] = { ...data, chainId, source: data.source ?? 'live' };
   else if (kind === 'policy') policies[chainId] = { ...data, chainId };
+  else if (kind === 'vault') settlements[chainId] = data.settlements ?? [];
   else blocks[chainId] = data;
 }
 
@@ -413,11 +417,14 @@ writeFileSync(
   banner +
     `import type { AppraisalBundle } from '@/lib/bundle';\n` +
     `import type { Deployment } from '@/lib/deployments';\n` +
-    `import type { AttestationSnapshot } from '@/lib/attestation';\n\n` +
+    `import type { AttestationSnapshot } from '@/lib/attestation';\n` +
+    `import type { Settlement } from '@/lib/settlement';\n\n` +
     `export const DEPLOYMENTS: Record<number, Deployment> = ${JSON.stringify(deployments, null, 2)};\n\n` +
     `export const ROUNDS: AppraisalBundle[] = ${JSON.stringify(rounds, null, 2)} as unknown as AppraisalBundle[];\n\n` +
     `/** Trust root per chain, captured from the registry by scripts/snapshot-chain.mjs. */\n` +
-    `export const ATTESTATIONS: Record<number, AttestationSnapshot> = ${JSON.stringify(attestations, null, 2)} as unknown as Record<number, AttestationSnapshot>;\n`,
+    `export const ATTESTATIONS: Record<number, AttestationSnapshot> = ${JSON.stringify(attestations, null, 2)} as unknown as Record<number, AttestationSnapshot>;\n\n` +
+    `/** Settlement transactions read back off each chain by scripts/snapshot-chain.mjs. */\n` +
+    `export const SETTLEMENTS: Record<number, Settlement[]> = ${JSON.stringify(settlements, null, 2)} as unknown as Record<number, Settlement[]>;\n`,
 );
 
 console.log(

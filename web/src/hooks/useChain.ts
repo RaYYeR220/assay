@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { getAddress } from 'viem';
 import { publicClientFor, rpcErrorMessage } from '@/lib/rpc';
 import {
@@ -17,19 +17,46 @@ import type { Deployment } from '@/lib/deployments';
 /**
  * A clock that ticks once a second, for countdowns and ages.
  *
- * Null until the component has mounted. The pages are prerendered into static HTML, and a clock
- * reading at build time is not the same reading as the one in the reader's browser — rendering
- * it directly would make the first paint disagree with the markup and tear the page down on
+ * One interval for the whole page, read through `useSyncExternalStore` rather than held in
+ * component state: the clock is an external source, not something React owns.
+ *
+ * It reads null on the server and on the first client render. The pages are prerendered into
+ * static HTML, and the time at build is not the time in the reader's browser — rendering it
+ * directly would make the first paint disagree with the markup and tear the page down on
  * hydration. Call sites fall back to a timestamp that is the same in both places.
  */
-export function useNow(intervalMs = 1000): number | null {
-  const [now, setNow] = useState<number | null>(null);
-  useEffect(() => {
-    setNow(Math.floor(Date.now() / 1000));
-    const id = setInterval(() => setNow(Math.floor(Date.now() / 1000)), intervalMs);
-    return () => clearInterval(id);
-  }, [intervalMs]);
-  return now;
+let clockSeconds: number | null = null;
+const clockListeners = new Set<() => void>();
+let clockTimer: ReturnType<typeof setInterval> | null = null;
+
+function subscribeToClock(onChange: () => void): () => void {
+  clockListeners.add(onChange);
+  if (clockTimer === null) {
+    clockTimer = setInterval(() => {
+      clockSeconds = Math.floor(Date.now() / 1000);
+      for (const listener of clockListeners) listener();
+    }, 1000);
+  }
+  // Start the clock for whoever subscribed first, so an age is not blank for a whole second.
+  if (clockSeconds === null) {
+    clockSeconds = Math.floor(Date.now() / 1000);
+    onChange();
+  }
+  return () => {
+    clockListeners.delete(onChange);
+    if (clockListeners.size === 0 && clockTimer !== null) {
+      clearInterval(clockTimer);
+      clockTimer = null;
+    }
+  };
+}
+
+export function useNow(): number | null {
+  return useSyncExternalStore(
+    subscribeToClock,
+    () => clockSeconds,
+    () => null,
+  );
 }
 
 export interface Poll<T> {

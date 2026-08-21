@@ -1,8 +1,8 @@
 {
   "chainId": 196,
   "source": "live",
-  "capturedAt": 1787347999,
-  "capturedAtBlock": "68578963",
+  "capturedAt": 1787349321,
+  "capturedAtBlock": "68580285",
   "adapter": {
     "address": "0x37311f00F76bD171FC10B0fB2413625419F394ad",
     "label": "AutomataTdxAdapter",

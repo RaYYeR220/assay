@@ -26,7 +26,9 @@ export function RoundPicker() {
             className="control"
             data-active={active}
             onClick={() => setRoundIndex(i)}
-            title={`${b.assetLabel ?? b.assetId} · ${b.createdAt}`}
+            title={`${b.assetLabel ?? b.assetId} · ${
+              b.onChain ? (b.onChain.chainId === 196 ? 'X Layer mainnet' : 'X Layer testnet') : 'not posted'
+            } · ${b.createdAt}`}
             style={
               !active && halted
                 ? { color: 'var(--alarm)', borderColor: 'var(--alarm-rule)' }

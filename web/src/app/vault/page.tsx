@@ -6,9 +6,10 @@ import { useApp } from '@/state/AppContext';
 import { useVaultState } from '@/hooks/useChain';
 import { simulateRedeem, simulateSubscribe, type RevertInfo } from '@/lib/oracle';
 import { errorCopy, HALT_COPY } from '@/lib/enums';
-import { formatE6, formatUnits, parseUnits } from '@/lib/format';
+import { formatE6, formatTimestamp, formatUnits, parseUnits, truncateHex } from '@/lib/format';
 import { AddressRef, Alarm, Caption, Notice, SectionHead, Spec, TxRef } from '@/components/primitives';
 import { publicClientFor } from '@/lib/rpc';
+import { allSettlements, subscriptionOf, type ChainSettlement } from '@/lib/settlement';
 
 /**
  * Section IV — the vault.
@@ -24,6 +25,7 @@ import { publicClientFor } from '@/lib/rpc';
 export default function VaultPage() {
   const { deployment, chainId, wallet, round, connect, walletAvailable } = useApp();
   const vault = useVaultState();
+  const settlements = allSettlements(chainId);
 
   const halted = round ? !round.published : false;
   const blocked = vault.data ? !vault.data.canTransact : halted;
@@ -101,10 +103,37 @@ export default function VaultPage() {
 
       <hr className="rule" />
 
+      {/* ---- what the chain actually did -------------------------------------------------- */}
+      {settlements.length > 0 ? (
+        <>
+          <section className="py-10">
+            <SectionHead
+              index="I"
+              title="Settlement record"
+              aside={<>the same call, on a struck price and on a refused one</>}
+            />
+            <Caption>
+              Two transactions, both sent, both on chain. The first priced against a valuation the
+              committee agreed on and minted shares. The second is the identical call against an
+              asset the oracle had refused: it was mined, it consumed gas, and it moved nothing,
+              because the chain rejected it. A refusal that costs a real transaction is the only
+              kind worth claiming.
+            </Caption>
+            <div className="mt-8 ruled">
+              {settlements.map((s) => (
+                <SettlementRecord key={s.txHash} settlement={s} />
+              ))}
+            </div>
+          </section>
+
+          <hr className="rule" />
+        </>
+      ) : null}
+
       {/* ---- forms ------------------------------------------------------------------------ */}
       <section className="py-10">
         <SectionHead
-          index="I"
+          index={settlements.length > 0 ? 'II' : 'I'}
           title="Subscribe and redeem"
           aside={
             wallet ? (
@@ -143,7 +172,7 @@ export default function VaultPage() {
       <hr className="rule" />
 
       <section className="py-10">
-        <SectionHead index="II" title="Contract" />
+        <SectionHead index={settlements.length > 0 ? 'III' : 'II'} title="Contract" />
         {!deployment ? (
           <Notice title="Not deployed on this network yet">
             The vault has not been published to chain {chainId}. The figures above come from the
@@ -367,6 +396,110 @@ function Action({
           </p>
         ) : null}
       </div>
+    </div>
+  );
+}
+
+/**
+ * One transaction sent at the vault, as the chain recorded it.
+ *
+ * A successful subscription is shown by what it moved; a failed one by the error it reverted
+ * with, recovered by replaying the call at the block before it. The failure is given the same
+ * weight as the success on purpose — it is the behaviour the whole design exists to produce.
+ */
+function SettlementRecord({ settlement }: { settlement: ChainSettlement }) {
+  const subscription = subscriptionOf(settlement);
+  const failed = !settlement.succeeded;
+  // Links follow the transaction's own network, never the one the reader has selected.
+  const chainId = settlement.chainId;
+
+  return (
+    <div className="py-7">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+        <div className="flex items-baseline gap-3">
+          <span
+            className="legend legend-strong"
+            style={{ color: failed ? 'var(--alarm)' : 'var(--seal)' }}
+          >
+            {failed ? 'reverted' : 'settled'}
+          </span>
+          <span className="text-[14px]" style={{ fontWeight: 600 }}>
+            {settlement.label ?? (failed ? 'Refused call' : 'Subscription')}
+          </span>
+        </div>
+        <span className="legend" style={{ color: 'var(--ink-4)' }}>
+          {chainId === 196 ? 'X Layer mainnet' : 'X Layer testnet'} ·{' '}
+          {settlement.timestamp ? formatTimestamp(settlement.timestamp) : `block ${settlement.blockNumber}`}
+        </span>
+      </div>
+
+      {settlement.note ? (
+        <p className="note mt-2 max-w-[80ch]" style={{ color: 'var(--ink-2)' }}>
+          {settlement.note}
+        </p>
+      ) : null}
+
+      <div className="mt-5 grid grid-cols-2 gap-x-8 gap-y-5 md:grid-cols-3 lg:grid-cols-6">
+        <Spec label="Receipt status" alarm={failed}>
+          {settlement.status}
+          <span style={{ color: 'var(--ink-4)' }}> · {failed ? 'failed' : 'success'}</span>
+        </Spec>
+        <Spec label="Transaction">
+          <TxRef chainId={chainId} hash={settlement.txHash} />
+        </Spec>
+        <Spec label="Vault">
+          <AddressRef chainId={chainId} address={settlement.to} />
+        </Spec>
+        <Spec label="Block">{settlement.blockNumber}</Spec>
+        <Spec label="Gas used">{settlement.gasUsed.toLocaleString('en-US')}</Spec>
+        <Spec label={failed ? 'Value moved' : 'Struck at'} alarm={failed}>
+          {failed
+            ? 'nothing'
+            : subscription
+              ? formatE6(subscription.navE6)
+              : '—'}
+        </Spec>
+      </div>
+
+      {subscription ? (
+        <p className="note mt-4 max-w-[80ch]">
+          <span className="hex" style={{ color: 'var(--ink)' }}>
+            {formatUnits(subscription.currencyIn, 6, 2)}
+          </span>{' '}
+          of settlement currency in,{' '}
+          <span className="hex" style={{ color: 'var(--ink)' }}>
+            {formatUnits(subscription.sharesOut, 18, 3)}
+          </span>{' '}
+          shares minted, priced at{' '}
+          <span className="hex" style={{ color: 'var(--ink)' }}>
+            {formatE6(subscription.navE6)}
+          </span>{' '}
+          — the valuation the committee struck, read through{' '}
+          <span className="hex">requireFreshNav</span> at the moment of the call.
+        </p>
+      ) : null}
+
+      {failed && settlement.revert ? (
+        <div
+          className="mt-4 border-y px-5 py-4"
+          style={{ borderColor: 'var(--alarm)', background: 'var(--alarm-wash)' }}
+        >
+          <div className="legend legend-strong" style={{ color: 'var(--alarm)' }}>
+            Reverted with
+          </div>
+          <p className="hex mt-2" style={{ color: 'var(--alarm)', fontWeight: 700 }}>
+            {settlement.revert.signature ?? truncateHex(settlement.revert.raw, 12, 8)}
+          </p>
+          {errorCopy(settlement.revert.name ?? undefined) ? (
+            <p className="note mt-2 max-w-[80ch]" style={{ color: 'var(--ink)' }}>
+              {errorCopy(settlement.revert.name ?? undefined)}
+            </p>
+          ) : null}
+          <p className="legend mt-3" style={{ color: 'var(--ink-4)' }}>
+            recovered by replaying the call at block {Number(settlement.blockNumber) - 1}
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }

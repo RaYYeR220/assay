@@ -1,0 +1,72 @@
+{
+  "chainId": 1952,
+  "source": "live",
+  "capturedAt": 1787348768,
+  "settlements": [
+    {
+      "txHash": "0x58b49da7a90740721e88a22b9d316dee7fd7b50e8b09d8155466a068de6c755f",
+      "label": "Subscription against a published valuation",
+      "note": "The oracle had struck a price, so the vault priced the subscription against it and minted.",
+      "succeeded": true,
+      "status": 1,
+      "blockNumber": "38889499",
+      "timestamp": 1787348336,
+      "from": "0xcf0a49f8e6cc7d0c50cb8aae492e97216a13316f",
+      "to": "0x6dc736825907ecff91c57b238c4f076dd93ad024",
+      "gasUsed": 127996,
+      "events": [
+        {
+          "address": "0x54d9b3ef4904c4917cc6f97a14237c419505f48a",
+          "name": "Transfer",
+          "args": {
+            "from": "0xcf0A49F8e6CC7D0C50CB8AAe492E97216A13316f",
+            "to": "0x6Dc736825907ecfF91c57b238c4f076DD93aD024",
+            "value": "100000000"
+          }
+        },
+        {
+          "address": "0x6dc736825907ecff91c57b238c4f076dd93ad024",
+          "name": "Transfer",
+          "args": {
+            "from": "0x0000000000000000000000000000000000000000",
+            "to": "0xcf0A49F8e6CC7D0C50CB8AAe492E97216A13316f",
+            "value": "90909090909090909090"
+          }
+        },
+        {
+          "address": "0x6dc736825907ecff91c57b238c4f076dd93ad024",
+          "name": "Subscribed",
+          "args": {
+            "who": "0xcf0A49F8e6CC7D0C50CB8AAe492E97216A13316f",
+            "currencyIn": "100000000",
+            "sharesOut": "90909090909090909090",
+            "navE6": "1100000"
+          }
+        }
+      ],
+      "revert": null
+    },
+    {
+      "txHash": "0xbba4c376efd80d0246a17a909acbf4f68816f40ff3c4e2e677d27c71d4664a17",
+      "label": "Subscription against a refused valuation",
+      "note": "The oracle had refused for this asset, so the same call reverted rather than transacting at a price nobody agreed on.",
+      "succeeded": false,
+      "status": 0,
+      "blockNumber": "38889542",
+      "timestamp": 1787348379,
+      "from": "0xcf0a49f8e6cc7d0c50cb8aae492e97216a13316f",
+      "to": "0x9b06deea180ae5e52d624fb6bc393e1fa95af816",
+      "gasUsed": 41584,
+      "events": [],
+      "revert": {
+        "raw": "0xe0c631c7c52284d7d0a577d60e0793938419de18c4821659029579d20b083cc1fdad52660000000000000000000000000000000000000000000000000000000000000001",
+        "name": "OracleHalted",
+        "args": [
+          "0xc52284d7d0a577d60e0793938419de18c4821659029579d20b083cc1fdad5266",
+          "InsufficientQuorum"
+        ],
+        "signature": "OracleHalted(0xc52284d7d0a577d60e0793938419de18c4821659029579d20b083cc1fdad5266, InsufficientQuorum)"
+      }
+    }
+  ]
+}

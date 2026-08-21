@@ -37,7 +37,8 @@ export default function OraclePage() {
   const chain = b.onChain;
   // Freshness is judged as the contract judged it: against the moment the round was posted.
   const reference = deployment && live.data ? live.data.blockTimestamp : (chain?.timestamp ?? now);
-  const observedAgo = chain?.observedAt ? reference - chain.observedAt : null;
+  const observedAgo =
+    chain?.observedAt && reference !== null ? reference - chain.observedAt : null;
 
   return (
     <div data-verdict={round.published ? 'struck' : 'halted'}>
@@ -96,8 +97,19 @@ export default function OraclePage() {
             {truncateHex(`0x${b.evidence.evidenceSha256}`, 10, 6)}
           </span>
         </Spec>
+        {/* The link follows the network the round was posted on, which is not always the one
+            selected above, so the network is named rather than left to be inferred. */}
         <Spec label={round.published ? 'Posted in' : 'Halt recorded in'}>
-          {chain ? <TxRef chainId={chain.chainId} hash={chain.txHash} /> : <span style={{ color: 'var(--ink-4)' }}>pending</span>}
+          {chain ? (
+            <>
+              <TxRef chainId={chain.chainId} hash={chain.txHash} />
+              <span className="legend ml-2" style={{ color: 'var(--ink-4)' }}>
+                {chain.chainId === 196 ? 'mainnet' : 'testnet'}
+              </span>
+            </>
+          ) : (
+            <span style={{ color: 'var(--ink-4)' }}>pending</span>
+          )}
         </Spec>
       </section>
 
@@ -131,7 +143,7 @@ export default function OraclePage() {
         <SectionHead
           index="III"
           title="Committee readings"
-          aside={<>five enclaves · one model each · independently signed</>}
+          aside={<>{round.readings.length} seats · one model each · each answer separately signed</>}
         />
         <Caption>
           Every seat is listed. The contract will not accept a partial committee, so a member that

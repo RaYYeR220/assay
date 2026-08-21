@@ -50,11 +50,16 @@ function Published({ round, navE6 }: { round: RoundView; navE6: bigint }) {
             .{fraction}
           </span>
         </div>
+        {/* What agreed here is a set of models, not a set of machines: on this deployment one
+            attested enclave answers for every seat. Section II states that in full; the verdict
+            must not quietly imply otherwise by calling the seats independent. */}
         <p className="note mt-4 max-w-[58ch]">
-          Struck at epoch {round.epoch ?? '—'}. {round.accepted.length} independent enclaves
-          appraised the same evidence and agreed to within{' '}
-          {groupDigits(String(round.maxDeviationBps ?? 0))} basis points of the median, inside the{' '}
-          {bpsToPercent(round.policy.bandBps)} band this asset permits.
+          Struck at epoch {round.epoch ?? '—'}. {round.accepted.length} committee{' '}
+          {round.accepted.length === 1 ? 'model' : 'models'} appraised the same evidence and agreed
+          to within {groupDigits(String(round.maxDeviationBps ?? 0))} basis points of the median,
+          inside the {bpsToPercent(round.policy.bandBps)} band this asset permits — signed by{' '}
+          {round.distinctSigners} attested{' '}
+          {round.distinctSigners === 1 ? 'enclave key' : 'enclave keys'}.
         </p>
       </div>
 

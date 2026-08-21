@@ -23,6 +23,7 @@ import {
   http,
   decodeFunctionData,
   decodeEventLog,
+  decodeErrorResult,
   getAddress,
   keccak256,
   toHex,
@@ -40,7 +41,7 @@ const RPC = {
 
 /** X Layer refuses a wider window. */
 const LOG_WINDOW = 100n;
-const CONCURRENCY = 12;
+const CONCURRENCY = 4;
 
 const registryAbi = parseAbi([
   'event SignerAttested(address indexed signer, bytes32 indexed measurement, bytes32 indexed modelIdHash, string modelId, uint8 tcbStatus)',
@@ -60,6 +61,67 @@ const assetRegistryAbi = parseAbi([
   'function config(bytes32 assetId) view returns ((address issuer, uint8 quorum, uint8 minDistinctSigners, uint16 bandBps, uint16 minConfidenceBps, uint32 maxAgeSec, uint16 disputeBandBps, uint96 disputeBond, bytes32 schemaId, bool active))',
   'function metadataURI(bytes32 assetId) view returns (string)',
 ]);
+
+/**
+ * Enough of the vault and the oracle to read a settlement back: the events a subscription
+ * emits, and every custom error a blocked one can revert with. The oracle's errors are here
+ * because the vault reverts with them — the refusal originates upstream of the vault.
+ */
+const vaultAbi = parseAbi([
+  'event Subscribed(address indexed who, uint256 currencyIn, uint256 sharesOut, uint256 navE6)',
+  'event Redeemed(address indexed who, uint256 sharesIn, uint256 currencyOut, uint256 navE6)',
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+  'event LiquidityAdded(address indexed from, uint256 amount)',
+  'error OracleHalted(bytes32 assetId, uint8 reason)',
+  'error NavStale(bytes32 assetId, uint64 postedAt, uint32 maxAgeSec)',
+  'error NavDisputed(bytes32 assetId)',
+  'error NoNav(bytes32 assetId)',
+  'error SequencerDown()',
+  'error SubscriptionsClosed()',
+  'error InsufficientLiquidity(uint256 wanted, uint256 held)',
+  'error CapExceeded(uint256 wanted, uint256 cap)',
+  'error ZeroAmount()',
+]);
+
+const HALT_ORDINALS = [
+  'None',
+  'InsufficientQuorum',
+  'Disagreement',
+  'SequencerDown',
+  'AssetInactive',
+  'Unauthenticated',
+];
+
+/** Digs the revert payload out of whatever viem wrapped it in. */
+function findRevertData(error) {
+  let cursor = error;
+  for (let depth = 0; cursor && depth < 12; depth++) {
+    const data = cursor.data;
+    if (typeof data === 'string' && data.startsWith('0x') && data.length >= 10) return data;
+    if (typeof data?.data === 'string' && data.data.startsWith('0x')) return data.data;
+    cursor = cursor.cause;
+  }
+  return null;
+}
+
+/** Names the error a failed call reverted with, in the contract's own words. */
+function decodeRevert(data) {
+  if (!data) return { name: null, args: null, signature: null };
+  try {
+    const decoded = decodeErrorResult({ abi: vaultAbi, data });
+    const args = (decoded.args ?? []).map((a) => (typeof a === 'bigint' ? a.toString() : a));
+    const readable = args.map((a, i) =>
+      decoded.errorName === 'OracleHalted' && i === 1 ? (HALT_ORDINALS[Number(a)] ?? a) : a,
+    );
+    return {
+      name: decoded.errorName,
+      args: readable,
+      signature: `${decoded.errorName}(${readable.join(', ')})`,
+    };
+  } catch {
+    return { name: null, args: null, signature: null };
+  }
+}
 
 const TCB = [
   'UpToDate',
@@ -127,12 +189,12 @@ async function main() {
   // failing, so every window is retried and the run aborts rather than under-report.
   const batches = await pooled(windows, async ([fromBlock, toBlock]) => {
     let lastError;
-    for (let attempt = 0; attempt < 5; attempt++) {
+    for (let attempt = 0; attempt < 8; attempt++) {
       try {
         return await client.getLogs({ address: d.attestationRegistry, fromBlock, toBlock });
       } catch (e) {
         lastError = e;
-        await new Promise((r) => setTimeout(r, 200 * (attempt + 1)));
+        await new Promise((r) => setTimeout(r, 300 * (attempt + 1)));
       }
     }
     throw new Error(
@@ -435,6 +497,96 @@ async function main() {
     console.log(
       `wrote ${blocksDest}: ${Object.keys(blockTimes).length} block time(s), ${Object.keys(commitBlocks).length} commitment block(s)`,
     );
+  }
+
+  // --- settlement record ----------------------------------------------------------------
+  //
+  // The vault is where a refusal stops being an argument and starts costing someone a
+  // transaction. Both outcomes are read back off the chain here: the subscription that priced
+  // against a struck valuation, and the identical call against a refused one, which the chain
+  // rejected. A failed transaction carries no receipt data beyond its status, so the revert is
+  // recovered by replaying the exact call at the block before it — the error the chain names is
+  // the error the page prints.
+  const settlementsPath = join(OUT, 'settlements.json');
+  if (existsSync(settlementsPath)) {
+    const listed = (JSON.parse(readFileSync(settlementsPath, 'utf8')).transactions ?? []).filter(
+      (t) => Number(t.chainId) === chainId,
+    );
+
+    const settlements = [];
+    for (const entry of listed) {
+      const receipt = await client.getTransactionReceipt({ hash: entry.txHash }).catch(() => null);
+      if (!receipt) {
+        console.warn(`  settlement ${entry.txHash} not found on chain ${chainId}`);
+        continue;
+      }
+      const [tx, block] = await Promise.all([
+        client.getTransaction({ hash: entry.txHash }).catch(() => null),
+        client.getBlock({ blockNumber: receipt.blockNumber }).catch(() => null),
+      ]);
+      const succeeded = receipt.status === 'success';
+
+      const events = [];
+      for (const log of receipt.logs) {
+        try {
+          const decoded = decodeEventLog({ abi: vaultAbi, topics: log.topics, data: log.data });
+          events.push({
+            address: log.address,
+            name: decoded.eventName,
+            args: Object.fromEntries(
+              Object.entries(decoded.args ?? {}).map(([k, v]) => [k, typeof v === 'bigint' ? v.toString() : v]),
+            ),
+          });
+        } catch {
+          /* a log from a contract this build does not carry the ABI for */
+        }
+      }
+
+      let revert = null;
+      if (!succeeded && tx) {
+        try {
+          await client.call({
+            account: tx.from,
+            to: tx.to,
+            data: tx.input,
+            value: tx.value,
+            blockNumber: receipt.blockNumber - 1n,
+          });
+        } catch (e) {
+          const data = findRevertData(e);
+          revert = { raw: data ?? null, ...decodeRevert(data) };
+        }
+      }
+
+      settlements.push({
+        txHash: entry.txHash,
+        label: entry.label ?? null,
+        note: entry.note ?? null,
+        succeeded,
+        status: succeeded ? 1 : 0,
+        blockNumber: receipt.blockNumber.toString(),
+        timestamp: block ? Number(block.timestamp) : null,
+        from: receipt.from,
+        to: receipt.to,
+        gasUsed: Number(receipt.gasUsed),
+        events,
+        revert,
+      });
+      console.log(
+        `  settlement ${entry.txHash.slice(0, 12)}… status ${succeeded ? 1 : 0}` +
+          (revert?.name ? ` reverting ${revert.name}` : '') +
+          (events.length ? ` · ${events.map((e) => e.name).join(', ')}` : ''),
+      );
+    }
+
+    if (settlements.length > 0) {
+      const dest = join(OUT, `vault.${chainId}.json`);
+      writeFileSync(
+        dest,
+        `${JSON.stringify({ chainId, source: 'live', capturedAt: Number(block.timestamp), settlements }, null, 2)}\n`,
+      );
+      console.log(`wrote ${dest}: ${settlements.length} settlement(s)`);
+    }
   }
 
   if (policy) {

@@ -1,0 +1,17 @@
+{
+  "_comment": "Settlement transactions worth showing on the vault page, by chain. Only the hashes are stated here; every figure the dashboard displays about them — status, block, amounts, and the error a failed call reverted with — is read back off the chain by scripts/snapshot-chain.mjs and written to data/vault.<chainId>.json. Add a hash to have it appear; nothing else is needed.",
+  "transactions": [
+    {
+      "chainId": 1952,
+      "txHash": "0x58b49da7a90740721e88a22b9d316dee7fd7b50e8b09d8155466a068de6c755f",
+      "label": "Subscription against a published valuation",
+      "note": "The oracle had struck a price, so the vault priced the subscription against it and minted."
+    },
+    {
+      "chainId": 1952,
+      "txHash": "0xbba4c376efd80d0246a17a909acbf4f68816f40ff3c4e2e677d27c71d4664a17",
+      "label": "Subscription against a refused valuation",
+      "note": "The oracle had refused for this asset, so the same call reverted rather than transacting at a price nobody agreed on."
+    }
+  ]
+}

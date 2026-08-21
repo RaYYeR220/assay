@@ -10,6 +10,12 @@ and every contract downstream stops moving money.
 
 Built on [X Layer](https://web3.okx.com/xlayer), OKX's OP Stack L2.
 
+**[Live dashboard](https://rayyer220.github.io/assay/)** · **[Two-minute walkthrough](https://youtu.be/7me0nZNoGNo)** · **[Verify every claim yourself](docs/VERIFY.md)**
+
+The dashboard reads straight from X Layer and needs no wallet, no account and no key. It shows a
+published valuation, the refusals that came before it, and the vault transaction that failed on
+chain rather than transact without a price.
+
 ---
 
 ## The problem

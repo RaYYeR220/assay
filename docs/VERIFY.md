@@ -1,5 +1,7 @@
 # Verify it yourself
 
+**[Live dashboard](https://rayyer220.github.io/assay/)** · **[Two-minute walkthrough](https://youtu.be/7me0nZNoGNo)**
+
 Everything Assay claims is checkable from public data. No account, no API key, no wallet. This page
 is the short path: five minutes, one command, and a list of the exact transactions behind each claim.
 

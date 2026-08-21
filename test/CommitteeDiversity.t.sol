@@ -111,10 +111,7 @@ contract CommitteeDiversityTest is Fixtures {
             vs[i] = Verdict({
                 slot: i,
                 responseBody: one.responseBody,
-                signature: one.signature,
-                contentOffset: one.contentOffset,
-                finishOffset: one.finishOffset,
-                createdOffset: one.createdOffset
+                signature: one.signature
             });
         }
 

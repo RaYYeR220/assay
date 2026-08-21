@@ -146,6 +146,9 @@ contract Deploy is Script {
     ) internal {
         string memory json = "deployment";
         vm.serializeUint(json, "chainId", block.chainid);
+        // X Layer caps eth_getLogs at a 100-block range, so a client that does not know where to
+        // start has to walk backwards and can never distinguish "no rounds" from "not far enough".
+        vm.serializeUint(json, "startBlock", block.number);
         vm.serializeAddress(json, "quoteAdapter", adapter);
         vm.serializeAddress(json, "attestationRegistry", attestations);
         vm.serializeAddress(json, "assetRegistry", assets);

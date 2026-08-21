@@ -43,8 +43,7 @@ contract AssetRegistryTest is Test {
             disputeBandBps: 500,
             disputeBond: 0.01 ether,
             schemaId: schemaId,
-            active: true,
-            requireAllowedEvidence: false
+            active: true
         });
     }
 
@@ -214,22 +213,6 @@ contract AssetRegistryTest is Test {
         assertEq(stored.issuer, issuer);
         assertEq(stored.schemaId, schemaId);
         assertTrue(stored.active);
-    }
-
-    function test_ConfigureAsset_TogglesEvidenceCommitment() public {
-        _register(_cfg(), 3);
-        assertFalse(assets.config(ASSET).requireAllowedEvidence);
-
-        AssetConfig memory cfg = _cfg();
-        cfg.requireAllowedEvidence = true;
-        vm.prank(issuer);
-        assets.configureAsset(ASSET, cfg);
-        assertTrue(assets.config(ASSET).requireAllowedEvidence);
-
-        cfg.requireAllowedEvidence = false;
-        vm.prank(issuer);
-        assets.configureAsset(ASSET, cfg);
-        assertFalse(assets.config(ASSET).requireAllowedEvidence);
     }
 
     function test_SetActive_IsIssuerOnly() public {

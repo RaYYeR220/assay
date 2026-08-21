@@ -222,6 +222,38 @@ contract AssayOracleTest is Fixtures {
         assertEq(oracle.navOf(id).accepted, 2);
     }
 
+    /// @dev Array order is not covered by any signature either, and it decides which of two claims
+    ///      on the same slot is the one that counts. Both have to be genuinely signed for that slot,
+    ///      so this is the submitter choosing among answers the committee really gave rather than
+    ///      inventing one, but the choice is real and the rule needs to be deterministic.
+    function test_VerdictOrder_DecidesWhichDuplicateClaimCounts() public {
+        bytes32 id = keccak256("assay.test.asset.ordering");
+        listCommittee(id, 3, 2, 2);
+
+        Verdict memory low = goodVerdict(PK_0, id, 0, 1_000_000, 9000, block.timestamp);
+        Verdict memory high = goodVerdict(PK_0, id, 0, 1_020_000, 9000, block.timestamp);
+        Verdict memory other = goodVerdict(PK_2, id, 2, 1_010_000, 9000, block.timestamp);
+
+        Verdict[] memory lowFirst = new Verdict[](3);
+        (lowFirst[0], lowFirst[1], lowFirst[2]) = (low, high, other);
+        assertTrue(oracle.postAppraisal(id, evidence, lowFirst));
+        assertEq(oracle.navOf(id).valueE6, 1_005_000, "median of the first claim and slot 2");
+
+        bytes32 reversed = keccak256("assay.test.asset.ordering.reversed");
+        listCommittee(reversed, 3, 2, 2);
+        Verdict[] memory highFirst = new Verdict[](3);
+        highFirst[0] = goodVerdict(PK_0, reversed, 0, 1_020_000, 9000, block.timestamp);
+        highFirst[1] = goodVerdict(PK_0, reversed, 0, 1_000_000, 9000, block.timestamp);
+        highFirst[2] = goodVerdict(PK_2, reversed, 2, 1_010_000, 9000, block.timestamp);
+        assertTrue(oracle.postAppraisal(reversed, evidence, highFirst));
+        assertEq(oracle.navOf(reversed).valueE6, 1_015_000, "the other order takes the other claim");
+
+        // Both remain inside the band, so ordering can only move the price within the tolerance the
+        // asset already accepts, and the duplicate is visible on chain either way.
+        assertEq(oracle.navOf(id).accepted, 2);
+        assertEq(oracle.navOf(reversed).accepted, 2);
+    }
+
     function test_OutOfRangeSlot_IsRejected() public {
         Verdict[] memory vs = roundFor(assetId, navList(1_000_000, 1_000_000, 1_000_000));
         vs[2].slot = 7;
@@ -248,10 +280,7 @@ contract AssayOracleTest is Fixtures {
             vs[i] = Verdict({
                 slot: i,
                 responseBody: goodBody(assetId, i, 5_000_000, 9000, block.timestamp),
-                signature: new bytes(65),
-                contentOffset: 0,
-                finishOffset: 0,
-                createdOffset: 0
+                signature: new bytes(65)
             });
         }
 
@@ -297,10 +326,7 @@ contract AssayOracleTest is Fixtures {
         vs[2] = Verdict({
             slot: 2,
             responseBody: goodBody(assetId, 2, 1_000_000, 9000, block.timestamp),
-            signature: new bytes(65),
-            contentOffset: 0,
-            finishOffset: 0,
-            createdOffset: 0
+            signature: new bytes(65)
         });
 
         vm.expectEmit(true, true, false, true, address(oracle));
@@ -321,6 +347,60 @@ contract AssayOracleTest is Fixtures {
             block.timestamp, assets.modelAt(assetId, slot), "I am unable to appraise this asset.", "stop"
         );
         return verdictOf(pkAt(slot), assetId, slot, evidence, body);
+    }
+
+    /// @dev A genuinely signed but unusable answer is allowed to halt the asset, because the
+    ///      committee really did answer and really did answer badly. What it must not be is a
+    ///      keepsake: freshness is settled before the answer is read, so the same blob stops
+    ///      counting once it ages out instead of halting the asset again on demand forever.
+    function test_AuthenticMalformedRound_StopsBeingAHaltTokenOnceItAgesOut() public {
+        publish(1_000_000);
+        vm.warp(block.timestamp + 60);
+
+        Verdict[] memory blob = new Verdict[](3);
+        for (uint8 i = 0; i < 3; ++i) {
+            blob[i] = _malformed(i);
+        }
+
+        assertFalse(post(blob), "fresh, authentic and unusable: this one halts");
+        assertEq(uint8(oracle.navOf(assetId).state), uint8(NavState.Halted));
+        assertEq(oracle.haltCount(assetId), 1);
+
+        // The blob is still newer than the watermark, so only its age can retire it.
+        assertGt(uint256(3600), 0);
+        vm.warp(block.timestamp + 3601);
+
+        vm.recordLogs();
+        assertFalse(post(blob));
+        assertEq(uint8(rejectionFor(0)), uint8(RejectReason.Stale));
+        assertEq(oracle.haltCount(assetId), 1, "the same blob cannot halt a second time");
+    }
+
+    /// @dev `maxAgeSec` is taken at publication. Read live, an issuer could widen the window after
+    ///      the fact and bring an expired valuation back into service.
+    function test_MaxAgeSnapshot_DoesNotMoveWhenTheIssuerReconfigures() public {
+        publish(1_000_000);
+        assertEq(oracle.navOf(assetId).maxAgeSec, 3600);
+
+        AssetConfig memory cfg = defaultConfig();
+        cfg.maxAgeSec = 30 days;
+        vm.prank(issuer);
+        assets.configureAsset(assetId, cfg);
+        assertEq(assets.config(assetId).maxAgeSec, 30 days, "the policy did change");
+
+        vm.warp(START_TIME + 3601);
+        vm.expectRevert(
+            abi.encodeWithSelector(AssayOracle.NavStale.selector, assetId, uint64(START_TIME))
+        );
+        oracle.requireFreshNav(assetId);
+        (, bool usable) = oracle.peekNav(assetId);
+        assertFalse(usable, "a widened window does not revive an expired valuation");
+
+        // It does apply to the next round, which is the difference between policy and revision.
+        assertTrue(post(agreeingRound(1_100_000)));
+        assertEq(oracle.navOf(assetId).maxAgeSec, uint32(30 days));
+        vm.warp(block.timestamp + 20 days);
+        assertEq(oracle.requireFreshNav(assetId), 1_100_000);
     }
 
     // -----------------------------------------------------------------------------------
@@ -464,5 +544,33 @@ contract AssayOracleTest is Fixtures {
         uint256 before = gasleft();
         oracle.postAppraisal(ASSET_5, evidence, vs);
         emit log_named_uint("postAppraisal gas, 5 members", before - gasleft());
+    }
+
+    /// @dev What the parser costs when every field has to be found the hard way. All three patterns
+    ///      are located by scanning, so the bill is set by how long the response is and where in it
+    ///      the fields sit: five members, each answering with a response of the maximum accepted
+    ///      length, padded ahead of every field so each scan walks the whole body. Whoever posts the
+    ///      round pays this, and there is no cheaper path for an honest caller to be denied.
+    function test_Gas_PostAppraisal_WorstCaseScan() public {
+        listCommittee(ASSET_5, 5, 5, 5);
+
+        Verdict[] memory vs = new Verdict[](5);
+        for (uint8 i = 0; i < 5; ++i) {
+            bytes memory body = paddedBody(ASSET_5, i, 1_000_000, 9000, block.timestamp, MAX_RESPONSE);
+            assertEq(body.length, MAX_RESPONSE);
+            vs[i] = verdictOf(pkAt(i), ASSET_5, i, evidence, body);
+        }
+
+        uint256 before = gasleft();
+        assertTrue(oracle.postAppraisal(ASSET_5, evidence, vs));
+        emit log_named_uint("postAppraisal gas, 5 members, bodies at the cap", before - gasleft());
+    }
+
+    /// @dev The same committee answering at a realistic length, for the ratio between the two.
+    function test_Gas_PostAppraisal_RealisticLength() public {
+        listCommittee(ASSET_5, 5, 5, 5);
+        Verdict[] memory vs =
+            roundFor(ASSET_5, navList(1_000_000, 1_000_000, 1_000_000, 1_000_000, 1_000_000));
+        emit log_named_uint("response body length", vs[0].responseBody.length);
     }
 }

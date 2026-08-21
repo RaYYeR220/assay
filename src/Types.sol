@@ -44,9 +44,6 @@ enum NavState {
 /// @param slot committee position, which fixes the model the answer must have come from
 /// @param responseBody the raw HTTP response bytes; the chain hashes these itself
 /// @param signature 65-byte secp256k1 signature produced inside the enclave
-/// @param contentOffset where the submitter believes `"content":"ASSAY1|` starts; not read on chain
-/// @param finishOffset where the submitter believes `"finish_reason":"stop"` starts; not read
-/// @param createdOffset where the submitter believes `"created":` starts; not read
 /// @dev The three offsets are inert. They are carried so an indexer can point at the fields without
 ///      re-scanning, and the contract ignores them: an offset travels outside the signature, so
 ///      anyone watching a pending round could otherwise rewrite one and change what the round says.
@@ -55,9 +52,6 @@ struct Verdict {
     uint8 slot;
     bytes responseBody;
     bytes signature;
-    uint32 contentOffset;
-    uint32 finishOffset;
-    uint32 createdOffset;
 }
 
 /// @notice Per-asset appraisal policy, chosen by whoever lists the asset.

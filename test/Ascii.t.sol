@@ -43,6 +43,116 @@ contract AsciiTest is Test {
     }
 
     // -----------------------------------------------------------------------------------
+    // indexOf and locate
+    // -----------------------------------------------------------------------------------
+
+    /// @dev The scan is written in assembly and compares a word at a time, so it is checked against
+    ///      the obvious byte-by-byte version rather than against itself.
+    function _naiveIndexOf(bytes memory data, uint256 from, bytes memory pattern)
+        internal
+        pure
+        returns (uint256, bool)
+    {
+        uint256 n = pattern.length;
+        if (n == 0 || data.length < n) return (0, false);
+        for (uint256 i = from; i + n <= data.length; ++i) {
+            bool hit = true;
+            for (uint256 j = 0; j < n; ++j) {
+                if (data[i + j] != pattern[j]) {
+                    hit = false;
+                    break;
+                }
+            }
+            if (hit) return (i, true);
+        }
+        return (0, false);
+    }
+
+    function _assertAgrees(bytes memory data, uint256 from, bytes memory pattern) internal pure {
+        (uint256 wantIndex, bool wantFound) = _naiveIndexOf(data, from, pattern);
+        (uint256 gotIndex, bool gotFound) = Ascii.indexOf(data, from, pattern);
+        assertEq(gotFound, wantFound);
+        if (wantFound) assertEq(gotIndex, wantIndex);
+    }
+
+    function test_IndexOf_HandlesTheEdgesOfTheBuffer() public pure {
+        _assertAgrees("hello world", 0, "hello");
+        _assertAgrees("hello world", 0, "world");
+        _assertAgrees("hello world", 7, "world");
+        _assertAgrees("hello world", 0, "hello world");
+        _assertAgrees("hello world", 0, "hello world!");
+        _assertAgrees("hello world", 0, "");
+        _assertAgrees("", 0, "x");
+        _assertAgrees("aaaa", 0, "aa");
+        _assertAgrees("aaaa", 3, "aa");
+        _assertAgrees("hello", 99, "h");
+    }
+
+    function test_IndexOf_HandlesPatternsLongerThanAWord() public pure {
+        bytes memory long = "0123456789abcdefghijklmnopqrstuvwxyz0123456789";
+        _assertAgrees(bytes.concat("prefix ", long, " suffix"), 0, long);
+        _assertAgrees(bytes.concat("prefix ", long), 0, bytes.concat(long, "x"));
+
+        // Differs only past the first word, which is where the tail comparison takes over.
+        bytes memory nearly = bytes.concat("0123456789abcdefghijklmnopqrstuv", "DIFFERENT");
+        _assertAgrees(bytes.concat("prefix ", long), 0, nearly);
+    }
+
+    function test_IndexOf_ReturnsTheFirstOccurrence() public pure {
+        bytes memory data = "xx MARK yy MARK zz";
+        (uint256 i, bool found) = Ascii.indexOf(data, 0, "MARK");
+        assertTrue(found);
+        assertEq(i, 3);
+
+        (uint256 j, bool foundSecond) = Ascii.indexOf(data, i + 1, "MARK");
+        assertTrue(foundSecond);
+        assertEq(j, 11);
+    }
+
+    /// @dev `locate` takes no hint on purpose: a hint is not covered by the signature, so letting it
+    ///      short-circuit the scan would let whoever posts a round choose between two markers that
+    ///      the enclave signed.
+    function test_Locate_IsTheFirstOccurrence() public pure {
+        bytes memory data = "aa PAT bb PAT cc";
+        (uint256 i, bool found) = Ascii.locate(data, "PAT");
+        assertTrue(found);
+        assertEq(i, 3);
+
+        (, bool missing) = Ascii.locate(data, "NOPE");
+        assertFalse(missing);
+    }
+
+    /// forge-config: default.fuzz.runs = 256
+    function testFuzz_IndexOf_AgreesWithAByteScan(bytes memory data, bytes memory pattern, uint16 from)
+        public
+        pure
+    {
+        _assertAgrees(data, bound(uint256(from), 0, 300), pattern);
+    }
+
+    /// @dev Random buffers almost never contain a random pattern, so this plants one first.
+    /// forge-config: default.fuzz.runs = 256
+    function testFuzz_IndexOf_FindsAPlantedPattern(bytes memory noise, bytes memory pattern, uint16 at)
+        public
+        pure
+    {
+        vm.assume(pattern.length > 0 && pattern.length < 40);
+        uint256 where = bound(uint256(at), 0, noise.length);
+        bytes memory data = bytes.concat(_slice(noise, 0, where), pattern, _slice(noise, where, noise.length));
+        _assertAgrees(data, 0, pattern);
+        _assertAgrees(data, where, pattern);
+        (, bool found) = Ascii.indexOf(data, 0, pattern);
+        assertTrue(found, "a planted pattern is always there to be found");
+    }
+
+    function _slice(bytes memory data, uint256 start, uint256 end) internal pure returns (bytes memory out) {
+        out = new bytes(end - start);
+        for (uint256 i = start; i < end; ++i) {
+            out[i - start] = data[i];
+        }
+    }
+
+    // -----------------------------------------------------------------------------------
     // readUint
     // -----------------------------------------------------------------------------------
 

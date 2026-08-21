@@ -171,9 +171,32 @@ contract AttestationRegistryTest is Test {
         registry.transferOwnership(stranger);
         vm.stopPrank();
 
-        // Registration itself stays permissionless: it is the quote that grants the right.
+    }
+
+    /// @dev A quote proves which enclave image is running; it says nothing about which model that
+    ///      enclave fronts, so the model binding is a curator's assertion and is gated as one. It
+    ///      also stops anyone refreshing anyone else's attestation forever, which would have left
+    ///      `attestationTtl` proving nothing.
+    function test_RegisterSigner_IsOwnerOnly() public {
+        adapter.setAccepting(MEASUREMENT, enclave, 0);
         vm.prank(stranger);
-        assertEq(_register(enclave, MODEL_A), enclave);
+        vm.expectRevert(AttestationRegistry.NotOwner.selector);
+        registry.registerSigner(hex"deadbeef", MODEL_A);
+
+        assertEq(registry.registerSigner(hex"deadbeef", MODEL_A), enclave);
+    }
+
+    /// @dev Gating the call does not let the owner name a key. The address still comes out of the
+    ///      verified report data, so the owner chooses which model a quote is credited to and
+    ///      nothing else.
+    function test_Owner_CannotNameASignerOfTheirChoosing() public {
+        address wanted = address(0xDECAF);
+        adapter.setAccepting(MEASUREMENT, enclave, 0);
+
+        address got = registry.registerSigner(hex"deadbeef", MODEL_A);
+        assertEq(got, enclave, "the quote decides the key");
+        assertTrue(got != wanted);
+        assertFalse(registry.signerInfo(wanted).known);
     }
 
     function test_SetAttestationTtl_ShortensExistingWindows() public {

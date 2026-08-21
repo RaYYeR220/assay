@@ -33,6 +33,7 @@ abstract contract Fixtures is Test {
 
     bytes32 internal constant MEASUREMENT = keccak256("assay.test.image.v1");
     uint256 internal constant MAX_NAV_E6 = 1e24;
+    uint256 internal constant MAX_RESPONSE = 2048;
     uint256 internal constant START_TIME = 1_800_000_000;
 
     bytes32 internal constant EV_VERDICT_REJECTED =
@@ -81,8 +82,7 @@ abstract contract Fixtures is Test {
             disputeBandBps: 500,
             disputeBond: 0.01 ether,
             schemaId: schemaId,
-            active: true,
-            requireAllowedEvidence: false
+            active: true
         });
     }
 
@@ -105,6 +105,17 @@ abstract contract Fixtures is Test {
     function registerAsset(bytes32 id, string[] memory models, AssetConfig memory cfg) internal {
         vm.prank(issuer);
         assets.registerAsset(id, cfg, models, "ipfs://assay/test");
+        commit(id, evidence);
+    }
+
+    /// @notice Put `ev` on chain as evidence the issuer stands behind.
+    /// @dev Every round has to run on committed evidence, so a fixture that lists an asset commits
+    ///      the default document with it. Hashed before the prank: sha256 is a precompile call and
+    ///      would otherwise consume it.
+    function commit(bytes32 id, bytes memory ev) internal {
+        bytes32 evidenceHash = sha256(ev);
+        vm.prank(issuer);
+        assets.commitEvidence(id, evidenceHash, "ipfs://assay/test/evidence", true);
     }
 
     function pkAt(uint256 i) internal pure returns (uint256) {
@@ -191,6 +202,48 @@ abstract contract Fixtures is Test {
         );
     }
 
+    /// @notice The same completion with `padLen` filler bytes inside the id, which sits ahead of
+    ///         every field the parser has to find. Used to size the worst case a scan can face.
+    function paddedResponseBody(
+        uint256 created,
+        string memory model,
+        string memory content,
+        string memory finish,
+        uint256 padLen
+    ) internal pure returns (bytes memory) {
+        bytes memory filler = new bytes(padLen);
+        for (uint256 i = 0; i < padLen; ++i) {
+            filler[i] = "x";
+        }
+        return bytes(
+            string.concat(
+                '{"id":"chatcmpl-',
+                string(filler),
+                '","object":"chat.completion","created":',
+                vm.toString(created),
+                ',"model":"',
+                model,
+                '","choices":[{"index":0,"message":{"role":"assistant","content":"',
+                content,
+                '"},"finish_reason":"',
+                finish,
+                '"}],"usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2}}'
+            )
+        );
+    }
+
+    /// @notice A well-formed answer padded out to exactly `totalLength` bytes.
+    function paddedBody(bytes32 id, uint8 slot, uint256 nav, uint256 conf, uint256 created, uint256 totalLength)
+        internal
+        view
+        returns (bytes memory)
+    {
+        string memory model = assets.modelAt(id, slot);
+        uint256 bare = paddedResponseBody(created, model, marker(nav, conf), "stop", 0).length;
+        require(totalLength >= bare, "target length shorter than the answer");
+        return paddedResponseBody(created, model, marker(nav, conf), "stop", totalLength - bare);
+    }
+
     function marker(uint256 nav, uint256 conf) internal pure returns (string memory) {
         return string.concat("ASSAY1|nav_usd_e6=", vm.toString(nav), "|confidence_bps=", vm.toString(conf));
     }
@@ -233,25 +286,14 @@ abstract contract Fixtures is Test {
         return string(out);
     }
 
-    // -----------------------------------------------------------------------------------
-    // Verdicts
-    // -----------------------------------------------------------------------------------
-
-    /// @notice Wrap a response in a verdict, locating every offset by search.
+    /// @notice A verdict is just a slot, the raw response and the signature over it. There is
+    ///         nothing else to fill in, which is the point: no field here travels unsigned.
     function verdictOf(uint256 pk, bytes32 id, uint8 slot, bytes memory ev, bytes memory body)
         internal
         view
-        returns (Verdict memory v)
+        returns (Verdict memory)
     {
-        (uint32 c, uint32 f, uint32 cr) = findOffsets(body);
-        v = Verdict({
-            slot: slot,
-            responseBody: body,
-            signature: sign(pk, id, slot, ev, body),
-            contentOffset: c,
-            finishOffset: f,
-            createdOffset: cr
-        });
+        return Verdict({slot: slot, responseBody: body, signature: sign(pk, id, slot, ev, body)});
     }
 
     function goodVerdict(uint256 pk, bytes32 id, uint8 slot, uint256 nav, uint256 conf, uint256 created)
@@ -285,17 +327,6 @@ abstract contract Fixtures is Test {
     /// @notice Publish a NAV of `nav` and return to a state where consumers can read it.
     function publish(uint256 nav) internal {
         assertTrue(post(agreeingRound(nav)), "fixture round should publish");
-    }
-
-    // -----------------------------------------------------------------------------------
-    // Byte search
-    // -----------------------------------------------------------------------------------
-
-    /// @notice Offsets of the three anchors, found by searching for the literal JSON keys.
-    function findOffsets(bytes memory body) internal pure returns (uint32 c, uint32 f, uint32 cr) {
-        c = indexOf(body, '"content":"');
-        f = indexOf(body, '"finish_reason":"');
-        cr = indexOf(body, '"created":');
     }
 
     function indexOf(bytes memory haystack, bytes memory needle) internal pure returns (uint32) {

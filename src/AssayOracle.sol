@@ -56,9 +56,11 @@ contract AssayOracle is IAssayOracle {
     }
 
     uint256 internal constant MAX_EVIDENCE = 8192;
-    /// @dev Bounded because a wrong offset hint makes the parser scan the body, and the scan is
-    ///      linear in its length. A well-formed answer to this prompt is a few hundred bytes.
-    uint256 internal constant MAX_RESPONSE = 8192;
+    /// @dev The parser scans the body for three patterns, so the cost of a round is linear in this
+    ///      number. A real answer to this prompt measures a few hundred bytes; the cap leaves ample
+    ///      headroom while keeping the worst case a caller can construct to a few million gas
+    ///      rather than a large fraction of a block.
+    uint256 internal constant MAX_RESPONSE = 2048;
     uint256 internal constant MAX_NAV_E6 = 1e24;
     uint256 internal constant BPS = 10_000;
 
@@ -509,8 +511,17 @@ contract AssayOracle is IAssayOracle {
             if (verdicts.length != members) revert CommitteeIncomplete(verdicts.length, members);
         }
 
+        // The document the contested valuation was published with always settles the dispute about
+        // it, whether or not the issuer still stands behind it. Requiring a live commitment here
+        // instead would hand the issuer every dispute for nothing: withdrawing the commitment the
+        // moment a challenge opened would make every resolution revert, and the challenge would
+        // then lapse in their favour. Nothing is invented either way, since the hash has to match
+        // either the valuation on chain or a commitment the issuer made.
         bytes32 evidenceHash = sha256(evidence);
-        if (!assets.evidenceAllowed(assetId, evidenceHash)) revert EvidenceNotCommitted(evidenceHash);
+        if (evidenceHash != _navs[assetId].evidenceHash && !assets.evidenceAllowed(assetId, evidenceHash))
+        {
+            revert EvidenceNotCommitted(evidenceHash);
+        }
 
         uint32 epoch = ++epochOf[assetId];
         (bool ok, uint256 median, HaltReason reason, Round memory r) =

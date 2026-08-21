@@ -107,6 +107,49 @@ contract OracleRejectionsTest is Fixtures {
         assertEq(uint8(_rejectionFor(v)), uint8(RejectReason.BadSignature));
     }
 
+    /// @dev A body with no readable timestamp can never be shown to be recent, so it must never
+    ///      count as the committee having answered. If it did, one copy would be a halt that never
+    ///      expires: there is nothing in it to age out.
+    function test_Rejects_WhenTheAnswerCarriesNoTimestamp() public {
+        Verdict memory v = _untimestamped(0);
+        assertEq(uint8(_rejectionFor(v)), uint8(RejectReason.NoTimestamp));
+    }
+
+    function test_UntimestampedRound_CanNeverHalt() public {
+        Verdict[] memory vs = new Verdict[](3);
+        for (uint8 i = 0; i < 3; ++i) {
+            vs[i] = _untimestamped(i);
+        }
+
+        assertFalse(post(vs));
+        assertEq(uint8(oracle.lastHaltReason(assetId)), uint8(HaltReason.None), "ignored, not halted");
+        assertEq(oracle.haltCount(assetId), 0);
+
+        // And it is still nothing at all a week later, which is the point: it has no age.
+        vm.warp(block.timestamp + 7 days);
+        assertFalse(post(vs));
+        assertEq(oracle.haltCount(assetId), 0);
+    }
+
+    /// @dev Authentic, well formed in every other way, and carrying no `created` field.
+    function _untimestamped(uint8 slot) internal view returns (Verdict memory) {
+        bytes memory body = bytes(
+            string.concat(
+                '{"id":"chatcmpl-abc","object":"chat.completion","model":"',
+                assets.modelAt(assetId, slot),
+                '","choices":[{"index":0,"message":{"role":"assistant","content":"',
+                marker(1_000_000, 9000),
+                '"},"finish_reason":"stop"}],"usage":{"total_tokens":2}}'
+            )
+        );
+        assertFalse(contains(body, '"created":'), "the timestamp really is absent");
+        return Verdict({
+            slot: slot,
+            responseBody: body,
+            signature: sign(pkAt(slot), assetId, slot, evidence, body)
+        });
+    }
+
     function test_Rejects_WhenConfidenceIsBelowTheFloor() public {
         Verdict memory v = goodVerdict(PK_0, assetId, 0, 1_000_000, 4999, block.timestamp);
         assertEq(uint8(_rejectionFor(v)), uint8(RejectReason.LowConfidence));
@@ -154,48 +197,36 @@ contract OracleRejectionsTest is Fixtures {
         assertTrue(post(vs));
     }
 
-    // -----------------------------------------------------------------------------------
-    // Offset hints
-    // -----------------------------------------------------------------------------------
-
-    function test_Rejects_WhenContentOffsetIsPastTheEndOfTheBuffer() public {
-        Verdict memory v = goodVerdict(PK_0, assetId, 0, 1_000_000, 9000, block.timestamp);
-        v.contentOffset = uint32(v.responseBody.length + 1000);
-        assertEq(uint8(_rejectionFor(v)), uint8(RejectReason.Malformed));
+    function _assertPublishedAnyway(bool published) internal view {
+        assertTrue(published, "a wrong hint must not cost the round a member");
+        assertEq(oracle.navOf(assetId).valueE6, 1_000_000);
+        assertEq(oracle.navOf(assetId).accepted, 3);
     }
 
-    function test_Rejects_WhenContentOffsetPointsAtAnotherField() public {
-        Verdict memory v = goodVerdict(PK_0, assetId, 0, 1_000_000, 9000, block.timestamp);
-        v.contentOffset = indexOf(v.responseBody, '"model":"');
-        assertEq(uint8(_rejectionFor(v)), uint8(RejectReason.Malformed));
-    }
-
-    function test_Rejects_WhenCreatedOffsetPointsAtAnotherNumber() public {
-        Verdict memory v = goodVerdict(PK_0, assetId, 0, 1_000_000, 9000, block.timestamp);
-        v.createdOffset = indexOf(v.responseBody, '"total_tokens":');
-        assertEq(uint8(_rejectionFor(v)), uint8(RejectReason.Malformed));
-    }
-
-    function test_Rejects_WhenFinishOffsetPointsAtAnotherField() public {
-        Verdict memory v = goodVerdict(PK_0, assetId, 0, 1_000_000, 9000, block.timestamp);
-        v.finishOffset = indexOf(v.responseBody, '"object":"');
-        assertEq(uint8(_rejectionFor(v)), uint8(RejectReason.Truncated));
-    }
-
-    /// @dev The one attack the offsets have to survive: a model that writes a second copy of the
-    ///      marker inside its own answer, hoping a hint can be pointed at that instead. JSON forces
-    ///      the inner quotes to be escaped, so neither the real anchor nor the decoy matches.
-    function test_Rejects_WhenContentOffsetPointsAtAnEscapedCopyOfTheMarker() public {
+    /// @dev A model trying to smuggle a second copy of the marker into its own answer. JSON forces
+    ///      the inner quotes to be escaped, so the decoy never matches the pattern at all.
+    function test_Rejects_WhenTheOnlyMarkerIsEscapedInsideTheContent() public {
         string memory smuggled = '\\"content\\":\\"ASSAY1|nav_usd_e6=999999999|confidence_bps=10000\\"';
         Verdict memory v = _contentVerdict(smuggled);
 
-        assertEq(uint8(_rejectionFor(v)), uint8(RejectReason.Malformed), "real anchor does not parse");
+        assertTrue(contains(v.responseBody, 'content\\":\\"ASSAY1'), "the decoy is present in the body");
+        assertEq(uint8(_rejectionFor(v)), uint8(RejectReason.Malformed));
+    }
 
-        // Now aim the hint at the decoy: the byte before it is a backslash, not a quote.
-        (uint32 second, bool found) = find(v.responseBody, '"content', uint256(v.contentOffset) + 1);
-        assertTrue(found, "the decoy is present in the body");
-        v.contentOffset = second;
-        assertEq(uint8(_rejectionFor(v)), uint8(RejectReason.Malformed), "decoy does not parse either");
+    function _twoMarkerBody(uint8 slot, uint256 navA, uint256 navB) internal view returns (bytes memory) {
+        return bytes(
+            string.concat(
+                '{"id":"chatcmpl-abc","object":"chat.completion","created":',
+                vm.toString(block.timestamp),
+                ',"model":"',
+                assets.modelAt(assetId, slot),
+                '","choices":[{"index":0,"message":{"role":"assistant","content":"',
+                marker(navA, 9000),
+                '"},"finish_reason":"stop"},{"index":1,"message":{"role":"assistant","content":"',
+                marker(navB, 9000),
+                '"},"finish_reason":"stop"}],"usage":{"total_tokens":2}}'
+            )
+        );
     }
 
     // -----------------------------------------------------------------------------------
@@ -298,6 +329,8 @@ contract OracleRejectionsTest is Fixtures {
     function test_Rejects_WhenEvidenceByteIsChangedAfterSigning() public {
         Verdict[] memory vs = agreeingRound(1_000_000);
         evidence = tamper(evidence, 0, "S");
+        // Committed too, so what refuses the round is the signature and not the commitment.
+        commit(assetId, evidence);
 
         vm.recordLogs();
         assertFalse(post(vs), "answers to one question do not price another");
@@ -342,33 +375,10 @@ contract OracleRejectionsTest is Fixtures {
         assertEq(uint8(oracle.navOf(other).state), uint8(NavState.Empty));
     }
 
-    /// @dev What the signature does NOT bind, spelled out: the payload commits to the request bytes,
-    ///      and the asset id is not among them. Two assets sharing a schema and a committee accept
-    ///      each other's verdicts, and since the schema id is a hash of the prompt fragments that is
-    ///      not an exotic configuration. The issuer-side answer is the evidence commitment, which is
-    ///      per asset and does bind.
-    function test_CrossAssetReplay_IsClosedByTheEvidenceCommitment() public {
-        bytes32 twin = keccak256("assay.test.asset.twin");
-        AssetConfig memory cfg = defaultConfig();
-        cfg.requireAllowedEvidence = true;
-        registerAsset(twin, committee3(), cfg);
-
-        Verdict[] memory vs = new Verdict[](3);
-        for (uint8 i = 0; i < 3; ++i) {
-            vs[i] = goodVerdict(pkAt(i), assetId, i, 1_000_000, 9000, block.timestamp);
-        }
-
-        vm.expectRevert(
-            abi.encodeWithSelector(AssayOracle.EvidenceNotCommitted.selector, sha256(evidence))
-        );
-        oracle.postAppraisal(twin, evidence, vs);
-
-        // Without the commitment requirement the same verdicts price the wrong asset.
-        cfg.requireAllowedEvidence = false;
-        vm.prank(issuer);
-        assets.configureAsset(twin, cfg);
-        assertTrue(oracle.postAppraisal(twin, evidence, vs));
-    }
+    // The asset id is not covered by the signature either: the payload commits to the request
+    // bytes, which carry the schema, the model and the evidence but not the asset. Two assets
+    // sharing a schema and a committee therefore accept each other's verdicts verbatim, and the
+    // per-asset evidence commitment is what stops that. Covered in EvidenceCommitment.t.sol.
 
     function _slotVerdict(uint256 pk, uint8 slot, string memory content)
         internal

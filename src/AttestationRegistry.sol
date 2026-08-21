@@ -51,8 +51,15 @@ contract AttestationRegistry {
     event ImageAllowed(bytes32 indexed measurement, bool allowed);
     event TcbStatusAllowed(uint8 indexed status, bool allowed);
     event AttestationTtlSet(uint64 ttl);
+    /// @dev `modelId` is carried unindexed as well as hashed, because an indexed string is only a
+    ///      topic: without the plain value there is no way to get from a registered key back to the
+    ///      model it serves without guessing candidates and hashing them.
     event SignerAttested(
-        address indexed signer, bytes32 indexed measurement, bytes32 indexed modelIdHash, uint8 tcbStatus
+        address indexed signer,
+        bytes32 indexed measurement,
+        bytes32 indexed modelIdHash,
+        string modelId,
+        uint8 tcbStatus
     );
     event SignerRevoked(address indexed signer);
 
@@ -116,7 +123,7 @@ contract AttestationRegistry {
         bytes32 modelIdHash = keccak256(bytes(modelId));
         servesModel[signer][modelIdHash] = true;
 
-        emit SignerAttested(signer, measurement, modelIdHash, tcbStatus);
+        emit SignerAttested(signer, measurement, modelIdHash, modelId, tcbStatus);
     }
 
     /// @notice Whether `signer` currently counts as a live attested enclave key for `modelIdHash`.

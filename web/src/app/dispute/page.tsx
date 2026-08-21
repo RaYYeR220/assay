@@ -123,7 +123,7 @@ export default function DisputePage() {
           {open && dispute ? <AddressRef chainId={chainId} address={dispute.challenger} /> : '—'}
         </Spec>
         <Spec label="Open for">
-          {open && dispute ? relativeAge(now - dispute.openedAt) : '—'}
+          {open && dispute && now !== null ? relativeAge(now - dispute.openedAt) : '—'}
         </Spec>
       </section>
 

@@ -2,9 +2,13 @@
 
 import { useMemo } from 'react';
 import { useApp } from '@/state/AppContext';
-import { useDeploymentPresence, useNow } from '@/hooks/useChain';
-import { ATTESTATION_SNAPSHOT } from '@/generated/data';
-import { attestationLife, tcbIsClean, type AttestedSigner } from '@/lib/attestation';
+import { useAttestation, useDeploymentPresence, useNow } from '@/hooks/useChain';
+import {
+  attestationLife,
+  enclaveIndependence,
+  tcbIsClean,
+  type AttestedSigner,
+} from '@/lib/attestation';
 import { AddressRef, Alarm, Caption, Notice, SectionHead, Spec, TxRef } from '@/components/primitives';
 import { relativeAge, splitModelId, truncateHex } from '@/lib/format';
 
@@ -20,9 +24,13 @@ import { relativeAge, splitModelId, truncateHex } from '@/lib/format';
  */
 export default function AttestationPage() {
   const { chainId, round } = useApp();
-  const now = useNow();
+  const tick = useNow();
   const presence = useDeploymentPresence();
-  const snapshot = ATTESTATION_SNAPSHOT;
+  const attestation = useAttestation();
+  const snapshot = attestation.snapshot;
+  // Before the clock starts, ages are measured from the moment the snapshot itself was taken —
+  // a figure baked into the page, so the markup and the first paint agree.
+  const now = tick ?? snapshot?.capturedAt ?? 0;
 
   // Which models each key actually answered for in the round on screen.
   const servedInRound = useMemo(() => {
@@ -38,15 +46,24 @@ export default function AttestationPage() {
   if (!snapshot) {
     return (
       <Notice title="No attestation record">
-        No enclave keys have been registered, and no recorded snapshot is available.
+        Nothing has been captured from the attestation registry on chain {chainId}, and no enclave
+        key has been recorded for it. Once the contracts are deployed there and a quote is
+        verified, this page fills in with the registry&rsquo;s own answers.
       </Notice>
     );
   }
 
   const untrusted = !snapshot.adapter.isTrusted;
-  // A recorded snapshot is a worked example. It is never allowed to read as the live trust root
-  // of the selected network, and least of all as mainnet's.
-  const isFixture = snapshot.source === 'fixture' || presence !== 'live' || snapshot.chainId !== chainId;
+  // A worked example is never allowed to read as the live trust root of the selected network.
+  // A snapshot read out of the registry on this very chain is not an example, so a slow or
+  // unreachable endpoint does not demote it — only a record from somewhere else does.
+  const isFixture =
+    snapshot.source === 'fixture' ||
+    snapshot.chainId !== chainId ||
+    presence === 'absent' ||
+    presence === 'no-code';
+
+  const independence = enclaveIndependence(snapshot);
 
   return (
     <div>
@@ -97,15 +114,16 @@ export default function AttestationPage() {
             Quotes verified on chain
           </div>
           <div className="note mt-2 max-w-[86ch]" style={{ color: 'var(--ink)' }}>
-            The registry is wired to a verifier at{' '}
-            <AddressRef chainId={chainId} address={snapshot.adapter.address} />. Every key below was
-            admitted only after its Intel TDX quote was walked back to the pinned Intel root inside a
-            transaction on this chain.
+            The registry is wired to <span className="hex">{snapshot.adapter.label}</span> at{' '}
+            <AddressRef chainId={chainId} address={snapshot.adapter.address} />, which reports{' '}
+            <span className="hex">isTrusted() = true</span>. Every key below was admitted only after
+            its Intel TDX quote was walked back to the pinned Intel root inside a transaction on
+            this chain — each one linked in the record beneath.
           </div>
         </div>
       )}
 
-      <section className="grid grid-cols-2 gap-x-8 gap-y-6 pb-8 md:grid-cols-4">
+      <section className="grid grid-cols-2 gap-x-8 gap-y-6 pb-8 md:grid-cols-3 lg:grid-cols-6">
         <Spec label="Adapter">
           <span className="hex">{snapshot.adapter.label}</span>
         </Spec>
@@ -113,8 +131,55 @@ export default function AttestationPage() {
           {String(snapshot.adapter.isTrusted)}
         </Spec>
         <Spec label="Attestation lifetime">{relativeAge(snapshot.attestationTtlSec)}</Spec>
-        <Spec label="Registered keys">{snapshot.signers.length}</Spec>
+        <Spec label="Attested keys">{snapshot.signers.length}</Spec>
+        <Spec label="Committee seats" alarm={independence.shared}>
+          {independence.seats}
+        </Spec>
+        <Spec label="Read at">
+          {attestation.isLive ? (
+            <span style={{ color: 'var(--seal)' }}>
+              live · block {snapshot.capturedAtBlock ?? '—'}
+            </span>
+          ) : attestation.error ? (
+            <span style={{ color: 'var(--alarm)' }}>endpoint down</span>
+          ) : (
+            `recorded ${relativeAge(Math.max(0, now - snapshot.capturedAt))} ago`
+          )}
+        </Spec>
       </section>
+
+      {/* The count of keys and the count of seats are not the same number, and that difference
+          is a limit on what any of this proves. It is stated before the keys, not after them. */}
+      {independence.shared ? (
+        <div
+          className="mb-2 border-y-2 px-5 py-4"
+          style={{ borderColor: 'var(--alarm)', background: 'var(--alarm-wash)' }}
+        >
+          <div className="legend legend-strong" style={{ color: 'var(--alarm)' }}>
+            Stated limitation · {independence.keys} attested{' '}
+            {independence.keys === 1 ? 'enclave' : 'enclaves'} behind {independence.seats} committee
+            seats
+          </div>
+          <div className="note mt-2 max-w-[86ch]" style={{ color: 'var(--ink)' }}>
+            {independence.keys === 1 ? 'A single attested gateway enclave fronts' : 'Fewer attested enclaves than seats front'}{' '}
+            all {independence.seats} models
+            {independence.sharedMeasurement ? (
+              <>
+                , and every registration reports the same measurement{' '}
+                <span className="hex" title={independence.sharedMeasurement}>
+                  {truncateHex(independence.sharedMeasurement, 12, 8)}
+                </span>
+              </>
+            ) : null}
+            . The quotes are real and the verification is real, but what they attest is one machine
+            running one image, not {independence.seats} independent ones. A committee is only as
+            independent as the enclaves behind it, so the correlated-failure argument for a
+            multi-model committee does not hold on this deployment: the models differ, the hardware
+            does not. The registry counts distinct signing keys, which is why{' '}
+            <span className="hex">minDistinctSigners</span> is the figure that actually binds here.
+          </div>
+        </div>
+      ) : null}
 
       <hr className="rule" />
 
@@ -146,10 +211,45 @@ export default function AttestationPage() {
         </div>
       </section>
 
+      {snapshot.allowedImages && snapshot.allowedImages.length > 0 ? (
+        <>
+          <hr className="rule" />
+          <section className="py-10">
+            <SectionHead
+              index="II"
+              title="Allowlisted images"
+              aside={<>measurement · admitted in</>}
+            />
+            <Caption>
+              A verified quote is not enough on its own. The registry admits a key only if the
+              measurement in its quote is an image the operator allowlisted first, in its own
+              transaction — so which software may answer is a decision on the record, made before
+              any key was bound to it.
+            </Caption>
+            <div className="mt-6 ruled">
+              {snapshot.allowedImages.map((image) => (
+                <div
+                  key={image.txHash}
+                  className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 py-4"
+                >
+                  <span className="hex" title={image.measurement} style={{ fontWeight: 600 }}>
+                    {truncateHex(image.measurement, 16, 10)}
+                  </span>
+                  <span className="legend" style={{ color: 'var(--ink-4)' }}>
+                    {image.allowed ? 'allowed' : 'withdrawn'} in{' '}
+                    <TxRef chainId={chainId} hash={image.txHash} /> · block {image.blockNumber}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+        </>
+      ) : null}
+
       <hr className="rule" />
 
       <section className="py-10">
-        <SectionHead index="II" title="Report data layout" />
+        <SectionHead index="III" title="Report data layout" />
         <Caption>
           The 64 bytes an enclave binds into its quote. The first twenty are the signing address the
           registry reads back out at offset {snapshot.signerOffset}; the tail carries the nonce that
@@ -233,8 +333,8 @@ function SignerRecord({
         <Spec label="Expires in" alarm={life.remainingSec < 86_400}>
           {life.expired ? 'expired' : relativeAge(life.remainingSec)}
         </Spec>
-        <Spec label="Quote verified in">
-          <TxRef chainId={chainId} hash={signer.txHash} />
+        <Spec label="Image allowlisted" alarm={signer.imageAllowed === false}>
+          {signer.imageAllowed === undefined ? '—' : String(signer.imageAllowed)}
         </Spec>
       </div>
 
@@ -265,21 +365,41 @@ function SignerRecord({
       </div>
 
       <div className="mt-5">
-        <div className="legend">Serves</div>
-        <div className="mt-2 flex flex-wrap gap-x-6 gap-y-1.5">
+        <div className="legend">
+          Serves · {signer.models.length}{' '}
+          {signer.models.length === 1 ? 'model' : 'models'}, each bound in its own transaction
+        </div>
+        <div className="mt-2 ruled">
           {signer.models.map((m) => {
             const { vendor, name } = splitModelId(m);
             const used = usedFor.includes(m);
+            const registration = signer.registrations?.find((r) => r.model === m);
             return (
-              <span key={m} className="text-[12.5px]" style={{ color: used ? 'var(--ink)' : 'var(--ink-3)' }}>
-                <span style={{ color: 'var(--ink-4)' }}>{vendor}/</span>
-                {name}
-                {used ? (
-                  <span className="legend ml-2" style={{ color: 'var(--seal)' }}>
-                    in this round
+              <div
+                key={m}
+                className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-2"
+              >
+                <span
+                  className="text-[12.5px]"
+                  style={{ color: used ? 'var(--ink)' : 'var(--ink-3)' }}
+                >
+                  <span style={{ color: 'var(--ink-4)' }}>{vendor}/</span>
+                  {name}
+                  {used ? (
+                    <span className="legend ml-2" style={{ color: 'var(--seal)' }}>
+                      in this round
+                    </span>
+                  ) : null}
+                </span>
+                {registration ? (
+                  <span className="legend" style={{ color: 'var(--ink-4)' }}>
+                    quote verified in{' '}
+                    <TxRef chainId={chainId} hash={registration.txHash} /> · block{' '}
+                    {registration.blockNumber}
+                    {registration.quoteBytes ? ` · ${registration.quoteBytes} quote bytes` : ''}
                   </span>
                 ) : null}
-              </span>
+              </div>
             );
           })}
         </div>

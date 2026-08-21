@@ -23,9 +23,9 @@ import {
 } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 
-import { appraise, persistBundle, type AppraisalBundle } from '../src/appraise.ts';
+import { appraise, type AppraisalBundle } from '../src/appraise.ts';
 import { buildEvidence, loadAsset } from '../src/evidence.ts';
-import { REJECT_REASONS } from '../src/canonical.ts';
+import { REJECT_REASONS, SCHEMA_ID } from '../src/canonical.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..', '..');
@@ -33,15 +33,66 @@ const DATA = join(HERE, '..', 'data');
 
 // --- config -----------------------------------------------------------------
 
-const manifest = JSON.parse(readFileSync(join(ROOT, 'deployments', '1952.json'), 'utf8')) as {
-  assayOracle: Address; assetRegistry: Address; assetId: Hex; chainId: number; explorer: string;
+const argv0 = process.argv.slice(2);
+const ci = argv0.indexOf('--chain');
+const CHAIN_ID = ci >= 0 ? Number(argv0[ci + 1]) : 1952;
+
+/**
+ * Per-chain deployment. Mainnet and testnet reuse the same addresses in different roles, so
+ * these are kept explicit rather than derived — a swapped oracle/registry pair would sail
+ * through type checking and revert on chain.
+ */
+const CHAINS: Record<number, {
+  name: string; rpc: string; explorer: string;
+  assayOracle: Address; assetRegistry: Address;
+}> = {
+  1952: {
+    name: 'X Layer Testnet',
+    rpc: 'https://testrpc.xlayer.tech',
+    explorer: 'https://web3.okx.com/explorer/x-layer-testnet',
+    assayOracle: '0xEd888DC5b67038fF66D9a5DeB76B323655f21b23',
+    assetRegistry: '0xE6FBd750cf852149185c226c770B6d484398a71F',
+  },
+  196: {
+    name: 'X Layer Mainnet',
+    rpc: 'https://rpc.xlayer.tech',
+    explorer: 'https://www.oklink.com/xlayer',
+    assayOracle: '0xE6FBd750cf852149185c226c770B6d484398a71F',
+    assetRegistry: '0x1f2E8DA086fF0919C3efbf3D952a65a820D857a4',
+  },
 };
 
-const xlayerTestnet = defineChain({
-  id: manifest.chainId,
-  name: 'X Layer Testnet',
+const CHAIN = CHAINS[CHAIN_ID]!;
+if (!CHAINS[CHAIN_ID]) throw new Error(`unknown chain ${CHAIN_ID} (expected 196 or 1952)`);
+
+/** The default listing: the liquid asset, tolerant band, corrected committee. */
+const LIQUID = {
+  assetKey: 'assay.carbon.liquid.v1',
+  assetId: '0x65e8b0665d0465ee6e0bbbff780354ea5a389bab5b30f737faf0ce7e1d1f4584' as Hex,
+  committee: [
+    'deepseek/deepseek-v4-flash-0731',
+    'google/gemma-3-27b-it',
+    'meta-llama/llama-3.3-70b-instruct',
+    'qwen/qwen-2.5-7b-instruct',
+    'qwen/qwen3-vl-30b-a3b-instruct',
+  ],
+};
+
+const manifest = {
+  chainId: CHAIN_ID,
+  explorer: CHAIN.explorer,
+  assayOracle: CHAIN.assayOracle,
+  assetRegistry: CHAIN.assetRegistry,
+  assetId: LIQUID.assetId,
+  assetIdV2: LIQUID.assetId,
+  assetKeyV2: LIQUID.assetKey,
+};
+
+const chainDef = defineChain({
+  id: CHAIN_ID,
+  name: CHAIN.name,
   nativeCurrency: { name: 'OKB', symbol: 'OKB', decimals: 18 },
-  rpcUrls: { default: { http: [process.env.ASSAY_RPC_URL ?? 'https://testrpc.xlayer.tech'] } },
+  rpcUrls: { default: { http: [process.env.ASSAY_RPC_URL ?? CHAIN.rpc] } },
 });
 
 function env(name: string): string {
@@ -82,16 +133,28 @@ async function main() {
   const evidenceBytes = `0x${Buffer.from(ev.line, 'utf8').toString('hex')}` as Hex;
   // The registered on-chain asset, NOT a locally derived id. The contract keys everything
   // off this, and inventing our own would simply not resolve.
-  const onChainAssetId = manifest.assetId;
+  //
+  // Schemas are content-addressed and immutable, so a prompt change means a NEW listing
+  // rather than an edit. Default to the newest listing; `--asset-id` pins an older one so a
+  // historical round can still be reproduced against the exact question that produced it.
+  const mi = argv.indexOf('--models');
+  const committee = mi >= 0 ? argv[mi + 1]!.split(',') : LIQUID.committee;
+  const idOverride = argv[argv.indexOf('--asset-id') + 1];
+  const onChainAssetId = (argv.includes('--asset-id') && idOverride
+    ? idOverride
+    : manifest.assetIdV2 ?? manifest.assetId) as Hex;
 
   const account = privateKeyToAccount(env('DEPLOYER_PK') as Hex);
-  const pub = createPublicClient({ chain: xlayerTestnet, transport: http() });
-  const wallet = createWalletClient({ account, chain: xlayerTestnet, transport: http() });
+  const pub = createPublicClient({ chain: chainDef, transport: http() });
+  const wallet = createWalletClient({ account, chain: chainDef, transport: http() });
 
   console.log(`asset        ${asset.assetId}  (case ${asset.caseId ?? '-'})`);
-  console.log(`onChain id   ${onChainAssetId}`);
+  console.log(`onChain id   ${onChainAssetId}${onChainAssetId === manifest.assetIdV2 ? `  (${manifest.assetKeyV2})` : ''}`);
+  console.log(`schemaId     ${SCHEMA_ID}`);
   console.log(`evidence     ${ev.byteLength} bytes  sha256=${ev.evidenceSha256}`);
+  console.log(`chain        ${CHAIN.name} (${CHAIN_ID})`);
   console.log(`issuer       ${account.address}`);
+  console.log(`committee    ${committee.map((m, i) => `${i}:${m.split('/')[1]}`).join(' ')}`);
   console.log(`oracle       ${manifest.assayOracle}`);
   console.log('');
 
@@ -130,17 +193,35 @@ async function main() {
   }
   if (!alreadyCommitted && !DRY) throw new Error('evidence is not committed — postAppraisal would revert');
 
+  // Policy comes from the REGISTRY, never from local defaults. The issuer sets quorum,
+  // band and the confidence floor on chain; guessing them locally makes the preflight
+  // disagree with the contract and every recorded bundle misreport its own outcome.
+  const cfg = (await pub.readContract({
+    address: manifest.assetRegistry, abi: registryAbi,
+    functionName: 'config', args: [onChainAssetId],
+  })) as { quorum: number; bandBps: number; minConfidenceBps: number; maxAgeSec: number; schemaId: Hex; active: boolean };
+
+  console.log(`policy (on chain)  quorum=${cfg.quorum} band=${cfg.bandBps}bps minConfidence=${cfg.minConfidenceBps}bps maxAge=${cfg.maxAgeSec}s`);
+  if (cfg.schemaId !== SCHEMA_ID) {
+    throw new Error(`schema mismatch: registry ${cfg.schemaId} vs backend ${SCHEMA_ID} — every signature would fail`);
+  }
+  if (!cfg.active) throw new Error('asset is not active');
+
   // --- 2. run the committee, fetching signatures immediately ---------------
   console.log('\nrunning the committee (receipts expire in 1h, in memory only)...');
   const t0 = Date.now();
   const bundle: AppraisalBundle = await appraise(asset.assetId, {
     apiKey: env('REDPILL_API_KEY'),
-    quorum: 3,
-    bandBps: 1500,
-    maxAgeSec: 3600,
+    quorum: Number(cfg.quorum),
+    bandBps: Number(cfg.bandBps),
+    minConfidenceBps: Number(cfg.minConfidenceBps),
+    maxAgeSec: Number(cfg.maxAgeSec),
     persist: false,
     // Precheck against the REGISTERED id, or the local preflight disagrees with the chain.
     onChainAssetId: onChainAssetId,
+    // The listing's committee, not whatever Deploy.s.sol last held. Slot order is
+    // consensus-critical and this listing corrected slot 3.
+    models: committee,
   });
   const appraiseMs = Date.now() - t0;
 
@@ -260,6 +341,11 @@ async function main() {
       distinctSigners,
       observedAt,
       evidenceHash,
+      policy: {
+        quorum: Number(cfg.quorum), bandBps: Number(cfg.bandBps),
+        minConfidenceBps: Number(cfg.minConfidenceBps), maxAgeSec: Number(cfg.maxAgeSec),
+        schemaId: cfg.schemaId,
+      },
       slots: slotEvents,
       evidenceCommitment: {
         committed: true,
@@ -281,8 +367,10 @@ async function main() {
     },
   };
   mkdirSync(join(DATA, 'bundles'), { recursive: true });
-  persistBundle(enriched as AppraisalBundle);
-  writeFileSync(join(DATA, 'bundles', `${asset.assetId}-latest.json`), jsonSafe(enriched));
+  // Chain-scoped, so a mainnet round never silently overwrites the testnet one.
+  writeFileSync(join(DATA, 'bundles', `${asset.assetId}-${CHAIN_ID}-${bundle.createdAt.replace(/[:.]/g, '-')}.json`), jsonSafe(enriched));
+  writeFileSync(join(DATA, 'bundles', `${asset.assetId}-${CHAIN_ID}-latest.json`), jsonSafe(enriched));
+  if (CHAIN_ID === 1952) writeFileSync(join(DATA, 'bundles', `${asset.assetId}-latest.json`), jsonSafe(enriched));
 
   console.log(`\n  timing: appraise ${appraiseMs}ms, first completion -> posted ${enriched.timing.firstCompletionToPostedMs}ms`);
   console.log(`  wrote data/bundles/${asset.assetId}-latest.json`);

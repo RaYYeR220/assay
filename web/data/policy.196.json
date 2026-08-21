@@ -1,0 +1,49 @@
+{
+  "chainId": 196,
+  "source": "live",
+  "capturedAt": 1787347999,
+  "assets": {
+    "0xc52284d7d0a577d60e0793938419de18c4821659029579d20b083cc1fdad5266": {
+      "assetId": "0xc52284d7d0a577d60e0793938419de18c4821659029579d20b083cc1fdad5266",
+      "committee": [
+        "deepseek/deepseek-v4-flash-0731",
+        "google/gemma-3-27b-it",
+        "meta-llama/llama-3.3-70b-instruct",
+        "qwen/qwen3.6-35b-a3b",
+        "qwen/qwen3-vl-30b-a3b-instruct"
+      ],
+      "metadataURI": "ipfs://assay/carbon/demo",
+      "issuer": "0xcf0A49F8e6CC7D0C50CB8AAe492E97216A13316f",
+      "quorum": 3,
+      "minDistinctSigners": 1,
+      "bandBps": 1500,
+      "minConfidenceBps": 5000,
+      "maxAgeSec": 3600,
+      "disputeBandBps": 500,
+      "disputeBond": "1000000000000000",
+      "schemaId": "0xb243d59149ab535ae3fee80efcd3df312f0e487eff546971f019ea439920b538",
+      "active": true
+    },
+    "0x65e8b0665d0465ee6e0bbbff780354ea5a389bab5b30f737faf0ce7e1d1f4584": {
+      "assetId": "0x65e8b0665d0465ee6e0bbbff780354ea5a389bab5b30f737faf0ce7e1d1f4584",
+      "committee": [
+        "deepseek/deepseek-v4-flash-0731",
+        "google/gemma-3-27b-it",
+        "meta-llama/llama-3.3-70b-instruct",
+        "qwen/qwen-2.5-7b-instruct",
+        "qwen/qwen3-vl-30b-a3b-instruct"
+      ],
+      "metadataURI": "ipfs://assay/carbon",
+      "issuer": "0xcf0A49F8e6CC7D0C50CB8AAe492E97216A13316f",
+      "quorum": 3,
+      "minDistinctSigners": 1,
+      "bandBps": 5000,
+      "minConfidenceBps": 5000,
+      "maxAgeSec": 3600,
+      "disputeBandBps": 500,
+      "disputeBond": "1000000000000000",
+      "schemaId": "0xb243d59149ab535ae3fee80efcd3df312f0e487eff546971f019ea439920b538",
+      "active": true
+    }
+  }
+}

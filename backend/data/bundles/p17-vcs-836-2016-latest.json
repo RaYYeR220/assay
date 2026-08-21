@@ -1,0 +1,400 @@
+{
+  "bundleId": "db0c655c-c94e-43db-861c-bdd5fc4b0517",
+  "createdAt": "2026-08-21T21:32:25.838Z",
+  "promptVersion": "assay.appraisal.v1",
+  "schemaId": "0xb243d59149ab535ae3fee80efcd3df312f0e487eff546971f019ea439920b538",
+  "assetId": "p17-vcs-836-2016",
+  "assetIdHex": "0x65e8b0665d0465ee6e0bbbff780354ea5a389bab5b30f737faf0ce7e1d1f4584",
+  "evidence": {
+    "line": "schema=assay.carbon.v1;asset_id=p17-vcs-836-2016;registry=VCS;project_id=VCS-836;project_name=Song Ong Hydropower Project;project_type=Hydropower;methodology=AMS-I.D. Grid connected renewable electricity generation;vintage=2016;country=Viet Nam;region=South-Eastern Asia;registry_status=Registered;credits_issued=168375;credits_retired=155496;credits_remaining=12879;buffer_deposited=0;first_vintage=2009;durability=emission avoidance, no storage reversal risk;integrity_flags=none recorded in the sources consulted;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21",
+    "hex": "0x736368656d613d61737361792e636172626f6e2e76313b61737365745f69643d7031372d7663732d3833362d323031363b72656769737472793d5643533b70726f6a6563745f69643d5643532d3833363b70726f6a6563745f6e616d653d536f6e67204f6e6720487964726f706f7765722050726f6a6563743b70726f6a6563745f747970653d487964726f706f7765723b6d6574686f646f6c6f67793d414d532d492e442e204772696420636f6e6e65637465642072656e657761626c6520656c6563747269636974792067656e65726174696f6e3b76696e746167653d323031363b636f756e7472793d56696574204e616d3b726567696f6e3d536f7574682d4561737465726e20417369613b72656769737472795f7374617475733d526567697374657265643b637265646974735f6973737565643d3136383337353b637265646974735f726574697265643d3135353439363b637265646974735f72656d61696e696e673d31323837393b6275666665725f6465706f73697465643d303b66697273745f76696e746167653d323030393b6475726162696c6974793d656d697373696f6e2061766f6964616e63652c206e6f2073746f7261676520726576657273616c207269736b3b696e746567726974795f666c6167733d6e6f6e65207265636f7264656420696e2074686520736f757263657320636f6e73756c7465643b7265665f70726963655f7573643d4e413b7265665f70726963655f736f757263653d4e413b7265665f70726963655f646174653d4e413b6f627365727665645f61743d323032362d30382d3231",
+    "sha256": "ea2ec63e9dc84ead275d3ce087a86079c2071655a89524b7748e183fb0d79e42",
+    "byteLength": 593
+  },
+  "chain": {
+    "evidenceCommitted": null,
+    "observationWatermark": null,
+    "epoch": null,
+    "configured": false,
+    "error": "no RPC configured (set ASSAY_RPC_URL and ASSAY_ASSET_REGISTRY) — commitment state is UNKNOWN",
+    "commitEvidenceCall": {
+      "to": "(set ASSAY_ASSET_REGISTRY)",
+      "abi": "AssetRegistry",
+      "functionName": "commitEvidence",
+      "args": [
+        "0x65e8b0665d0465ee6e0bbbff780354ea5a389bab5b30f737faf0ce7e1d1f4584",
+        "0xea2ec63e9dc84ead275d3ce087a86079c2071655a89524b7748e183fb0d79e42",
+        "",
+        true
+      ],
+      "signature": "commitEvidence(bytes32,bytes32,string,bool)",
+      "note": "Must be sent by the asset issuer. Until it lands, postAppraisal reverts with EvidenceNotCommitted."
+    }
+  },
+  "committee": [
+    "deepseek/deepseek-v4-flash-0731",
+    "google/gemma-3-27b-it",
+    "meta-llama/llama-3.3-70b-instruct",
+    "qwen/qwen-2.5-7b-instruct",
+    "qwen/qwen3-vl-30b-a3b-instruct"
+  ],
+  "slots": [
+    {
+      "slot": 0,
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-ac754d0f2e49d2afa0c2e406",
+      "requestBody": "{\"model\":\"deepseek/deepseek-v4-flash-0731\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE SINGLE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. One unit of a carbon credit is one tonne of carbon dioxide equivalent. Worked example: a fair value of 12.50 US dollars per unit must be written as 12500000, and a fair value of 0.80 US dollars per unit must be written as 800000. Never report the value of the whole project, the whole issuance or the whole batch, and never report the unscaled dollar figure. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=p17-vcs-836-2016;registry=VCS;project_id=VCS-836;project_name=Song Ong Hydropower Project;project_type=Hydropower;methodology=AMS-I.D. Grid connected renewable electricity generation;vintage=2016;country=Viet Nam;region=South-Eastern Asia;registry_status=Registered;credits_issued=168375;credits_retired=155496;credits_remaining=12879;buffer_deposited=0;first_vintage=2009;durability=emission avoidance, no storage reversal risk;integrity_flags=none recorded in the sources consulted;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "c9a2333c53dea186b3040b69acf84a7f39efa64811ec5213a7ccb1675268da6d",
+      "responseBody": "{\"id\":\"req_26c8b9475956b6f3945709eb930f7f06\",\"object\":\"chat.completion\",\"created\":1787347945,\"model\":\"deepseek/deepseek-v4-flash-0731\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=1250000|confidence_bps=5000\",\"reasoning_content\":null,\"tool_calls\":null},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":422,\"total_tokens\":444,\"completion_tokens\":22,\"prompt_tokens_details\":{\"cached_tokens\":256},\"reasoning_tokens\":0,\"completion_tokens_details\":{\"reasoning_tokens\":0},\"cost\":0.00005992}}",
+      "responseSha256": "14120c75d3432bb03dc186e3cb73153b89544ee2c66c0faeb1ed7106d584857a",
+      "signature": "0x108c5fef337850ad29b7783f8302899538f29bde6b11d007bdd3d2ad54ad9d6f484cfa6109491bec89ebb3a73bc76fa8e5e107b5dfe9f49f7dde58499d100b871c",
+      "gatewayText": "c9a2333c53dea186b3040b69acf84a7f39efa64811ec5213a7ccb1675268da6d:14120c75d3432bb03dc186e3cb73153b89544ee2c66c0faeb1ed7106d584857a",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 0,
+        "modelId": "deepseek/deepseek-v4-flash-0731",
+        "ok": true,
+        "failedCheck": null,
+        "reason": "None",
+        "detail": null,
+        "requestBody": "{\"model\":\"deepseek/deepseek-v4-flash-0731\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE SINGLE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. One unit of a carbon credit is one tonne of carbon dioxide equivalent. Worked example: a fair value of 12.50 US dollars per unit must be written as 12500000, and a fair value of 0.80 US dollars per unit must be written as 800000. Never report the value of the whole project, the whole issuance or the whole batch, and never report the unscaled dollar figure. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=p17-vcs-836-2016;registry=VCS;project_id=VCS-836;project_name=Song Ong Hydropower Project;project_type=Hydropower;methodology=AMS-I.D. Grid connected renewable electricity generation;vintage=2016;country=Viet Nam;region=South-Eastern Asia;registry_status=Registered;credits_issued=168375;credits_retired=155496;credits_remaining=12879;buffer_deposited=0;first_vintage=2009;durability=emission avoidance, no storage reversal risk;integrity_flags=none recorded in the sources consulted;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "c9a2333c53dea186b3040b69acf84a7f39efa64811ec5213a7ccb1675268da6d",
+        "responseSha256": "14120c75d3432bb03dc186e3cb73153b89544ee2c66c0faeb1ed7106d584857a",
+        "signedText": "c9a2333c53dea186b3040b69acf84a7f39efa64811ec5213a7ccb1675268da6d:14120c75d3432bb03dc186e3cb73153b89544ee2c66c0faeb1ed7106d584857a",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "1250000",
+        "confBps": 5000,
+        "createdAt": 1787347945,
+        "ageSec": 0,
+        "offsets": {
+          "contentOffset": 187,
+          "finishOffset": 305,
+          "createdOffset": 72
+        },
+        "roundBlocker": null
+      },
+      "onChain": {
+        "slot": 0,
+        "responseBody": "0x7b226964223a227265715f3236633862393437353935366236663339343537303965623933306637663036222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334373934352c226d6f64656c223a22646565707365656b2f646565707365656b2d76342d666c6173682d30373331222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d313235303030307c636f6e666964656e63655f6270733d35303030222c22726561736f6e696e675f636f6e74656e74223a6e756c6c2c22746f6f6c5f63616c6c73223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c227573616765223a7b2270726f6d70745f746f6b656e73223a3432322c22746f74616c5f746f6b656e73223a3434342c22636f6d706c6574696f6e5f746f6b656e73223a32322c2270726f6d70745f746f6b656e735f64657461696c73223a7b226361636865645f746f6b656e73223a3235367d2c22726561736f6e696e675f746f6b656e73223a302c22636f6d706c6574696f6e5f746f6b656e735f64657461696c73223a7b22726561736f6e696e675f746f6b656e73223a307d2c22636f7374223a302e30303030353939327d7d",
+        "signature": "0x108c5fef337850ad29b7783f8302899538f29bde6b11d007bdd3d2ad54ad9d6f484cfa6109491bec89ebb3a73bc76fa8e5e107b5dfe9f49f7dde58499d100b871c"
+      },
+      "available": true,
+      "failure": null,
+      "latencyMs": 3527
+    },
+    {
+      "slot": 1,
+      "model": "google/gemma-3-27b-it",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-150e04b63b7c81d534fa5cd3",
+      "requestBody": "{\"model\":\"google/gemma-3-27b-it\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE SINGLE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. One unit of a carbon credit is one tonne of carbon dioxide equivalent. Worked example: a fair value of 12.50 US dollars per unit must be written as 12500000, and a fair value of 0.80 US dollars per unit must be written as 800000. Never report the value of the whole project, the whole issuance or the whole batch, and never report the unscaled dollar figure. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=p17-vcs-836-2016;registry=VCS;project_id=VCS-836;project_name=Song Ong Hydropower Project;project_type=Hydropower;methodology=AMS-I.D. Grid connected renewable electricity generation;vintage=2016;country=Viet Nam;region=South-Eastern Asia;registry_status=Registered;credits_issued=168375;credits_retired=155496;credits_remaining=12879;buffer_deposited=0;first_vintage=2009;durability=emission avoidance, no storage reversal risk;integrity_flags=none recorded in the sources consulted;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "04174f93f14f984eec42786d5a79cfe568e47ef3e6d695a449839abdf676ce08",
+      "responseBody": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"logprobs\":null,\"message\":{\"content\":\"ASSAY1|nav_usd_e6=1200000|confidence_bps=7000\",\"role\":\"assistant\"}}],\"created\":1787347944,\"id\":\"req_320c6c280d3059bb3156ff20e6f7203f\",\"model\":\"google/gemma-3-27b-it\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":28,\"prompt_tokens\":488,\"total_tokens\":516,\"cost\":0.00008608}}",
+      "responseSha256": "74904766883b40c4cc0fc36b86cef9b3ecfe8e52c0df2b04cbd7418154e1d52a",
+      "signature": "0x23f13d86fde3a00d68be345ed6fe8a89ddaa04a30978f3890244c85d2b4ec585138b9f7b559c28344dab042fc58aeba53737ef96686c860666c9e68bddfa80061b",
+      "gatewayText": "04174f93f14f984eec42786d5a79cfe568e47ef3e6d695a449839abdf676ce08:74904766883b40c4cc0fc36b86cef9b3ecfe8e52c0df2b04cbd7418154e1d52a",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 1,
+        "modelId": "google/gemma-3-27b-it",
+        "ok": true,
+        "failedCheck": null,
+        "reason": "None",
+        "detail": null,
+        "requestBody": "{\"model\":\"google/gemma-3-27b-it\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE SINGLE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. One unit of a carbon credit is one tonne of carbon dioxide equivalent. Worked example: a fair value of 12.50 US dollars per unit must be written as 12500000, and a fair value of 0.80 US dollars per unit must be written as 800000. Never report the value of the whole project, the whole issuance or the whole batch, and never report the unscaled dollar figure. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=p17-vcs-836-2016;registry=VCS;project_id=VCS-836;project_name=Song Ong Hydropower Project;project_type=Hydropower;methodology=AMS-I.D. Grid connected renewable electricity generation;vintage=2016;country=Viet Nam;region=South-Eastern Asia;registry_status=Registered;credits_issued=168375;credits_retired=155496;credits_remaining=12879;buffer_deposited=0;first_vintage=2009;durability=emission avoidance, no storage reversal risk;integrity_flags=none recorded in the sources consulted;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "04174f93f14f984eec42786d5a79cfe568e47ef3e6d695a449839abdf676ce08",
+        "responseSha256": "74904766883b40c4cc0fc36b86cef9b3ecfe8e52c0df2b04cbd7418154e1d52a",
+        "signedText": "04174f93f14f984eec42786d5a79cfe568e47ef3e6d695a449839abdf676ce08:74904766883b40c4cc0fc36b86cef9b3ecfe8e52c0df2b04cbd7418154e1d52a",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "1200000",
+        "confBps": 7000,
+        "createdAt": 1787347944,
+        "ageSec": 1,
+        "offsets": {
+          "contentOffset": 73,
+          "finishOffset": 13,
+          "createdOffset": 153
+        },
+        "roundBlocker": null
+      },
+      "onChain": {
+        "slot": 1,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d313230303030307c636f6e666964656e63655f6270733d37303030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334373934342c226964223a227265715f3332306336633238306433303539626233313536666632306536663732303366222c226d6f64656c223a22676f6f676c652f67656d6d612d332d3237622d6974222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a32382c2270726f6d70745f746f6b656e73223a3438382c22746f74616c5f746f6b656e73223a3531362c22636f7374223a302e30303030383630387d7d",
+        "signature": "0x23f13d86fde3a00d68be345ed6fe8a89ddaa04a30978f3890244c85d2b4ec585138b9f7b559c28344dab042fc58aeba53737ef96686c860666c9e68bddfa80061b"
+      },
+      "available": true,
+      "failure": null,
+      "latencyMs": 2945
+    },
+    {
+      "slot": 2,
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-c10bb0d8129bfb0102e46ee8",
+      "requestBody": "{\"model\":\"meta-llama/llama-3.3-70b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE SINGLE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. One unit of a carbon credit is one tonne of carbon dioxide equivalent. Worked example: a fair value of 12.50 US dollars per unit must be written as 12500000, and a fair value of 0.80 US dollars per unit must be written as 800000. Never report the value of the whole project, the whole issuance or the whole batch, and never report the unscaled dollar figure. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=p17-vcs-836-2016;registry=VCS;project_id=VCS-836;project_name=Song Ong Hydropower Project;project_type=Hydropower;methodology=AMS-I.D. Grid connected renewable electricity generation;vintage=2016;country=Viet Nam;region=South-Eastern Asia;registry_status=Registered;credits_issued=168375;credits_retired=155496;credits_remaining=12879;buffer_deposited=0;first_vintage=2009;durability=emission avoidance, no storage reversal risk;integrity_flags=none recorded in the sources consulted;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "60c513a4de56f47b78d7e8df3b4cad1d014d65181b8128fd61cd1840cb710a9e",
+      "responseBody": "{\"id\":\"req_72a8482bf3bdf9af5cdbc59afe2b9696\",\"object\":\"chat.completion\",\"created\":1787347946,\"model\":\"meta-llama/llama-3.3-70b-instruct\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=600000|confidence_bps=8000\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":null},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"service_tier\":null,\"usage\":{\"prompt_tokens\":450,\"total_tokens\":470,\"completion_tokens\":20,\"prompt_tokens_details\":null,\"cost\":0.00094}}",
+      "responseSha256": "a441f970c6148500576200b008c627b27ba61289c85638eaba271c770a650f50",
+      "signature": "0x59febedf665d5ca759e4743d85a352df5a53b54a4b7134bd553df1bf24008ca648f5c66ce00aef0eea43e456d058b16c2098aef519c3b9b2b5046c0aeb27abd41c",
+      "gatewayText": "60c513a4de56f47b78d7e8df3b4cad1d014d65181b8128fd61cd1840cb710a9e:a441f970c6148500576200b008c627b27ba61289c85638eaba271c770a650f50",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 2,
+        "modelId": "meta-llama/llama-3.3-70b-instruct",
+        "ok": true,
+        "failedCheck": null,
+        "reason": "None",
+        "detail": null,
+        "requestBody": "{\"model\":\"meta-llama/llama-3.3-70b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE SINGLE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. One unit of a carbon credit is one tonne of carbon dioxide equivalent. Worked example: a fair value of 12.50 US dollars per unit must be written as 12500000, and a fair value of 0.80 US dollars per unit must be written as 800000. Never report the value of the whole project, the whole issuance or the whole batch, and never report the unscaled dollar figure. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=p17-vcs-836-2016;registry=VCS;project_id=VCS-836;project_name=Song Ong Hydropower Project;project_type=Hydropower;methodology=AMS-I.D. Grid connected renewable electricity generation;vintage=2016;country=Viet Nam;region=South-Eastern Asia;registry_status=Registered;credits_issued=168375;credits_retired=155496;credits_remaining=12879;buffer_deposited=0;first_vintage=2009;durability=emission avoidance, no storage reversal risk;integrity_flags=none recorded in the sources consulted;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "60c513a4de56f47b78d7e8df3b4cad1d014d65181b8128fd61cd1840cb710a9e",
+        "responseSha256": "a441f970c6148500576200b008c627b27ba61289c85638eaba271c770a650f50",
+        "signedText": "60c513a4de56f47b78d7e8df3b4cad1d014d65181b8128fd61cd1840cb710a9e:a441f970c6148500576200b008c627b27ba61289c85638eaba271c770a650f50",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "600000",
+        "confBps": 8000,
+        "createdAt": 1787347946,
+        "ageSec": -2,
+        "offsets": {
+          "contentOffset": 189,
+          "finishOffset": 364,
+          "createdOffset": 72
+        },
+        "roundBlocker": null
+      },
+      "onChain": {
+        "slot": 2,
+        "responseBody": "0x7b226964223a227265715f3732613834383262663362646639616635636462633539616665326239363936222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334373934362c226d6f64656c223a226d6574612d6c6c616d612f6c6c616d612d332e332d3730622d696e737472756374222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3630303030307c636f6e666964656e63655f6270733d38303030222c227265667573616c223a6e756c6c2c22616e6e6f746174696f6e73223a6e756c6c2c22617564696f223a6e756c6c2c2266756e6374696f6e5f63616c6c223a6e756c6c2c22746f6f6c5f63616c6c73223a5b5d2c22726561736f6e696e67223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c22736572766963655f74696572223a6e756c6c2c227573616765223a7b2270726f6d70745f746f6b656e73223a3435302c22746f74616c5f746f6b656e73223a3437302c22636f6d706c6574696f6e5f746f6b656e73223a32302c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22636f7374223a302e30303039347d7d",
+        "signature": "0x59febedf665d5ca759e4743d85a352df5a53b54a4b7134bd553df1bf24008ca648f5c66ce00aef0eea43e456d058b16c2098aef519c3b9b2b5046c0aeb27abd41c"
+      },
+      "available": true,
+      "failure": null,
+      "latencyMs": 2613
+    },
+    {
+      "slot": 3,
+      "model": "qwen/qwen-2.5-7b-instruct",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-1029bec3f467580eff054aff",
+      "requestBody": "{\"model\":\"qwen/qwen-2.5-7b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE SINGLE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. One unit of a carbon credit is one tonne of carbon dioxide equivalent. Worked example: a fair value of 12.50 US dollars per unit must be written as 12500000, and a fair value of 0.80 US dollars per unit must be written as 800000. Never report the value of the whole project, the whole issuance or the whole batch, and never report the unscaled dollar figure. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=p17-vcs-836-2016;registry=VCS;project_id=VCS-836;project_name=Song Ong Hydropower Project;project_type=Hydropower;methodology=AMS-I.D. Grid connected renewable electricity generation;vintage=2016;country=Viet Nam;region=South-Eastern Asia;registry_status=Registered;credits_issued=168375;credits_retired=155496;credits_remaining=12879;buffer_deposited=0;first_vintage=2009;durability=emission avoidance, no storage reversal risk;integrity_flags=none recorded in the sources consulted;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "eaef0f6340165b3f0c1adb1db294568c48217c5ac7976a7fa2c1c7a4ae2104d9",
+      "responseBody": "{\"id\":\"req_40385187643e2c31289497909447d792\",\"object\":\"chat.completion\",\"created\":1787347944,\"model\":\"qwen/qwen-2.5-7b-instruct\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=800000|confidence_bps=2500\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning_content\":null},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"service_tier\":null,\"usage\":{\"prompt_tokens\":474,\"total_tokens\":500,\"completion_tokens\":26,\"prompt_tokens_details\":null,\"cost\":0.0000526}}",
+      "responseSha256": "ad3c2c273e765bbd76abe2a56070c8c63421ea92af5cf9928b851d4124ec3c6c",
+      "signature": "0x19058e4d8975cd561603d427e99ea88b716163091d3147423b1d245f31e75ddb7be7682c45b4a21ebf3ec1c12cb07b9e2a2c63aa8831e475df5d053ef95b2a141c",
+      "gatewayText": "eaef0f6340165b3f0c1adb1db294568c48217c5ac7976a7fa2c1c7a4ae2104d9:ad3c2c273e765bbd76abe2a56070c8c63421ea92af5cf9928b851d4124ec3c6c",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 3,
+        "modelId": "qwen/qwen-2.5-7b-instruct",
+        "ok": false,
+        "failedCheck": "confBps < cfg.minConfidenceBps",
+        "reason": "LowConfidence",
+        "detail": "2500 < 5000",
+        "requestBody": "{\"model\":\"qwen/qwen-2.5-7b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE SINGLE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. One unit of a carbon credit is one tonne of carbon dioxide equivalent. Worked example: a fair value of 12.50 US dollars per unit must be written as 12500000, and a fair value of 0.80 US dollars per unit must be written as 800000. Never report the value of the whole project, the whole issuance or the whole batch, and never report the unscaled dollar figure. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=p17-vcs-836-2016;registry=VCS;project_id=VCS-836;project_name=Song Ong Hydropower Project;project_type=Hydropower;methodology=AMS-I.D. Grid connected renewable electricity generation;vintage=2016;country=Viet Nam;region=South-Eastern Asia;registry_status=Registered;credits_issued=168375;credits_retired=155496;credits_remaining=12879;buffer_deposited=0;first_vintage=2009;durability=emission avoidance, no storage reversal risk;integrity_flags=none recorded in the sources consulted;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "eaef0f6340165b3f0c1adb1db294568c48217c5ac7976a7fa2c1c7a4ae2104d9",
+        "responseSha256": "ad3c2c273e765bbd76abe2a56070c8c63421ea92af5cf9928b851d4124ec3c6c",
+        "signedText": "eaef0f6340165b3f0c1adb1db294568c48217c5ac7976a7fa2c1c7a4ae2104d9:ad3c2c273e765bbd76abe2a56070c8c63421ea92af5cf9928b851d4124ec3c6c",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "800000",
+        "confBps": 2500,
+        "createdAt": 1787347944,
+        "ageSec": 0,
+        "offsets": {
+          "contentOffset": 181,
+          "finishOffset": 364,
+          "createdOffset": 72
+        },
+        "roundBlocker": null
+      },
+      "onChain": {
+        "slot": 3,
+        "responseBody": "0x7b226964223a227265715f3430333835313837363433653263333132383934393739303934343764373932222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334373934342c226d6f64656c223a227177656e2f7177656e2d322e352d37622d696e737472756374222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3830303030307c636f6e666964656e63655f6270733d32353030222c227265667573616c223a6e756c6c2c22616e6e6f746174696f6e73223a6e756c6c2c22617564696f223a6e756c6c2c2266756e6374696f6e5f63616c6c223a6e756c6c2c22746f6f6c5f63616c6c73223a5b5d2c22726561736f6e696e675f636f6e74656e74223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c22736572766963655f74696572223a6e756c6c2c227573616765223a7b2270726f6d70745f746f6b656e73223a3437342c22746f74616c5f746f6b656e73223a3530302c22636f6d706c6574696f6e5f746f6b656e73223a32362c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22636f7374223a302e303030303532367d7d",
+        "signature": "0x19058e4d8975cd561603d427e99ea88b716163091d3147423b1d245f31e75ddb7be7682c45b4a21ebf3ec1c12cb07b9e2a2c63aa8831e475df5d053ef95b2a141c"
+      },
+      "available": true,
+      "failure": "LowConfidence at confBps < cfg.minConfidenceBps: 2500 < 5000",
+      "latencyMs": 2567
+    },
+    {
+      "slot": 4,
+      "model": "qwen/qwen3-vl-30b-a3b-instruct",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-0052c6c3ef9dadb4e2fa1f3b",
+      "requestBody": "{\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE SINGLE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. One unit of a carbon credit is one tonne of carbon dioxide equivalent. Worked example: a fair value of 12.50 US dollars per unit must be written as 12500000, and a fair value of 0.80 US dollars per unit must be written as 800000. Never report the value of the whole project, the whole issuance or the whole batch, and never report the unscaled dollar figure. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=p17-vcs-836-2016;registry=VCS;project_id=VCS-836;project_name=Song Ong Hydropower Project;project_type=Hydropower;methodology=AMS-I.D. Grid connected renewable electricity generation;vintage=2016;country=Viet Nam;region=South-Eastern Asia;registry_status=Registered;credits_issued=168375;credits_retired=155496;credits_remaining=12879;buffer_deposited=0;first_vintage=2009;durability=emission avoidance, no storage reversal risk;integrity_flags=none recorded in the sources consulted;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "79454214a9189359b085c2e2dba976a2adcc8a09c8b5dd6eea91aa5338bad603",
+      "responseBody": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"logprobs\":null,\"message\":{\"content\":\"ASSAY1|nav_usd_e6=1000000|confidence_bps=5000\",\"role\":\"assistant\"}}],\"created\":1787347944,\"id\":\"req_bf9d1a810ad8a8e0cff90d7a876e5e5e\",\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":27,\"prompt_tokens\":474,\"prompt_tokens_details\":{\"cached_tokens\":464},\"total_tokens\":501,\"cost\":0.0001137}}",
+      "responseSha256": "2245955e298990162757db131cd0940e77e20641965552a044c95cf0c7c96697",
+      "signature": "0x916be879148bb7de8cb9c16d3f3241e8a40fb67854bed62fa37bd296cb649d994ab021d751ccf5ceb988e3079e563d812628c3eb1538b532af8ba7b60797a22c1b",
+      "gatewayText": "79454214a9189359b085c2e2dba976a2adcc8a09c8b5dd6eea91aa5338bad603:2245955e298990162757db131cd0940e77e20641965552a044c95cf0c7c96697",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 4,
+        "modelId": "qwen/qwen3-vl-30b-a3b-instruct",
+        "ok": true,
+        "failedCheck": null,
+        "reason": "None",
+        "detail": null,
+        "requestBody": "{\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE SINGLE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. One unit of a carbon credit is one tonne of carbon dioxide equivalent. Worked example: a fair value of 12.50 US dollars per unit must be written as 12500000, and a fair value of 0.80 US dollars per unit must be written as 800000. Never report the value of the whole project, the whole issuance or the whole batch, and never report the unscaled dollar figure. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=p17-vcs-836-2016;registry=VCS;project_id=VCS-836;project_name=Song Ong Hydropower Project;project_type=Hydropower;methodology=AMS-I.D. Grid connected renewable electricity generation;vintage=2016;country=Viet Nam;region=South-Eastern Asia;registry_status=Registered;credits_issued=168375;credits_retired=155496;credits_remaining=12879;buffer_deposited=0;first_vintage=2009;durability=emission avoidance, no storage reversal risk;integrity_flags=none recorded in the sources consulted;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "79454214a9189359b085c2e2dba976a2adcc8a09c8b5dd6eea91aa5338bad603",
+        "responseSha256": "2245955e298990162757db131cd0940e77e20641965552a044c95cf0c7c96697",
+        "signedText": "79454214a9189359b085c2e2dba976a2adcc8a09c8b5dd6eea91aa5338bad603:2245955e298990162757db131cd0940e77e20641965552a044c95cf0c7c96697",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "1000000",
+        "confBps": 5000,
+        "createdAt": 1787347944,
+        "ageSec": 1,
+        "offsets": {
+          "contentOffset": 73,
+          "finishOffset": 13,
+          "createdOffset": 153
+        },
+        "roundBlocker": null
+      },
+      "onChain": {
+        "slot": 4,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d313030303030307c636f6e666964656e63655f6270733d35303030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334373934342c226964223a227265715f6266396431613831306164386138653063666639306437613837366535653565222c226d6f64656c223a227177656e2f7177656e332d766c2d3330622d6133622d696e737472756374222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a32372c2270726f6d70745f746f6b656e73223a3437342c2270726f6d70745f746f6b656e735f64657461696c73223a7b226361636865645f746f6b656e73223a3436347d2c22746f74616c5f746f6b656e73223a3530312c22636f7374223a302e303030313133377d7d",
+        "signature": "0x916be879148bb7de8cb9c16d3f3241e8a40fb67854bed62fa37bd296cb649d994ab021d751ccf5ceb988e3079e563d812628c3eb1538b532af8ba7b60797a22c1b"
+      },
+      "available": true,
+      "failure": null,
+      "latencyMs": 2884
+    }
+  ],
+  "submission": {
+    "assetId": "p17-vcs-836-2016",
+    "evidence": "0x736368656d613d61737361792e636172626f6e2e76313b61737365745f69643d7031372d7663732d3833362d323031363b72656769737472793d5643533b70726f6a6563745f69643d5643532d3833363b70726f6a6563745f6e616d653d536f6e67204f6e6720487964726f706f7765722050726f6a6563743b70726f6a6563745f747970653d487964726f706f7765723b6d6574686f646f6c6f67793d414d532d492e442e204772696420636f6e6e65637465642072656e657761626c6520656c6563747269636974792067656e65726174696f6e3b76696e746167653d323031363b636f756e7472793d56696574204e616d3b726567696f6e3d536f7574682d4561737465726e20417369613b72656769737472795f7374617475733d526567697374657265643b637265646974735f6973737565643d3136383337353b637265646974735f726574697265643d3135353439363b637265646974735f72656d61696e696e673d31323837393b6275666665725f6465706f73697465643d303b66697273745f76696e746167653d323030393b6475726162696c6974793d656d697373696f6e2061766f6964616e63652c206e6f2073746f7261676520726576657273616c207269736b3b696e746567726974795f666c6167733d6e6f6e65207265636f7264656420696e2074686520736f757263657320636f6e73756c7465643b7265665f70726963655f7573643d4e413b7265665f70726963655f736f757263653d4e413b7265665f70726963655f646174653d4e413b6f627365727665645f61743d323032362d30382d3231",
+    "verdicts": [
+      {
+        "slot": 0,
+        "responseBody": "0x7b226964223a227265715f3236633862393437353935366236663339343537303965623933306637663036222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334373934352c226d6f64656c223a22646565707365656b2f646565707365656b2d76342d666c6173682d30373331222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d313235303030307c636f6e666964656e63655f6270733d35303030222c22726561736f6e696e675f636f6e74656e74223a6e756c6c2c22746f6f6c5f63616c6c73223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c227573616765223a7b2270726f6d70745f746f6b656e73223a3432322c22746f74616c5f746f6b656e73223a3434342c22636f6d706c6574696f6e5f746f6b656e73223a32322c2270726f6d70745f746f6b656e735f64657461696c73223a7b226361636865645f746f6b656e73223a3235367d2c22726561736f6e696e675f746f6b656e73223a302c22636f6d706c6574696f6e5f746f6b656e735f64657461696c73223a7b22726561736f6e696e675f746f6b656e73223a307d2c22636f7374223a302e30303030353939327d7d",
+        "signature": "0x108c5fef337850ad29b7783f8302899538f29bde6b11d007bdd3d2ad54ad9d6f484cfa6109491bec89ebb3a73bc76fa8e5e107b5dfe9f49f7dde58499d100b871c"
+      },
+      {
+        "slot": 1,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d313230303030307c636f6e666964656e63655f6270733d37303030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334373934342c226964223a227265715f3332306336633238306433303539626233313536666632306536663732303366222c226d6f64656c223a22676f6f676c652f67656d6d612d332d3237622d6974222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a32382c2270726f6d70745f746f6b656e73223a3438382c22746f74616c5f746f6b656e73223a3531362c22636f7374223a302e30303030383630387d7d",
+        "signature": "0x23f13d86fde3a00d68be345ed6fe8a89ddaa04a30978f3890244c85d2b4ec585138b9f7b559c28344dab042fc58aeba53737ef96686c860666c9e68bddfa80061b"
+      },
+      {
+        "slot": 2,
+        "responseBody": "0x7b226964223a227265715f3732613834383262663362646639616635636462633539616665326239363936222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334373934362c226d6f64656c223a226d6574612d6c6c616d612f6c6c616d612d332e332d3730622d696e737472756374222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3630303030307c636f6e666964656e63655f6270733d38303030222c227265667573616c223a6e756c6c2c22616e6e6f746174696f6e73223a6e756c6c2c22617564696f223a6e756c6c2c2266756e6374696f6e5f63616c6c223a6e756c6c2c22746f6f6c5f63616c6c73223a5b5d2c22726561736f6e696e67223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c22736572766963655f74696572223a6e756c6c2c227573616765223a7b2270726f6d70745f746f6b656e73223a3435302c22746f74616c5f746f6b656e73223a3437302c22636f6d706c6574696f6e5f746f6b656e73223a32302c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22636f7374223a302e30303039347d7d",
+        "signature": "0x59febedf665d5ca759e4743d85a352df5a53b54a4b7134bd553df1bf24008ca648f5c66ce00aef0eea43e456d058b16c2098aef519c3b9b2b5046c0aeb27abd41c"
+      },
+      {
+        "slot": 3,
+        "responseBody": "0x7b226964223a227265715f3430333835313837363433653263333132383934393739303934343764373932222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334373934342c226d6f64656c223a227177656e2f7177656e2d322e352d37622d696e737472756374222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3830303030307c636f6e666964656e63655f6270733d32353030222c227265667573616c223a6e756c6c2c22616e6e6f746174696f6e73223a6e756c6c2c22617564696f223a6e756c6c2c2266756e6374696f6e5f63616c6c223a6e756c6c2c22746f6f6c5f63616c6c73223a5b5d2c22726561736f6e696e675f636f6e74656e74223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c22736572766963655f74696572223a6e756c6c2c227573616765223a7b2270726f6d70745f746f6b656e73223a3437342c22746f74616c5f746f6b656e73223a3530302c22636f6d706c6574696f6e5f746f6b656e73223a32362c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22636f7374223a302e303030303532367d7d",
+        "signature": "0x19058e4d8975cd561603d427e99ea88b716163091d3147423b1d245f31e75ddb7be7682c45b4a21ebf3ec1c12cb07b9e2a2c63aa8831e475df5d053ef95b2a141c"
+      },
+      {
+        "slot": 4,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d313030303030307c636f6e666964656e63655f6270733d35303030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334373934342c226964223a227265715f6266396431613831306164386138653063666639306437613837366535653565222c226d6f64656c223a227177656e2f7177656e332d766c2d3330622d6133622d696e737472756374222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a32372c2270726f6d70745f746f6b656e73223a3437342c2270726f6d70745f746f6b656e735f64657461696c73223a7b226361636865645f746f6b656e73223a3436347d2c22746f74616c5f746f6b656e73223a3530312c22636f7374223a302e303030313133377d7d",
+        "signature": "0x916be879148bb7de8cb9c16d3f3241e8a40fb67854bed62fa37bd296cb649d994ab021d751ccf5ceb988e3079e563d812628c3eb1538b532af8ba7b60797a22c1b"
+      }
+    ]
+  },
+  "summary": {
+    "slots": 5,
+    "available": 5,
+    "signatureOk": 5,
+    "preflightOk": 4,
+    "navsE6": [
+      "1250000",
+      "1200000",
+      "600000",
+      "1000000"
+    ],
+    "medianE6": "1100000",
+    "maxDeviationBps": 4545,
+    "wouldHalt": false,
+    "wouldRevert": false,
+    "haltReasons": [],
+    "rejectReasons": [
+      {
+        "slot": 3,
+        "model": "qwen/qwen-2.5-7b-instruct",
+        "reason": "LowConfidence",
+        "check": "confBps < cfg.minConfidenceBps",
+        "detail": "2500 < 5000"
+      }
+    ]
+  },
+  "onChain": {
+    "chainId": 1952,
+    "explorer": "https://web3.okx.com/explorer/x-layer-testnet",
+    "oracle": "0xEd888DC5b67038fF66D9a5DeB76B323655f21b23",
+    "assetId": "0x65e8b0665d0465ee6e0bbbff780354ea5a389bab5b30f737faf0ce7e1d1f4584",
+    "epoch": 4,
+    "txHash": "0x0cf21ef4bb14d42cf8d89d28276baef22468188263ad5496f7567772b1224b6b",
+    "txUrl": "https://web3.okx.com/explorer/x-layer-testnet/tx/0x0cf21ef4bb14d42cf8d89d28276baef22468188263ad5496f7567772b1224b6b",
+    "blockNumber": 38889112,
+    "gasUsed": 1199340,
+    "published": true,
+    "navE6": "1100000",
+    "haltReason": null,
+    "accepted": 4,
+    "distinctSigners": 1,
+    "observedAt": 1787347944,
+    "evidenceHash": "0xea2ec63e9dc84ead275d3ce087a86079c2071655a89524b7748e183fb0d79e42",
+    "policy": {
+      "quorum": 3,
+      "bandBps": 5000,
+      "minConfidenceBps": 5000,
+      "maxAgeSec": 3600,
+      "schemaId": "0xb243d59149ab535ae3fee80efcd3df312f0e487eff546971f019ea439920b538"
+    },
+    "slots": [
+      {
+        "slot": 0,
+        "accepted": true,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "1250000",
+        "confidenceBps": 5000,
+        "createdAt": 1787347945
+      },
+      {
+        "slot": 1,
+        "accepted": true,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "1200000",
+        "confidenceBps": 7000,
+        "createdAt": 1787347944
+      },
+      {
+        "slot": 2,
+        "accepted": true,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "600000",
+        "confidenceBps": 8000,
+        "createdAt": 1787347946
+      },
+      {
+        "slot": 3,
+        "accepted": false,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "reason": "LowConfidence"
+      },
+      {
+        "slot": 4,
+        "accepted": true,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "1000000",
+        "confidenceBps": 5000,
+        "createdAt": 1787347944
+      }
+    ],
+    "evidenceCommitment": {
+      "committed": true,
+      "evidenceHash": "0xea2ec63e9dc84ead275d3ce087a86079c2071655a89524b7748e183fb0d79e42",
+      "txHash": "0x7e1354c44bc257dac658d67cdeb26e784f14d17b0997867f578d6cf1b00f41af",
+      "txUrl": "https://web3.okx.com/explorer/x-layer-testnet/tx/0x7e1354c44bc257dac658d67cdeb26e784f14d17b0997867f578d6cf1b00f41af",
+      "registry": "0xE6FBd750cf852149185c226c770B6d484398a71F",
+      "preCommitted": true,
+      "committedInEarlierAttempt": true
+    }
+  },
+  "timing": {
+    "appraiseMs": 3710,
+    "firstCompletionToPostedMs": 6398,
+    "slowestSlotMs": 3527,
+    "receiptTtlSec": 3600
+  }
+}

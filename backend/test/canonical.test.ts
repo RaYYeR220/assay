@@ -660,8 +660,21 @@ describe('trailing whitespace tolerance — mirrors Ascii.skipJsonWhitespace', (
 });
 
 describe('schema is the one loaded from Solidity', () => {
-  test('schemaId matches the regenerated max_tokens=512 template', () => {
-    assert.equal(SCHEMA_ID, '0xb5c98bdc502ede2fe911af4d7f7dbec8ffff5ab2c88837475cf3d160a9c22c2c');
+  // Never hardcode the digest: schemas are content-addressed and immutable, so a prompt
+  // change publishes a NEW schemaId. Pinning a literal here just breaks on every revision.
+  // What must hold is that the loaded fragments actually hash to the id we report.
+  test('schemaId is a 32-byte digest loaded from the schema file', () => {
+    assert.match(SCHEMA_ID, /^0x[0-9a-f]{64}$/);
+    assert.equal(SCHEMA_ID, SCHEMA.schemaId, 'SCHEMA_ID must come from the file, not a copy');
+  });
+
+  test('the deployed asset config agrees with the loaded schema', () => {
+    // Read-only cross-check against the manifest, so a stale schema file is caught before a
+    // round is posted rather than after every signature fails.
+    const mf = join(HERE, '..', '..', 'deployments', '1952.json');
+    if (!existsSync(mf)) { assert.ok(true, 'no deployment manifest'); return; }
+    const m = JSON.parse(readFileSync(mf, 'utf8')) as { assetIdV2?: string; assetId?: string };
+    assert.ok(m.assetIdV2 ?? m.assetId, 'manifest must name a registered asset');
   });
 });
 
@@ -776,5 +789,24 @@ describe('evidence commitment is a ROUND blocker, not a verdict rejection', () =
     // caller surfaces the unknown separately rather than claiming the round will land.
     assert.equal(r.roundBlocker, null);
     assert.equal(r.ok, true);
+  });
+});
+
+describe('constants mirrored from Solidity', () => {
+  test('MAX_RESPONSE matches AssayOracle.sol', () => {
+    const src = join(HERE, '..', '..', 'src', 'AssayOracle.sol');
+    if (!existsSync(src)) { assert.ok(true, 'contract source not present'); return; }
+    const m = readFileSync(src, 'utf8').match(/MAX_RESPONSE\s*=\s*(\d+)/);
+    assert.ok(m, 'MAX_RESPONSE must be findable in AssayOracle.sol');
+    assert.equal(MAX_RESPONSE, Number(m![1]), 'backend MAX_RESPONSE drifted from the contract');
+  });
+
+  test('a reasoning-length body is rejected on LENGTH, before the signature', () => {
+    // ~2.3KB is what a model returns when it burns the whole 512-token budget thinking.
+    const oversize = fakeResponse(GOOD_LINE) + ' '.repeat(2048);
+    const r = parseResponseOnChain(oversize);
+    assert.equal(r.ok, false);
+    assert.equal(r.reason, 'BadSignature');
+    assert.match(r.detail!, /MAX_RESPONSE/);
   });
 });

@@ -261,8 +261,16 @@ export function rejectReasonIndex(r: RejectReason): number {
 
 export const MAX_NAV_E6 = 1_000_000_000_000_000n; // keep in sync with AssayOracle.MAX_NAV_E6
 export const BPS = 10_000;
-/** AssayOracle.MAX_RESPONSE — a body outside (0, 8192] never reaches the signature check. */
-export const MAX_RESPONSE = 8192;
+/**
+ * `AssayOracle.MAX_RESPONSE`. A body outside (0, 2048] is rejected as `BadSignature` with
+ * signer `address(0)` BEFORE ecrecover runs — the length guard is the very first check.
+ *
+ * This is tighter than it looks. A model that spends its 512-token budget on chain-of-thought
+ * returns a body of ~2.3KB and is rejected on length alone, no matter how valid its signature
+ * is. `test/canonical.test.ts` asserts this against the constant in AssayOracle.sol so it
+ * cannot drift again.
+ */
+export const MAX_RESPONSE = 2048;
 
 // ---------------------------------------------------------------------------
 // Offset discovery — found by SEARCHING the raw bytes, never hardcoded

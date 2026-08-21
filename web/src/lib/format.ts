@@ -42,7 +42,10 @@ export function parseUnits(input: string, decimals: number): bigint | null {
   return BigInt(whole || '0') * 10n ** BigInt(decimals) + BigInt(padded || '0');
 }
 
-export function truncateHex(hex: string, lead = 6, tail = 4): string {
+export function truncateHex(hex: string | null | undefined, lead = 6, tail = 4): string {
+  // The rounds are written by another process; a field it did not record arrives as null, and a
+  // formatter is the wrong place to throw over it.
+  if (!hex) return '—';
   if (hex.length <= lead + tail + 2) return hex;
   return `${hex.slice(0, lead)}…${hex.slice(-tail)}`;
 }

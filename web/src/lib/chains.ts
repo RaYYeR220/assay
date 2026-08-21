@@ -28,7 +28,11 @@ export const CHAINS = [xLayer, xLayerTestnet] as const;
 
 export type SupportedChainId = 196 | 1952;
 
-export const DEFAULT_CHAIN_ID: SupportedChainId = 196;
+/**
+ * X Layer testnet, where the appraisal service posts its rounds. A reader who arrives with no
+ * wallet lands here, on the network the recorded rounds were actually run on.
+ */
+export const DEFAULT_CHAIN_ID: SupportedChainId = 1952;
 
 export function chainById(id: number): Chain {
   return id === xLayerTestnet.id ? xLayerTestnet : xLayer;

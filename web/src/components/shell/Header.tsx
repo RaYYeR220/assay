@@ -4,7 +4,8 @@ import { useApp } from '@/state/AppContext';
 import { useBlock, useDeploymentPresence } from '@/hooks/useChain';
 import { CHAINS, type SupportedChainId } from '@/lib/chains';
 import { truncateHex } from '@/lib/format';
-import { ATTESTATION_SNAPSHOT } from '@/generated/data';
+import { attestationFor } from '@/lib/attestation';
+import { deployedChainIds } from '@/lib/deployments';
 
 /**
  * Masthead and health strip.
@@ -21,7 +22,12 @@ export function Header() {
   const presence = useDeploymentPresence();
 
   const halted = round ? !round.published : false;
-  const adapterUntrusted = ATTESTATION_SNAPSHOT ? !ATTESTATION_SNAPSHOT.adapter.isTrusted : false;
+  // The trust root of the network on screen, not of whichever one happened to be recorded first.
+  const attestation = attestationFor(chainId);
+  const adapterUntrusted = attestation ? !attestation.adapter.isTrusted : false;
+  // Which networks this build actually carries contracts for. A network without a manifest stays
+  // selectable — and says so — so the absence is visible rather than hidden behind a disabled tab.
+  const deployed = new Set<number>(deployedChainIds());
 
   return (
     <header className="pt-7">
@@ -46,6 +52,12 @@ export function Header() {
               className="control"
               data-active={chainId === c.id}
               onClick={() => setChainId(c.id as SupportedChainId)}
+              title={
+                deployed.has(c.id)
+                  ? `${c.name} · chain ${c.id}`
+                  : `${c.name} · chain ${c.id} — no deployment in this build yet`
+              }
+              style={deployed.has(c.id) ? undefined : { opacity: 0.55 }}
             >
               {c.id === 196 ? 'X Layer' : 'Testnet'}
             </button>

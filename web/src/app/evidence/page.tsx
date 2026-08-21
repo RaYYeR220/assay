@@ -175,10 +175,10 @@ export default function EvidencePage() {
                   {commitment ? <TxRef chainId={chainId} hash={commitment.txHash} /> : '—'}
                 </SpecRow>
                 <SpecRow label="Committed at">
-                  {commitment ? formatTimestamp(commitment.timestamp) : '—'}
+                  {commitment?.timestamp ? formatTimestamp(commitment.timestamp) : '—'}
                 </SpecRow>
                 <SpecRow label="Ahead of the round by">
-                  {commitment && round.bundle.onChain
+                  {commitment?.timestamp && round.bundle.onChain?.timestamp
                     ? relativeAge(round.bundle.onChain.timestamp - commitment.timestamp)
                     : '—'}
                 </SpecRow>

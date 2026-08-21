@@ -53,6 +53,22 @@ export default function OraclePage() {
 
       <hr className="rule-heavy" />
 
+      {/* A round that no chain has seen is never allowed to read like one that has. */}
+      {b.source === 'fixture' ? (
+        <div
+          className="mt-6 border-y-2 px-5 py-4"
+          style={{ borderColor: 'var(--ink)', background: 'var(--paper-sunk)' }}
+        >
+          <div className="legend legend-strong">Worked example — never posted to a chain</div>
+          <div className="note mt-2 max-w-[86ch]" style={{ color: 'var(--ink)' }}>
+            This entry is kept so the published outcome can be read alongside the refusals: the
+            same arithmetic, on answers that agree. The answers are fabricated and no transaction
+            exists for it, so it carries no epoch and no links. Every other entry in the register
+            was posted on chain {chainId} and links to the transaction that recorded it.
+          </div>
+        </div>
+      ) : null}
+
       {/* ---- I · the verdict ------------------------------------------------------------- */}
       <section className="py-11">
         <Verdict round={round} />

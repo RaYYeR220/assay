@@ -1,4 +1,5 @@
 import type { Address, Hex } from 'viem';
+import { ATTESTATIONS } from '@/generated/data';
 
 /**
  * The trust root, as the dashboard displays it.
@@ -7,6 +8,15 @@ import type { Address, Hex } from 'viem';
  * In replay mode it comes from a recorded snapshot with the same shape, so the attestation
  * view looks identical with or without a chain connection.
  */
+
+/** One `registerSigner` call: this key, bound to this model, in this transaction. */
+export interface ModelRegistration {
+  model: string;
+  modelIdHash: Hex;
+  txHash: Hex;
+  blockNumber: string;
+  quoteBytes?: number | null;
+}
 
 export interface AttestedSigner {
   /** The address the enclave bound into its own quote's report data. */
@@ -19,15 +29,27 @@ export interface AttestedSigner {
   /** Unix seconds at which the quote was verified on chain. */
   attestedAt: number;
   revoked: boolean;
+  /** Whether this measurement is still on the registry's allowlist. */
+  imageAllowed?: boolean;
   /** Models this key is permitted to answer for. */
   models: string[];
+  /** Each binding, with the transaction that made it. */
+  registrations?: ModelRegistration[];
   /** Transaction in which the quote was verified. */
   txHash: Hex;
   blockNumber: string;
-  quoteBytes?: number;
+  quoteBytes?: number | null;
   gpuArch?: string;
   /** The 64 bytes the enclave bound into its quote, hex without prefix. */
-  reportData?: string;
+  reportData?: string | null;
+}
+
+/** A measurement the registry will accept a quote for, and the transaction that allowed it. */
+export interface AllowedImage {
+  measurement: Hex;
+  allowed: boolean;
+  txHash: Hex;
+  blockNumber: string;
 }
 
 export interface AttestationSnapshot {
@@ -39,6 +61,7 @@ export interface AttestationSnapshot {
   source?: 'live' | 'fixture';
   /** Unix seconds this snapshot was taken. */
   capturedAt: number;
+  capturedAtBlock?: string;
   adapter: {
     address: Address;
     /** Contract name as it appears on the explorer. */
@@ -48,7 +71,47 @@ export interface AttestationSnapshot {
   };
   attestationTtlSec: number;
   signerOffset: number;
+  /** The committee seats this deployment appraises with, as the asset registry lists them. */
+  committee?: string[];
+  allowedImages?: AllowedImage[];
   signers: AttestedSigner[];
+}
+
+/**
+ * The recorded trust root for a network, or null where nothing has been captured for it.
+ *
+ * Keyed by chain so a snapshot taken on one network can never be shown as another's. A network
+ * with no record shows as having none, which is the honest answer before a deployment exists.
+ */
+export function attestationFor(chainId: number): AttestationSnapshot | null {
+  return ATTESTATIONS[chainId] ?? null;
+}
+
+/**
+ * How many enclaves actually stand behind the committee.
+ *
+ * A committee of five models is not a committee of five enclaves unless five distinct keys
+ * signed. Where one attested key fronts several seats, that is a real limit on what the
+ * attestation proves, and the view states it rather than letting five model names imply five
+ * independent machines.
+ */
+export function enclaveIndependence(snapshot: AttestationSnapshot): {
+  keys: number;
+  seats: number;
+  /** True when fewer keys than seats — one enclave answering for several models. */
+  shared: boolean;
+  /** The single measurement behind every key, when they all run the same image. */
+  sharedMeasurement: Hex | null;
+} {
+  const live = snapshot.signers.filter((s) => !s.revoked);
+  const seats = new Set(live.flatMap((s) => s.models)).size;
+  const measurements = new Set(live.map((s) => s.mrTd));
+  return {
+    keys: live.length,
+    seats,
+    shared: live.length > 0 && live.length < seats,
+    sharedMeasurement: measurements.size === 1 ? (live[0]?.mrTd ?? null) : null,
+  };
 }
 
 /**

@@ -136,6 +136,14 @@ export interface AppraisalBundle {
   slots: SlotResult[];
   /** Ready to splice into a postAppraisal call. */
   submission: { assetId: string; evidence: string; verdicts: OnChainVerdict[] };
+  /** Populated by scripts/post-round.ts once the round is on chain. */
+  onChain?: {
+    chainId: number; epoch: number | null; txHash: string; blockNumber: number;
+    published: boolean; navE6: string | null; haltReason: string | null;
+    accepted: number; distinctSigners: number; evidenceHash: string;
+    policy?: { quorum: number; bandBps: number; minConfidenceBps: number; maxAgeSec: number; schemaId: string };
+    slots: unknown[]; evidenceCommitment: Record<string, unknown>;
+  };
   summary: {
     slots: number;
     available: number;
@@ -443,8 +451,13 @@ export async function reverifyBundle(b: AppraisalBundle): Promise<{
       slot: s.slot, modelId: s.model, evidence: b.evidence.line,
       responseBody: s.responseBody, signature: s.signature,
       attestedSigner: s.attestedSigner ?? undefined,
+      // Replay the round under the SAME policy the chain applied, or the replay disagrees
+      // with the transaction it claims to reproduce — a confidence floor of 0 would show
+      // ACCEPT where the contract recorded LowConfidence.
+      minConfidenceBps: b.onChain?.policy?.minConfidenceBps,
+      maxAgeSec: b.onChain?.policy?.maxAgeSec,
       // Staleness is time-dependent; replaying an old bundle must not report a false
-      // signature failure, so evaluate freshness at the moment it was created.
+      // failure, so evaluate freshness at the moment it was created.
       now: Math.floor(new Date(b.createdAt).getTime() / 1000),
     });
     out.push({

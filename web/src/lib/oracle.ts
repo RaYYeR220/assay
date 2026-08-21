@@ -439,6 +439,7 @@ export async function readAttestation(
   d: Deployment,
   candidateSigners: Address[],
   modelsBySigner: Map<string, string[]>,
+  baseline?: AttestationSnapshot | null,
 ): Promise<AttestationSnapshot> {
   const client = publicClientFor(d.chainId);
 
@@ -461,8 +462,8 @@ export async function readAttestation(
     client.getBlock(),
   ]);
 
-  // `isTrusted` exists only on the labelled stand-in. A real verifier simply has no such
-  // function, and the absence is meaningful, so it is reported as unknown rather than false.
+  // `isTrusted` distinguishes the real verifier from the labelled stand-in. An adapter without
+  // the function at all is reported as unknown rather than as false.
   let isTrusted: boolean | null = null;
   try {
     isTrusted = (await client.readContract({
@@ -474,16 +475,22 @@ export async function readAttestation(
     isTrusted = null;
   }
 
+  const priorByAddress = new Map(
+    (baseline?.signers ?? []).map((s) => [s.address.toLowerCase(), s] as const),
+  );
+
   const signers: AttestedSigner[] = [];
   for (const address of candidateSigners) {
     try {
+      // The struct field is `measurement`; the dashboard calls it mrTd, which is what a TDX
+      // quote calls it, so the rename happens here rather than in the view.
       const info = (await client.readContract({
         address: d.attestationRegistry,
         abi: attestationRegistryAbi,
         functionName: 'signerInfo',
         args: [address],
       })) as unknown as {
-        mrTd: Hex;
+        measurement: Hex;
         attestedAt: bigint;
         tcbStatus: number;
         revoked: boolean;
@@ -491,6 +498,7 @@ export async function readAttestation(
       };
       if (!info.known) continue;
 
+      const prior = priorByAddress.get(address.toLowerCase());
       const claimed = modelsBySigner.get(address.toLowerCase()) ?? [];
       const served: string[] = [];
       for (const model of claimed) {
@@ -503,16 +511,35 @@ export async function readAttestation(
         if (ok) served.push(model);
       }
 
+      let imageAllowed: boolean | undefined;
+      try {
+        imageAllowed = (await client.readContract({
+          address: d.attestationRegistry,
+          abi: attestationRegistryAbi,
+          functionName: 'allowedImage',
+          args: [info.measurement],
+        })) as boolean;
+      } catch {
+        imageAllowed = prior?.imageAllowed;
+      }
+
+      // The registry keeps its verdict, not the transaction that produced it, so the
+      // registration links come from the recorded snapshot — filtered to the models the chain
+      // still confirms this key serves.
       signers.push({
         address: getAddress(address),
-        mrTd: info.mrTd,
+        mrTd: info.measurement,
         tcbStatus: Number(info.tcbStatus),
         tcbStatusLabel: tcbLabel(Number(info.tcbStatus)),
         attestedAt: Number(info.attestedAt),
         revoked: info.revoked,
+        imageAllowed,
         models: served,
-        txHash: '0x' as Hex,
-        blockNumber: '',
+        registrations: (prior?.registrations ?? []).filter((r) => served.includes(r.model)),
+        txHash: prior?.txHash ?? ('0x' as Hex),
+        blockNumber: prior?.blockNumber ?? '',
+        quoteBytes: prior?.quoteBytes ?? null,
+        reportData: prior?.reportData ?? null,
       });
     } catch {
       /* an unregistered candidate is simply not part of the trust root */
@@ -522,13 +549,21 @@ export async function readAttestation(
   return {
     chainId: d.chainId,
     capturedAt: Number(block.timestamp),
+    capturedAtBlock: block.number.toString(),
     adapter: {
       address: adapterAddress as Address,
-      label: isTrusted === false ? 'UnverifiedQuoteAdapter' : 'Quote adapter',
+      label:
+        isTrusted === true
+          ? 'AutomataTdxAdapter'
+          : isTrusted === false
+            ? 'UnverifiedQuoteAdapter'
+            : 'Quote adapter',
       isTrusted: isTrusted === true,
     },
     attestationTtlSec: Number(ttl),
     signerOffset: Number(signerOffset),
+    committee: baseline?.committee,
+    allowedImages: baseline?.allowedImages,
     signers,
   };
 }

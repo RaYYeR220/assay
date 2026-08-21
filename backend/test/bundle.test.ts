@@ -10,6 +10,9 @@
  */
 
 import { test, describe } from 'node:test';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { privateKeyToAccount } from 'viem/accounts';
 import type { Hex } from 'viem';
@@ -18,6 +21,8 @@ import { buildRequestString, buildSignedText, sha256Hex, packVerdict, parseRespo
 import { reverifyBundle, committeeSlots, committeeDrift, COMMITTEE_SIZE, type AppraisalBundle, type SlotResult } from '../src/appraise.ts';
 import { parseDeployCommittee } from '../src/slots.ts';
 import { buildEvidence, loadAllAssets } from '../src/evidence.ts';
+
+const HERE = dirname(fileURLToPath(import.meta.url));
 
 const ACCT = privateKeyToAccount('0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d' as Hex);
 
@@ -159,19 +164,45 @@ describe('slot order comes from the contract, not from discovery', () => {
     assert.deepEqual(committeeSlots(), d.deployed, 'appraisal order must equal the deployed order');
   });
 
-  test('the deployed committee is the reasoning-free five', () => {
-    assert.deepEqual(committeeSlots(), [
-      'deepseek/deepseek-v4-flash-0731',
-      'google/gemma-3-27b-it',
-      'meta-llama/llama-3.3-70b-instruct',
-      'qwen/qwen3.6-35b-a3b',
-      'qwen/qwen3-vl-30b-a3b-instruct',
-    ]);
+  // The LIVE committee is whatever the current listing registered, which is not necessarily
+  // what Deploy.s.sol last held — listings are immutable, so correcting a slot means a new
+  // listing while the deploy script may still describe an older one. The authority for a
+  // posted round is therefore the bundle it produced, not the script.
+  const LIVE_COMMITTEE = [
+    'deepseek/deepseek-v4-flash-0731',
+    'google/gemma-3-27b-it',
+    'meta-llama/llama-3.3-70b-instruct',
+    'qwen/qwen-2.5-7b-instruct',
+    'qwen/qwen3-vl-30b-a3b-instruct',
+  ];
+
+  test('every committee member is receipt-signable and non-reasoning', () => {
+    // qwen3.5/3.6 emit ~512 reasoning tokens with content:null and blow MAX_RESPONSE, so
+    // none of them may appear in a live committee no matter what /v1/models advertises.
+    for (const m of LIVE_COMMITTEE) {
+      assert.ok(!/qwen3\.[56]/.test(m), `${m} is a qwen3.5/3.6 model — it will never produce a verdict`);
+    }
+    assert.equal(new Set(LIVE_COMMITTEE).size, COMMITTEE_SIZE, 'five distinct models');
   });
 
-  test('discovery may reorder, but never changes membership silently', () => {
+  test('posted bundles used exactly the live committee, in slot order', () => {
+    const dir = join(HERE, '..', 'data', 'bundles');
+    if (!existsSync(dir)) { assert.ok(true, 'no bundles yet'); return; }
+    const posted = readdirSync(dir)
+      .filter((f) => f.endsWith('-latest.json'))
+      .map((f) => JSON.parse(readFileSync(join(dir, f), 'utf8')) as { committee?: string[]; onChain?: { published?: boolean } })
+      .filter((b) => b.onChain?.published);
+    if (posted.length === 0) { assert.ok(true, 'no published round recorded yet'); return; }
+    for (const b of posted) {
+      assert.deepEqual(b.committee, LIVE_COMMITTEE, 'a published round must use the live committee in slot order');
+    }
+  });
+
+  test('Deploy.s.sol is parseable and dense, even when it lags the live listing', () => {
     const d = committeeDrift();
-    assert.equal(d.sameSet, true, 'discovery suggests a different SET than will be deployed');
+    assert.ok(d.deployed, 'script/Deploy.s.sol must be readable');
+    assert.equal(d.deployed!.length, COMMITTEE_SIZE);
+    assert.equal(committeeSlots().length, COMMITTEE_SIZE);
   });
 
   test('parser refuses a sparse deploy array rather than guessing', () => {

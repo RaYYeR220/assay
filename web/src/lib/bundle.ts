@@ -97,8 +97,19 @@ export interface BundleOnChain {
   /** The transaction that posted or halted the round. */
   txHash: Hex;
   blockNumber: string;
-  /** Block timestamp, unix seconds. */
-  timestamp: number;
+  /**
+   * Block timestamp, unix seconds. Null when the round was recorded after the last chain
+   * snapshot, in which case the views show the date as unknown rather than guess at it.
+   */
+  timestamp?: number | null;
+  /** The asset the round was posted under, which is what its policy is keyed by. */
+  assetId?: Hex | null;
+  oracle?: string | null;
+  /** Gas the posting transaction burned. */
+  gasUsed?: number | null;
+  /** Explorer root and direct link, as the appraisal service recorded them. */
+  explorer?: string | null;
+  txUrl?: string | null;
   published: boolean;
   navE6: string | null;
   haltReason: HaltReason | null;
@@ -120,13 +131,15 @@ export interface BundleOnChain {
   /** The issuer's prior commitment to this evidence digest, without which a round reverts. */
   evidenceCommitment?: {
     committed: boolean;
-    issuer: string;
+    issuer: string | null;
     /** Where the document can be fetched and checked against the digest. */
-    uri: string;
+    uri?: string | null;
     /** The transaction in which the digest was committed. */
     txHash: Hex;
-    blockNumber: string;
-    timestamp: number;
+    blockNumber?: string | null;
+    timestamp?: number | null;
+    /** False when the digest was committed as part of running the round rather than ahead of it. */
+    preCommitted?: boolean | null;
   };
 }
 

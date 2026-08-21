@@ -1,26 +1,28 @@
 /**
- * Records the live trust root of a deployment into `web/data/attestation.<chainId>.json`.
+ * Records what a deployment currently says about itself into `web/data/`: the trust root, as
+ * `attestation.<chainId>.json`, and the policy a round is judged against, as
+ * `policy.<chainId>.json`.
  *
- * The dashboard is a static export with no server, so the registered enclave keys have to be
- * baked in at build time for a reader who arrives with no wallet. What is baked in here is not
- * an illustration: every field is read out of the registry on the named chain, and every key
- * carries the transaction in which its Intel TDX quote was verified. The attestation view
- * refreshes these same fields from the chain when it loads, so a key revoked after this
- * snapshot was taken shows as revoked.
+ * The dashboard is a static export with no server, so both have to be baked in at build time
+ * for a reader who arrives with no wallet. What is baked in here is not an illustration: every
+ * field is read out of the contracts on the named chain, and every key carries the transaction
+ * in which its Intel TDX quote was verified. The attestation view refreshes these same fields
+ * from the chain when it loads, so a key revoked after this snapshot was taken shows as revoked.
  *
  * X Layer caps `eth_getLogs` at a hundred blocks, so the registration events are found by
  * scanning forward from the deployment's `startBlock` rather than backwards from head.
  *
- *   node scripts/snapshot-attestation.mjs [chainId]
+ *   node scripts/snapshot-chain.mjs [chainId]
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   createPublicClient,
   http,
   decodeFunctionData,
+  decodeEventLog,
   getAddress,
   keccak256,
   toHex,
@@ -41,7 +43,7 @@ const LOG_WINDOW = 100n;
 const CONCURRENCY = 12;
 
 const registryAbi = parseAbi([
-  'event SignerAttested(address indexed signer, bytes32 indexed measurement, bytes32 indexed modelIdHash, uint8 tcbStatus)',
+  'event SignerAttested(address indexed signer, bytes32 indexed measurement, bytes32 indexed modelIdHash, string modelId, uint8 tcbStatus)',
   'event ImageAllowed(bytes32 indexed measurement, bool allowed)',
   'function registerSigner(bytes rawQuote, string modelId) returns (address)',
   'function signerInfo(address signer) view returns ((bytes32 measurement, uint64 attestedAt, uint8 tcbStatus, bool revoked, bool known))',
@@ -53,7 +55,11 @@ const registryAbi = parseAbi([
 ]);
 
 const adapterAbi = parseAbi(['function isTrusted() view returns (bool)']);
-const assetRegistryAbi = parseAbi(['function committee(bytes32 assetId) view returns (string[])']);
+const assetRegistryAbi = parseAbi([
+  'function committee(bytes32 assetId) view returns (string[])',
+  'function config(bytes32 assetId) view returns ((address issuer, uint8 quorum, uint8 minDistinctSigners, uint16 bandBps, uint16 minConfidenceBps, uint32 maxAgeSec, uint16 disputeBandBps, uint96 disputeBond, bytes32 schemaId, bool active))',
+  'function metadataURI(bytes32 assetId) view returns (string)',
+]);
 
 const TCB = [
   'UpToDate',
@@ -116,16 +122,28 @@ async function main() {
     windows.push([from, to]);
   }
 
-  const batches = await pooled(windows, ([fromBlock, toBlock]) =>
-    client
-      .getLogs({ address: d.attestationRegistry, fromBlock, toBlock })
-      .catch(() => []),
-  );
+  // A window that will not answer is not an empty window. Swallowing the difference would
+  // write a snapshot claiming the registry holds no keys, which is a far worse lie than
+  // failing, so every window is retried and the run aborts rather than under-report.
+  const batches = await pooled(windows, async ([fromBlock, toBlock]) => {
+    let lastError;
+    for (let attempt = 0; attempt < 5; attempt++) {
+      try {
+        return await client.getLogs({ address: d.attestationRegistry, fromBlock, toBlock });
+      } catch (e) {
+        lastError = e;
+        await new Promise((r) => setTimeout(r, 200 * (attempt + 1)));
+      }
+    }
+    throw new Error(
+      `eth_getLogs failed for blocks ${fromBlock}–${toBlock}: ${lastError?.shortMessage ?? lastError?.message}`,
+    );
+  });
   const raw = batches.flat();
 
   const attested = [];
   const allowedImages = [];
-  const SIGNER_ATTESTED = keccak256(toHex('SignerAttested(address,bytes32,bytes32,uint8)'));
+  const SIGNER_ATTESTED = keccak256(toHex('SignerAttested(address,bytes32,bytes32,string,uint8)'));
   const IMAGE_ALLOWED = keccak256(toHex('ImageAllowed(bytes32,bool)'));
   for (const log of raw) {
     const [topic] = log.topics;
@@ -137,26 +155,33 @@ async function main() {
 
   // Registrations, in the order the chain recorded them.
   const registrations = await pooled(attested, async (log) => {
-    const tx = await client.getTransaction({ hash: log.transactionHash });
-    let modelId = null;
+    const { args } = decodeEventLog({
+      abi: registryAbi,
+      eventName: 'SignerAttested',
+      topics: log.topics,
+      data: log.data,
+    });
+
+    // The quote itself is only in the calldata; the registry keeps its verdict, not its input.
     let quoteBytes = null;
     let rawQuote = null;
     try {
-      const { args } = decodeFunctionData({ abi: registryAbi, data: tx.input });
-      rawQuote = args[0];
-      modelId = args[1];
+      const tx = await client.getTransaction({ hash: log.transactionHash });
+      const decoded = decodeFunctionData({ abi: registryAbi, data: tx.input });
+      rawQuote = decoded.args[0];
       quoteBytes = (rawQuote.length - 2) / 2;
     } catch {
       /* registered through some other entry point; the event still stands on its own */
     }
+
     return {
-      signer: getAddress(`0x${log.topics[1].slice(26)}`),
-      measurement: log.topics[2],
-      modelIdHash: log.topics[3],
-      tcbStatus: Number(BigInt(log.data)),
+      signer: getAddress(args.signer),
+      measurement: args.measurement,
+      modelIdHash: args.modelIdHash,
+      modelId: args.modelId,
+      tcbStatus: Number(args.tcbStatus),
       txHash: log.transactionHash,
       blockNumber: log.blockNumber.toString(),
-      modelId,
       quoteBytes,
       rawQuote,
     };
@@ -180,17 +205,82 @@ async function main() {
     isTrusted = null;
   }
 
-  let committee = [];
-  try {
-    committee = await client.readContract({
-      address: d.assetRegistry,
-      abi: assetRegistryAbi,
-      functionName: 'committee',
-      args: [d.assetId],
-    });
-  } catch {
-    /* the asset may not be registered yet */
+  /**
+   * Every asset this deployment is known to appraise: the ones the manifest names, plus any a
+   * recorded round was run against. A round is judged by its own asset's policy, so reading one
+   * asset's band and applying it to another would misstate why a round refused.
+   */
+  const bundleDir = join(ROOT, 'backend', 'data', 'bundles');
+  // Every `assetId*` the manifest carries, whatever it is called. The deploy script adds assets
+  // over time, and each one needs its own policy read, so they are discovered rather than listed.
+  const assetIds = new Set(
+    Object.entries(d)
+      .filter(([k, v]) => /^assetId/.test(k) && typeof v === 'string' && /^0x[0-9a-fA-F]{64}$/.test(v))
+      .map(([, v]) => v),
+  );
+  const bundleFiles = existsSync(bundleDir)
+    ? readdirSync(bundleDir).filter((f) => f.endsWith('.json'))
+    : [];
+  const parsedBundles = [];
+  for (const file of bundleFiles) {
+    try {
+      parsedBundles.push(JSON.parse(readFileSync(join(bundleDir, file), 'utf8')));
+    } catch {
+      /* a round still being written is picked up on the next run */
+    }
   }
+  for (const b of parsedBundles) {
+    if (b.onChain && Number(b.onChain.chainId) !== chainId) continue;
+    const id = b.assetIdHex ?? b.assetIdHash ?? b.onChain?.assetId;
+    if (typeof id === 'string' && /^0x[0-9a-fA-F]{64}$/.test(id)) assetIds.add(id);
+  }
+
+  const assets = {};
+  let committee = [];
+  for (const assetId of assetIds) {
+    try {
+      const [seats, cfg, uri] = await Promise.all([
+        client.readContract({
+          address: d.assetRegistry,
+          abi: assetRegistryAbi,
+          functionName: 'committee',
+          args: [assetId],
+        }),
+        client.readContract({
+          address: d.assetRegistry,
+          abi: assetRegistryAbi,
+          functionName: 'config',
+          args: [assetId],
+        }),
+        client.readContract({
+          address: d.assetRegistry,
+          abi: assetRegistryAbi,
+          functionName: 'metadataURI',
+          args: [assetId],
+        }),
+      ]);
+      if (!cfg.active && seats.length === 0) continue;
+      if (committee.length === 0) committee = seats;
+      assets[assetId] = {
+        assetId,
+        committee: seats,
+        metadataURI: uri,
+        issuer: cfg.issuer,
+        quorum: Number(cfg.quorum),
+        minDistinctSigners: Number(cfg.minDistinctSigners),
+        bandBps: Number(cfg.bandBps),
+        minConfidenceBps: Number(cfg.minConfidenceBps),
+        maxAgeSec: Number(cfg.maxAgeSec),
+        disputeBandBps: Number(cfg.disputeBandBps),
+        disputeBond: cfg.disputeBond.toString(),
+        schemaId: cfg.schemaId,
+        active: cfg.active,
+      };
+    } catch {
+      /* not registered on this deployment */
+    }
+  }
+  const policy = Object.keys(assets).length > 0 ? assets : null;
 
   // Group registrations by the key the quote derived. One enclave may front several models.
   const bySigner = new Map();
@@ -302,6 +392,69 @@ async function main() {
   console.log(
     `wrote ${dest}: ${signers.length} key(s), ${signers.reduce((n, s) => n + s.models.length, 0)} model registration(s), adapter ${snapshot.adapter.label} isTrusted=${snapshot.adapter.isTrusted}`,
   );
+
+  // Block times for every block a recorded round refers to. `next build` must not need a
+  // network, so the timestamps a round is dated by are resolved here and written down; a round
+  // recorded after this ran simply has no date until the snapshot is taken again.
+  const wanted = new Set();
+  const commitTxs = new Set();
+  for (const b of parsedBundles) {
+    const oc = b.onChain;
+    if (!oc || Number(oc.chainId) !== chainId) continue;
+    if (oc.blockNumber !== undefined && oc.blockNumber !== null) wanted.add(String(oc.blockNumber));
+    if (oc.evidenceCommitment?.txHash) commitTxs.add(oc.evidenceCommitment.txHash);
+  }
+
+  const commitBlocks = {};
+  for (const [txHash, receipt] of await pooled([...commitTxs], async (h) => [
+    h,
+    await client.getTransactionReceipt({ hash: h }).catch(() => null),
+  ])) {
+    if (!receipt) continue;
+    commitBlocks[txHash] = receipt.blockNumber.toString();
+    wanted.add(receipt.blockNumber.toString());
+  }
+
+  const blockTimes = {};
+  for (const [number, ts] of await pooled([...wanted], async (n) => [
+    n,
+    await client
+      .getBlock({ blockNumber: BigInt(n) })
+      .then((b) => Number(b.timestamp))
+      .catch(() => null),
+  ])) {
+    if (ts !== null) blockTimes[number] = ts;
+  }
+
+  if (Object.keys(blockTimes).length > 0 || Object.keys(commitBlocks).length > 0) {
+    const blocksDest = join(OUT, `blocks.${chainId}.json`);
+    writeFileSync(
+      blocksDest,
+      `${JSON.stringify({ chainId, timestamps: blockTimes, commitmentBlocks: commitBlocks }, null, 2)}\n`,
+    );
+    console.log(
+      `wrote ${blocksDest}: ${Object.keys(blockTimes).length} block time(s), ${Object.keys(commitBlocks).length} commitment block(s)`,
+    );
+  }
+
+  if (policy) {
+    const policyDest = join(OUT, `policy.${chainId}.json`);
+    writeFileSync(
+      policyDest,
+      `${JSON.stringify(
+        { chainId, source: 'live', capturedAt: Number(block.timestamp), assets: policy },
+        null,
+        2,
+      )}\n`,
+    );
+    console.log(`wrote ${policyDest}: ${Object.keys(policy).length} asset polic(ies)`);
+    for (const a of Object.values(policy)) {
+      console.log(
+        `    ${a.assetId.slice(0, 12)}… quorum ${a.quorum}, ${a.minDistinctSigners} distinct signer(s), ` +
+          `band ${a.bandBps} bps, confidence ${a.minConfidenceBps} bps, max age ${a.maxAgeSec}s, ${a.committee.length} seat(s)`,
+      );
+    }
+  }
 }
 
 main().catch((e) => {

@@ -1,15 +1,31 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { getAddress } from 'viem';
 import { publicClientFor, rpcErrorMessage } from '@/lib/rpc';
-import { readOracleState, readVaultState, type OracleState, type VaultState } from '@/lib/oracle';
+import {
+  readAttestation,
+  readOracleState,
+  readVaultState,
+  type OracleState,
+  type VaultState,
+} from '@/lib/oracle';
 import { useApp } from '@/state/AppContext';
+import { attestationFor, type AttestationSnapshot } from '@/lib/attestation';
 import type { Deployment } from '@/lib/deployments';
 
-/** A clock that ticks once a second, for countdowns and ages. */
-export function useNow(intervalMs = 1000): number {
-  const [now, setNow] = useState(() => Math.floor(Date.now() / 1000));
+/**
+ * A clock that ticks once a second, for countdowns and ages.
+ *
+ * Null until the component has mounted. The pages are prerendered into static HTML, and a clock
+ * reading at build time is not the same reading as the one in the reader's browser — rendering
+ * it directly would make the first paint disagree with the markup and tear the page down on
+ * hydration. Call sites fall back to a timestamp that is the same in both places.
+ */
+export function useNow(intervalMs = 1000): number | null {
+  const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
+    setNow(Math.floor(Date.now() / 1000));
     const id = setInterval(() => setNow(Math.floor(Date.now() / 1000)), intervalMs);
     return () => clearInterval(id);
   }, [intervalMs]);
@@ -94,6 +110,62 @@ export function useOracleState(intervalMs = 12_000): Poll<OracleState> {
 export function useVaultState(intervalMs = 12_000): Poll<VaultState> {
   const { deployment } = useApp();
   return usePolled('vault', deployment, readVaultState, intervalMs);
+}
+
+/**
+ * The trust root for the selected network, refreshed from the registry.
+ *
+ * The recorded snapshot is the starting point — it carries the registration transactions, which
+ * the registry itself does not keep — and every field the registry does hold is read back from
+ * it here. So the page opens with real data instantly and then reflects the chain: a key
+ * revoked, re-attested or unbound since the snapshot shows as it stands now.
+ */
+export function useAttestation(intervalMs = 30_000): Poll<AttestationSnapshot> & {
+  /** What is on screen, live or recorded, so a view never has to render nothing. */
+  snapshot: AttestationSnapshot | null;
+  /** True once the figures on screen came from the chain rather than from the record. */
+  isLive: boolean;
+} {
+  const { deployment, chainId, rounds } = useApp();
+  const recorded = attestationFor(chainId);
+
+  // Candidate keys: whoever the record names, plus whoever signed a recorded answer. Every one
+  // is confirmed against the registry before it appears, so a candidate costs nothing.
+  const { candidates, modelsBySigner } = useMemo(() => {
+    const models = new Map<string, string[]>();
+    const add = (address: string | null | undefined, model: string) => {
+      if (!address) return;
+      const key = address.toLowerCase();
+      const list = models.get(key) ?? [];
+      if (!list.includes(model)) list.push(model);
+      models.set(key, list);
+    };
+
+    for (const s of recorded?.signers ?? []) for (const m of s.models) add(s.address, m);
+    for (const b of rounds) {
+      for (const v of b.verdicts) {
+        add(v.signer, v.model);
+        add(v.attestedSigner, v.model);
+      }
+    }
+    return {
+      candidates: [...models.keys()].map((a) => getAddress(a)),
+      modelsBySigner: models,
+    };
+  }, [recorded, rounds]);
+
+  const key = `attestation:${chainId}:${candidates.join(',')}`;
+  const read = useCallback(
+    (d: Deployment) => readAttestation(d, candidates, modelsBySigner, recorded),
+    [candidates, modelsBySigner, recorded],
+  );
+
+  const poll = usePolled(key, deployment, read, intervalMs);
+
+  // A live read that finds no registered key is not an improvement on the record — it means the
+  // candidates were wrong or the endpoint is answering badly — so the record stands.
+  const usable = poll.data && poll.data.signers.length > 0 ? poll.data : null;
+  return { ...poll, snapshot: usable ?? recorded, isLive: usable !== null };
 }
 
 export type DeploymentPresence = 'absent' | 'checking' | 'live' | 'no-code' | 'unreachable';

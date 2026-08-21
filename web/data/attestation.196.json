@@ -1,10 +1,10 @@
 {
-  "chainId": 1952,
+  "chainId": 196,
   "source": "live",
-  "capturedAt": 1787347985,
-  "capturedAtBlock": "38889148",
+  "capturedAt": 1787347999,
+  "capturedAtBlock": "68578963",
   "adapter": {
-    "address": "0x8902b08b0BCB906239772Fde394b5048d3f92180",
+    "address": "0x37311f00F76bD171FC10B0fB2413625419F394ad",
     "label": "AutomataTdxAdapter",
     "isTrusted": true
   },
@@ -21,14 +21,14 @@
     {
       "measurement": "0xc7343ebcc75fc5e2f538e892769cf520947342e58dd1bca1bef643ba4ec949ce",
       "allowed": true,
-      "txHash": "0xe03fd174d5408a43a556743d74453981ae2f15f537a51b5104f66d34ac8fa261",
-      "blockNumber": "38885438"
+      "txHash": "0x8fa36e12f87dd24c3d8939ffe78474d6b4fefaaf67c7c082540d6ff8d58a9e80",
+      "blockNumber": "68577535"
     },
     {
       "measurement": "0x3e1ff5ed6867593d68d2c7fb6eba0f31e1c35aa7d0041f35ea93fde5f1029a74",
       "allowed": true,
-      "txHash": "0xf2a07757c4ec3352994e6d80534ca6c415cbb24a0739642dbbae6e04d306910d",
-      "blockNumber": "38888728"
+      "txHash": "0xea6f36e0af493936b18081cfef2b29c53ca3bc2d37e513f167e02f198ac443e3",
+      "blockNumber": "68578446"
     }
   ],
   "signers": [
@@ -37,7 +37,7 @@
       "mrTd": "0x3e1ff5ed6867593d68d2c7fb6eba0f31e1c35aa7d0041f35ea93fde5f1029a74",
       "tcbStatus": 0,
       "tcbStatusLabel": "UpToDate",
-      "attestedAt": 1787347569,
+      "attestedAt": 1787347483,
       "revoked": false,
       "imageAllowed": true,
       "models": [
@@ -52,48 +52,48 @@
         {
           "model": "deepseek/deepseek-v4-flash-0731",
           "modelIdHash": "0xf4ba152cd9fe7a2adcbed7c32336fb407861c8803a4e035fe8d8acf73ae7a19f",
-          "txHash": "0x210cda7bed824377ef7d22e749ea972075ce83d7cb1193298ddf13f6aa09b453",
-          "blockNumber": "38885440",
+          "txHash": "0x50b52408e606ed443a24c6fe6284b8ea25ae000b7e1809954fa6fbf370e313b7",
+          "blockNumber": "68577537",
           "quoteBytes": 5006
         },
         {
           "model": "qwen/qwen3.6-35b-a3b",
           "modelIdHash": "0x8c250077b9514fc408ce810d85e1190bf25e254ff11e9ad157a91709e0b04266",
-          "txHash": "0xd0d20515f5b8e8375dafce21aef434e547652313fb1f884a77674c5a84e218a2",
-          "blockNumber": "38885442",
+          "txHash": "0x4af49d900abdc48b0f0f50ce1c3c5666013da373143333b93912d5ae1e7f662f",
+          "blockNumber": "68577539",
           "quoteBytes": 5006
         },
         {
           "model": "google/gemma-3-27b-it",
           "modelIdHash": "0xb2b22495b369d50878a31d05296abd18ad018319ecfdfb8c653ab5f57c29d3cc",
-          "txHash": "0x669f24f9a02ec48605825cec5c1cf3482a5e5e361e5a9806ddc0ef69263e5598",
-          "blockNumber": "38885444",
+          "txHash": "0x6c5cc51bd992042f7e559187b124a532b47087b9bb95e143ec650cd197326a68",
+          "blockNumber": "68577540",
           "quoteBytes": 5006
         },
         {
           "model": "meta-llama/llama-3.3-70b-instruct",
           "modelIdHash": "0x245e10b5c3befa4510d11cba0fe4ad1aa3dc9f8def21eb6287a846f8c0b47b9a",
-          "txHash": "0xbc5dc3403f638d19bcad4f5707cd445f59d76ea932fc2b6b15084d66e20ab36f",
-          "blockNumber": "38885447",
+          "txHash": "0xbe319c2ebcefe7cc2187231433c88b8793001c2ea8e81c81a6903b921ef73fa8",
+          "blockNumber": "68577541",
           "quoteBytes": 5006
         },
         {
           "model": "qwen/qwen3-vl-30b-a3b-instruct",
           "modelIdHash": "0xd3f20fb1ed7c74da78ac3eef04a535f604565c7235b547e49a4058a22e6bd0d8",
-          "txHash": "0x19bb79c2f64716c2996e34f784c62cc854cbf912c9fea5aec31092f13d11e4ba",
-          "blockNumber": "38885450",
+          "txHash": "0x36eee6022628a68e75c05191e6ffa96bb6b29a98e742e8b02d40278b4f50857f",
+          "blockNumber": "68577543",
           "quoteBytes": 5006
         },
         {
           "model": "qwen/qwen-2.5-7b-instruct",
           "modelIdHash": "0x31755bf3f6e7f8e25297eb63c2d40bde06a0a48a6223ea01646dd738e7bde194",
-          "txHash": "0xaa5bbae36ac3c2d2e9a9a58d58fff7851e94521d00334d97af51c02186f05789",
-          "blockNumber": "38888732",
+          "txHash": "0x29f3608f3f93b13157d4cb340dcf6b947afb97f7f99fbf67868a82a64e93c7cd",
+          "blockNumber": "68578447",
           "quoteBytes": 5006
         }
       ],
-      "txHash": "0x210cda7bed824377ef7d22e749ea972075ce83d7cb1193298ddf13f6aa09b453",
-      "blockNumber": "38885440",
+      "txHash": "0x50b52408e606ed443a24c6fe6284b8ea25ae000b7e1809954fa6fbf370e313b7",
+      "blockNumber": "68577537",
       "quoteBytes": 5006,
       "reportData": "79a5061efe5a46b0d1f33b11cf1c5adbedae6b790000000000000000000000009543d258c58f18ecc780669a28ae0370082caedb9f6518a0ed1bef18b397d226"
     }

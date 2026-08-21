@@ -7,11 +7,12 @@
     "dev": "next dev",
     "prebuild": "node scripts/sync-data.mjs",
     "build": "next build",
-    "export": "next build",
+    "postbuild": "node scripts/finalize-export.mjs",
     "start": "npx serve out",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "abi": "node scripts/extract-abis.mjs",
+    "snapshot": "node scripts/snapshot-chain.mjs 1952 && node scripts/snapshot-chain.mjs 196",
     "fixtures": "node scripts/make-fixtures.mjs && node scripts/sync-data.mjs"
   },
   "dependencies": {

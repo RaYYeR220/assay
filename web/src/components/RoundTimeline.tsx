@@ -110,7 +110,9 @@ function buildSteps(round: RoundView): Step[] {
         ? 'Evidence was never committed'
         : 'Prior commitment assumed',
     detail: commitment?.committed
-      ? `committed by the issuer in ${truncateHex(commitment.txHash, 10, 6)}`
+      ? commitment.txHash
+        ? `committed by the issuer in ${truncateHex(commitment.txHash, 10, 6)}`
+        : 'committed by the issuer before the round ran'
       : commitment
         ? 'the round reverts with EvidenceNotCommitted'
         : 'no commitment record in this bundle',

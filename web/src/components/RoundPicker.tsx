@@ -33,7 +33,8 @@ export function RoundPicker() {
                 : undefined
             }
           >
-            <span className="figure">EP {view.epoch ?? i}</span>
+            {/* A worked example has no epoch, and must not borrow a number that looks like one. */}
+            <span className="figure">{view.epoch !== null ? `EP ${view.epoch}` : 'example'}</span>
             <span className="mx-1.5" style={{ opacity: 0.4 }}>
               ·
             </span>

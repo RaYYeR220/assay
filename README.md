@@ -204,3 +204,47 @@ forge script script/Deploy.s.sol \
 On X Layer mainnet, `CURRENCY` should be the canonical USDC at
 `0x74b7F16337b8972027F6196A17a631aC6dE26d22` and `SEQUENCER_FEED` the Chainlink uptime feed at
 `0x45c2b8C204568A03Dc7A2E32B71D67Fe97F908A9`.
+
+## Deployments
+
+| | X Layer mainnet (196) | X Layer testnet (1952) |
+| --- | --- | --- |
+| `AutomataDcapAttestation` | *pending* | *pending* |
+| `AutomataTdxAdapter` | *pending* | *pending* |
+| `AttestationRegistry` | *pending* | *pending* |
+| `AssetRegistry` | *pending* | *pending* |
+| `AssayOracle` | *pending* | *pending* |
+| `AssayVault` | *pending* | *pending* |
+
+X Layer had no on-chain Intel DCAP verifier before this, so `assay/dcap` deploys one: the Automata
+verifier stack with its on-chain collateral store, wired to the RIP-7212 P-256 precompile that X
+Layer exposes at `0x100`. A full TDX quote verification costs about 4.6M gas, which at X Layer gas
+prices is roughly 0.0001 OKB. `dcap/README.md` covers deployment, the collateral refresh cycle, and
+the gotchas.
+
+## Repository
+
+```
+src/            the protocol
+  AssayOracle.sol           rounds, parsing, consensus, halts, disputes
+  AttestationRegistry.sol   which enclave keys the oracle will listen to
+  AssetRegistry.sol         listings, policy, immutable prompt schemas
+  AssayVault.sol            tokenised shares priced by the oracle
+  adapters/                 quote verifier adapters
+dcap/           deploys the on-chain Intel DCAP verifier to X Layer
+backend/        the appraisal service: evidence, committee calls, verdict bundles
+sdk/            typed client, verification helpers, and the assay-verify CLI
+mcp/            read-only MCP server so an agent can consult the oracle
+web/            the dashboard
+docs/           threat model, evaluation protocol, verification guide
+```
+
+## Further reading
+
+- [`docs/VERIFY.md`](docs/VERIFY.md) — check every claim yourself, in five minutes, with no credentials.
+- [`docs/THREAT-MODEL.md`](docs/THREAT-MODEL.md) — what we tried to break, what held, and what is still open.
+- [`docs/EVAL.md`](docs/EVAL.md) — the evaluation protocol, written before the evaluation ran.
+
+## License
+
+MIT.

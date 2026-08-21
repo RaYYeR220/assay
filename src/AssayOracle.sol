@@ -264,13 +264,7 @@ contract AssayOracle is IAssayOracle {
             (address signer, uint256 navE6, uint256 confBps, uint64 createdAt, RejectReason rej) =
                 _checkVerdict(assetId, evidence, v, cfg);
 
-            // Anything past the authentication reasons means the signature itself checked out and
-            // the answer failed on its merits. Only those count towards deciding whether this round
-            // reached the committee at all. `WrongModel` sits on the failure side: an attested key
-            // answering for a slot it was never attested for is not that slot's member, and letting
-            // it count would hand anyone holding a single attested key the ability to halt every
-            // asset by filling every slot with it.
-            if (rej == RejectReason.None || uint8(rej) > uint8(RejectReason.WrongModel)) {
+            if (_reachedCommittee(rej)) {
                 unchecked {
                     ++r.authed;
                 }
@@ -620,6 +614,19 @@ contract AssayOracle is IAssayOracle {
         // an answer rather than an exception.
         if (startedAt == 0 || startedAt > block.timestamp) return false;
         return block.timestamp - startedAt > sequencerGrace;
+    }
+
+    /// @dev Whether a rejected verdict still counts as this round having reached the committee.
+    ///      Yes when the signature checked out against a key that is live for the slot, the answer
+    ///      belonged to this round, and it then failed on its merits. No when it failed to
+    ///      authenticate, and no when it was never an answer to this round: an attested key
+    ///      answering for the wrong model is not that slot's member, and a recycled answer from an
+    ///      earlier round carries a perfectly good signature. Counting either would put a free halt
+    ///      back within reach of anyone holding one attested key or a copy of the last round's
+    ///      calldata.
+    function _reachedCommittee(RejectReason rej) internal pure returns (bool) {
+        return rej == RejectReason.None || rej == RejectReason.Truncated || rej == RejectReason.Malformed
+            || rej == RejectReason.OutOfRange || rej == RejectReason.LowConfidence;
     }
 
     function _countDistinct(address[] memory signers, uint256 n) internal pure returns (uint8 distinct) {

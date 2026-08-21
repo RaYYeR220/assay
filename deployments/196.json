@@ -1,0 +1,16 @@
+{
+ "assayOracle": "0xE6FBd750cf852149185c226c770B6d484398a71F",
+ "assayVault": "0xB7E7aa0C3737E2F5f3B17C905C3126c10cC32391",
+ "assetId": "0xc52284d7d0a577d60e0793938419de18c4821659029579d20b083cc1fdad5266",
+ "assetKey": "assay.carbon.v2",
+ "assetRegistry": "0x1f2E8DA086fF0919C3efbf3D952a65a820D857a4",
+ "attestationRegistry": "0x54d9B3Ef4904C4917Cc6F97A14237c419505f48A",
+ "chainId": 196,
+ "currency": "0x74b7F16337b8972027F6196A17a631aC6dE26d22",
+ "quoteAdapter": "0x37311f00F76bD171FC10B0fB2413625419F394ad",
+ "startBlock": 68577308,
+ "assetIdLiquid": "0x65e8b0665d0465ee6e0bbbff780354ea5a389bab5b30f737faf0ce7e1d1f4584",
+ "assetKeyLiquid": "assay.carbon.liquid.v1",
+ "dcapAttestation": "0x286f9b75Ab771C533Ba832Ce72b00518D941bb0F",
+ "explorer": "https://www.oklink.com/xlayer"
+}

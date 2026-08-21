@@ -28,7 +28,7 @@ contract ListAsset is Script {
         committee[0] = "deepseek/deepseek-v4-flash-0731";
         committee[1] = "google/gemma-3-27b-it";
         committee[2] = "meta-llama/llama-3.3-70b-instruct";
-        committee[3] = "qwen/qwen3.6-35b-a3b";
+        committee[3] = "qwen/qwen-2.5-7b-instruct";
         committee[4] = "qwen/qwen3-vl-30b-a3b-instruct";
 
         assets.registerAsset(
@@ -37,7 +37,7 @@ contract ListAsset is Script {
                 issuer: vm.addr(pk),
                 quorum: 3,
                 minDistinctSigners: 1,
-                bandBps: 1500,
+                bandBps: uint16(vm.envOr("BAND_BPS", uint256(1500))),
                 minConfidenceBps: 5000,
                 maxAgeSec: 3600,
                 disputeBandBps: 500,

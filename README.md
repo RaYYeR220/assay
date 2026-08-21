@@ -226,7 +226,19 @@ On X Layer mainnet, `CURRENCY` should be the canonical USDC at
 | `AssayOracle` | `0xEd888DC5b67038fF66D9a5DeB76B323655f21b23` |
 | `AssayVault` | `0x9b06dEea180aE5e52d624fB6bc393E1fa95AF816` |
 
-X Layer mainnet addresses are in `deployments/196.json`.
+**X Layer mainnet (chainId 196)** — [explorer](https://www.oklink.com/xlayer)
+
+| Contract | Address |
+| --- | --- |
+| `AutomataDcapAttestation` | `0x286f9b75Ab771C533Ba832Ce72b00518D941bb0F` |
+| `AutomataTdxAdapter` | `0x37311f00F76bD171FC10B0fB2413625419F394ad` |
+| `AttestationRegistry` | `0x54d9B3Ef4904C4917Cc6F97A14237c419505f48A` |
+| `AssetRegistry` | `0x1f2E8DA086fF0919C3efbf3D952a65a820D857a4` |
+| `AssayOracle` | `0xE6FBd750cf852149185c226c770B6d484398a71F` |
+| `AssayVault` | `0xB7E7aa0C3737E2F5f3B17C905C3126c10cC32391` |
+
+The mainnet vault settles in canonical USDC (`0x74b7F163…`) and the oracle checks the Chainlink L2
+sequencer uptime feed (`0x45c2b8C2…`) before it will answer.
 
 X Layer had no on-chain Intel DCAP verifier before this, so `assay/dcap` deploys one: the Automata
 verifier stack with its on-chain collateral store, wired to the RIP-7212 P-256 precompile that X

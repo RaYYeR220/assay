@@ -13,5 +13,7 @@
  "explorer": "https://web3.okx.com/explorer/x-layer-testnet",
  "assetIdV2": "0xc52284d7d0a577d60e0793938419de18c4821659029579d20b083cc1fdad5266",
  "assetKeyV2": "assay.carbon.v2",
- "assayVaultV2": "0x9b06dEea180aE5e52d624fB6bc393E1fa95AF816"
+ "assayVaultV2": "0x9b06dEea180aE5e52d624fB6bc393E1fa95AF816",
+ "assetIdLiquid": "0x65e8b0665d0465ee6e0bbbff780354ea5a389bab5b30f737faf0ce7e1d1f4584",
+ "assetKeyLiquid": "assay.carbon.liquid.v1"
 }

@@ -82,11 +82,11 @@ contract Deploy is Script {
                 issuer: deployer,
                 quorum: 3,
                 minDistinctSigners: 1,
-                bandBps: 1000,
+                bandBps: 1500,
                 minConfidenceBps: 5000,
                 maxAgeSec: 3600,
                 disputeBandBps: 500,
-                disputeBond: 0.01 ether,
+                disputeBond: 0.001 ether,
                 schemaId: schemaId,
                 active: true
             }),
@@ -130,7 +130,7 @@ contract Deploy is Script {
         c[0] = "deepseek/deepseek-v4-flash-0731";
         c[1] = "google/gemma-3-27b-it";
         c[2] = "meta-llama/llama-3.3-70b-instruct";
-        c[3] = "qwen/qwen3.6-35b-a3b";
+        c[3] = "qwen/qwen-2.5-7b-instruct";
         c[4] = "qwen/qwen3-vl-30b-a3b-instruct";
     }
 

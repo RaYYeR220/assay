@@ -1,0 +1,14 @@
+{
+ "assayOracle": "0xEd888DC5b67038fF66D9a5DeB76B323655f21b23",
+ "assayVault": "0xB7E7aa0C3737E2F5f3B17C905C3126c10cC32391",
+ "assetId": "0xc950707fccabbc3f8dc7caec6549ab64c9ee71c7944ed10862f73df6a8e96cfd",
+ "assetKey": "assay.carbon.demo.v1",
+ "assetRegistry": "0xE6FBd750cf852149185c226c770B6d484398a71F",
+ "attestationRegistry": "0x1f2E8DA086fF0919C3efbf3D952a65a820D857a4",
+ "chainId": 1952,
+ "currency": "0x54d9B3Ef4904C4917Cc6F97A14237c419505f48A",
+ "quoteAdapter": "0x8902b08b0BCB906239772Fde394b5048d3f92180",
+ "startBlock": 38884350,
+ "dcapAttestation": "0x286f9b75Ab771C533Ba832Ce72b00518D941bb0F",
+ "explorer": "https://web3.okx.com/explorer/x-layer-testnet"
+}

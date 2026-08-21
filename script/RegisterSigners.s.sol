@@ -31,7 +31,7 @@ contract RegisterSigners is Script {
         string memory json = vm.readFile(vm.envOr("QUOTES", string("./data/quotes.json")));
         bool discovery = vm.envOr("ALLOW_NEW_MEASUREMENTS", false);
 
-        uint256 count = vm.parseJsonStringArray(json, ".entries[*].model").length;
+        uint256 count = vm.parseJsonUint(json, ".count");
         IQuoteAdapter adapter = registry.adapter();
 
         bytes32[] memory measurements = new bytes32[](count);

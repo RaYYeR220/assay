@@ -9,7 +9,7 @@ interface IDcapAttestation {
     /// @param tcbEvaluationDataNumber which Intel TCB evaluation the collateral was uploaded under
     /// @return success false when the quote did not verify
     /// @return output on success, a packed attestation record; on failure, a UTF-8 reason string
-    function verifyAndAttestOnChain(bytes calldata rawQuote, uint8 tcbEvaluationDataNumber)
+    function verifyAndAttestOnChain(bytes calldata rawQuote, uint32 tcbEvaluationDataNumber)
         external
         payable
         returns (bool success, bytes memory output);
@@ -46,7 +46,7 @@ contract AutomataTdxAdapter is IQuoteAdapter {
     /// @dev Pinned rather than resolved at call time. The collateral stores are keyed by this
     ///      number, so letting the verifier pick one could silently select an evaluation nothing was
     ///      uploaded for, and it costs extra gas to look up.
-    uint8 public immutable tcbEvaluationDataNumber;
+    uint32 public immutable tcbEvaluationDataNumber;
 
     /// @notice Emitted on every successful verification so the raw measurements stay auditable.
     /// @param measurement the digest the registry keys its allowlist on
@@ -55,7 +55,7 @@ contract AutomataTdxAdapter is IQuoteAdapter {
 
     error OutputTooShort(uint256 length);
 
-    constructor(IDcapAttestation dcap_, uint8 tcbEvaluationDataNumber_) {
+    constructor(IDcapAttestation dcap_, uint32 tcbEvaluationDataNumber_) {
         dcap = dcap_;
         tcbEvaluationDataNumber = tcbEvaluationDataNumber_;
     }

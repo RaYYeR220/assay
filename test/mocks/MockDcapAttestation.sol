@@ -10,14 +10,14 @@ import {IDcapAttestation} from "../../src/adapters/AutomataTdxAdapter.sol";
 contract MockDcapAttestation is IDcapAttestation {
     bool public success = true;
     bytes public output;
-    uint8 public lastTcbEvaluationDataNumber;
+    uint32 public lastTcbEvaluationDataNumber;
 
     function set(bool success_, bytes memory output_) external {
         success = success_;
         output = output_;
     }
 
-    function verifyAndAttestOnChain(bytes calldata, uint8 tcbEvaluationDataNumber)
+    function verifyAndAttestOnChain(bytes calldata, uint32 tcbEvaluationDataNumber)
         external
         payable
         returns (bool, bytes memory)

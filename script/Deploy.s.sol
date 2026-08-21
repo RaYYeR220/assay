@@ -45,7 +45,7 @@ contract Deploy is Script {
         address dcap = vm.envOr("DCAP_ATTESTATION", address(0));
         if (adapterAddr == address(0) && dcap != address(0)) {
             adapterAddr = address(
-                new AutomataTdxAdapter(IDcapAttestation(dcap), uint8(vm.envOr("TCB_EVAL", uint256(20))))
+                new AutomataTdxAdapter(IDcapAttestation(dcap), uint32(vm.envOr("TCB_EVAL", uint256(20))))
             );
         }
         // Falling back to the stand-in has to be asked for. Silently substituting a verifier that

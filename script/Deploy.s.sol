@@ -13,6 +13,7 @@ import {IAggregatorV3} from "../src/interfaces/IAggregatorV3.sol";
 import {IAssayOracle} from "../src/interfaces/IAssayOracle.sol";
 import {IQuoteAdapter} from "../src/interfaces/IQuoteAdapter.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import {AssetConfig} from "../src/Types.sol";
 import {Schema} from "./Schema.sol";
 
@@ -47,9 +48,16 @@ contract Deploy is Script {
                 new AutomataTdxAdapter(IDcapAttestation(dcap), uint8(vm.envOr("TCB_EVAL", uint256(20))))
             );
         }
+        // Falling back to the stand-in has to be asked for. Silently substituting a verifier that
+        // verifies nothing is exactly the kind of deployment mistake that survives review, because
+        // everything downstream keeps working.
         if (adapterAddr == address(0)) {
+            require(
+                vm.envOr("ALLOW_UNVERIFIED_ADAPTER", false),
+                "no quote verifier: set DCAP_ATTESTATION, or ALLOW_UNVERIFIED_ADAPTER=true for a throwaway network"
+            );
             adapterAddr = address(new UnverifiedQuoteAdapter(deployer));
-            console2.log("WARNING: deployed a non-verifying quote adapter stand-in");
+            console2.log("WARNING: this deployment verifies no attestations");
         }
         if (currencyAddr == address(0)) {
             currencyAddr = address(new DemoUSD());
@@ -80,8 +88,7 @@ contract Deploy is Script {
                 disputeBandBps: 500,
                 disputeBond: 0.01 ether,
                 schemaId: schemaId,
-                active: true,
-                requireAllowedEvidence: false
+                active: true
             }),
             _modelDiverseCommittee(),
             "ipfs://assay/carbon/demo"
@@ -90,7 +97,7 @@ contract Deploy is Script {
             "Assay Carbon Basket",
             "aCARB",
             IERC20(currencyAddr),
-            6,
+            IERC20Metadata(currencyAddr).decimals(),
             IAssayOracle(address(oracle)),
             assetId,
             deployer,

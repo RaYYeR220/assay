@@ -36,6 +36,73 @@ library Ascii {
         return true;
     }
 
+    /// @notice Finds the first occurrence of `pattern` at or after `from`.
+    /// @dev Only reached when a caller-supplied hint was wrong. Scanning is more expensive than
+    ///      checking one position, which is the entire reason hints exist, but correctness cannot
+    ///      depend on them: a hint travels outside the signed payload, so anyone who sees a pending
+    ///      round could otherwise corrupt the hints, resubmit it first, and turn a perfectly good
+    ///      answer into a rejection. Paying for a scan is the price of that not being possible.
+    function indexOf(bytes memory data, uint256 from, bytes memory pattern)
+        internal
+        pure
+        returns (uint256 index, bool found)
+    {
+        uint256 n = pattern.length;
+        if (n == 0 || data.length < n) return (0, false);
+        uint256 last = data.length - n;
+        if (from > last) return (0, false);
+
+        // Written as one assembly block, and compared a word at a time rather than a byte at a
+        // time. The parser walks the whole response once per field it has to find, so this loop
+        // decides whether a long answer is affordable to post at all; the same code expressed in
+        // Solidity spends most of its gas reloading the pattern and the bounds on every step.
+        //
+        // Each load reads 32 bytes and the mask keeps only the ones the comparison needs, so a load
+        // near the end may reach past `data` but nothing outside it is ever compared.
+        assembly {
+            let dataPtr := add(data, 0x20)
+            let patPtr := add(pattern, 0x20)
+            let headLen := n
+            if gt(headLen, 32) { headLen := 32 }
+            let mask := not(shr(mul(headLen, 8), not(0)))
+            let head := and(mload(patPtr), mask)
+
+            for { let i := from } iszero(gt(i, last)) { i := add(i, 1) } {
+                if eq(and(mload(add(dataPtr, i)), mask), head) {
+                    let hit := 1
+                    for { let j := headLen } lt(j, n) { j := add(j, 32) } {
+                        let m := not(0)
+                        let remaining := sub(n, j)
+                        if lt(remaining, 32) { m := not(shr(mul(remaining, 8), not(0))) }
+                        if iszero(eq(and(mload(add(dataPtr, add(i, j))), m), and(mload(add(patPtr, j)), m)))
+                        {
+                            hit := 0
+                            break
+                        }
+                    }
+                    if hit {
+                        index := i
+                        found := 1
+                    }
+                }
+                if found { break }
+            }
+        }
+    }
+
+    /// @notice The one reading of `pattern` in `data` that every caller must agree on: the first.
+    /// @dev Deliberately takes no hint. Confirming a hint and only scanning when it is wrong looks
+    ///      like a free optimisation, but it lets the hint choose *which* occurrence is read, and a
+    ///      body can hold more than one: a completion carrying two choices carries two markers, both
+    ///      inside the signature. Whoever posts the round would then pick the price out of a set the
+    ///      enclave signed, which is the relayer deciding a value only an attested key is allowed to
+    ///      decide. Making the reading positional closes that, and it costs nothing to skip the
+    ///      hint: proving a hint is the first occurrence means scanning everything before it, which
+    ///      is the scan it was supposed to save.
+    function locate(bytes memory data, bytes memory pattern) internal pure returns (uint256, bool) {
+        return indexOf(data, 0, pattern);
+    }
+
     /// @notice Reads a run of ASCII digits.
     /// @return value the parsed number
     /// @return next index of the first non-digit byte

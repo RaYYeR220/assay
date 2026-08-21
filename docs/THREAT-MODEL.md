@@ -34,6 +34,31 @@ path. The only way in is `registerSigner`, which verifies a TDX quote and reads 
 the verified `report_data`. Registrations also expire, so a retired or compromised enclave falls out
 of the set without anyone needing to act.
 
+One part of that call is a claim rather than a proof, and it is worth being precise about which. A
+TDX quote attests the enclave; it says nothing about which model that enclave fronts. So the binding
+between an attested key and a model identifier is asserted by whoever curates the registry, and
+`registerSigner` is gated accordingly rather than dressed up as something Intel vouches for. Leaving
+it open would also have meant anyone could re-submit an old quote indefinitely, which would make the
+attestation lifetime prove nothing about liveness.
+
+### Inventing the facts
+The signed payload commits to the request, and the request contains the evidence — but if whoever
+posts a round also *chooses* the evidence, the whole chain rests on an input nothing checks. Someone
+could invent a record, buy genuine enclave signatures over it from a public inference endpoint, drive
+the valuation down, subscribe, drive it back up and redeem, in a single transaction.
+
+So evidence is not caller-supplied in any meaningful sense: the issuer must commit `sha256(evidence)`
+to the registry in advance, and a round using anything else reverts. Posting stays permissionless.
+Choosing what a round is about does not. Three roles, separated: the issuer commits to what the
+evidence *is*, the committee decides what it is *worth*, and the chain checks both.
+
+### Holding a bad answer until it is useful
+A rejection that counts toward the authentication threshold is what allows a round to halt, so an
+authentically-signed response that fails to parse must not be usable forever. Freshness and the
+replay watermark are therefore established *before* the answer is read: a verdict only reaches the
+counted rejections if it is recent and newer than the last published round. Otherwise one unparseable
+but genuine response would have been a permanent off switch for that asset.
+
 ### Cherry-picking answers across time
 Signatures stay valid for the whole freshness window, so a relayer could hold a favourable set of
 answers and post them after a later round disagreed. `observationWatermark` records the newest
@@ -64,19 +89,36 @@ and pays the bond to the issuer.
 that is not exactly 65 bytes, and treats a zero recovery as a failure rather than a match.
 
 ### Lying about where to read the answer
-The offsets in a verdict are hints, and each is confirmed by matching the literal pattern at that
-position before anything is read. A wrong hint produces a rejection, never a misread. The patterns
-begin with an unescaped quote, which cannot occur inside a JSON string value, so a model cannot
-fabricate a second copy of one inside its own output and have a hint point at it.
+Nobody gets to say where the answer is. An earlier version let the caller pass byte offsets so the
+contract could jump straight to each field, which was cheaper and quietly broken: the offsets were
+not covered by the signature, so anyone watching the mempool could copy a pending round, corrupt
+three integers, land first, and turn five perfectly good answers into a halt for the price of gas.
+The offsets are gone. The contract scans for the patterns itself, and a verdict now carries nothing
+that is not either signed or self-validating. The patterns begin with an unescaped quote, which
+cannot occur inside a JSON string value, so the first occurrence is necessarily the real one and a
+model cannot fabricate a second copy inside its own output.
+
+### Replaying a verdict against a different asset
+The signed payload commits to the request bytes, which are `head || modelId || mid || evidence ||
+tail`. It does not name the asset, and it cannot: the format is dictated by the inference gateway,
+not by us. Two assets that share a prompt schema and a committee will therefore accept each other's
+verdicts whenever they are shown the same evidence. In practice the evidence identifies the asset, so
+the request bytes differ and the verdicts do not transfer; but the separation rests on that
+convention rather than on the signature. Mandatory evidence commitment closes it in practice, since a round can
+only use a digest the issuer of that specific asset committed.
 
 ### A model that answers in prose
 Rejected. The content must be exactly the marker line, with only literal spaces and escaped
 whitespace permitted before the closing quote. A truncated generation is caught separately, because
 `finish_reason` must be `stop`.
 
-### Reentrancy
-The oracle settles all state before any value transfer and marks disputes closed before paying. The
-vault is `nonReentrant` on both value-moving entry points.
+### Reentrancy, and payments that refuse to land
+The oracle settles all state before any value transfer and marks disputes closed before paying. It
+does not push bonds at all: a resolution credits an account and the recipient withdraws. Pushing
+would have meant an issuer address that cannot receive value — a contract with no payable fallback,
+say — made every resolution revert, and since an open challenge freezes consumers, the asset would
+have been bricked with no way back. Nobody should be able to take an oracle offline by choosing an
+awkward address. The vault is `nonReentrant` on both value-moving entry points.
 
 ## Open, and why
 
@@ -88,11 +130,11 @@ information a way to intervene, but a confidently wrong committee produces a con
 We consider this the most important thing a reader should know about Assay, which is why it is here
 rather than in a footnote.
 
-**Evidence quality is upstream of everything.** By default whoever posts a round also supplies the
-evidence, which means the verification chain rests on an input the chain cannot check. Assets that
-care should set `requireAllowedEvidence`, which forces the issuer to commit to an evidence digest in
-advance and splits the roles apart: the issuer commits to what the evidence is, the committee decides
-what it is worth, and the chain checks both.
+**The issuer is trusted for the facts.** Evidence commitment moves the problem rather than dissolving
+it: the chain now knows the evidence is the one the issuer stood behind, and knows nothing about
+whether it is true. An issuer who commits a flattering record gets a valuation of a flattering
+record. What the design buys is that the party choosing the facts is named, on chain, in advance, and
+is not the same party that posts the round or the one that prices it.
 
 **On the deployed committee, the five models share one enclave.** This is the sharpest limitation of
 the live configuration and it deserves to be stated plainly rather than buried. The confidential
@@ -118,3 +160,25 @@ deployment spanning two providers should set it above 1; ours cannot yet, so it 
 well-formed answer. That cannot manufacture a signature, so the worst case is denial of service or an
 overly permissive parse, but it is a privileged surface and it belongs on this list rather than out
 of sight.
+
+
+## What a review found
+
+An adversarial review of this code, run before deployment, found two critical defects. Both are
+fixed, and both are recorded here rather than quietly patched, because how a system fails review says
+more than the fact that it passed one.
+
+**An unparseable but authentic answer was a permanent halt token.** Rejections that count toward the
+authentication threshold were evaluated before freshness, so a single genuinely-signed response that
+failed to parse never expired and could be resubmitted to halt the asset indefinitely. Freshness and
+the watermark now precede the answer.
+
+**Anyone could price any asset.** Asset identity lived entirely in caller-supplied evidence, and
+enclave signatures can be bought from a public endpoint, so a round could be manufactured over
+invented facts and used to move a valuation in both directions inside one transaction. Evidence
+commitment became mandatory.
+
+The review also produced fixes for a signature-covered-versus-not asymmetry in the parser hints
+(removed outright), a push payment that could brick an asset mid-dispute (now pull), a freshness
+window an issuer could widen retroactively (now snapshotted), and an attestation refresh anyone could
+perform forever (now curated). The test suite covers each of them.

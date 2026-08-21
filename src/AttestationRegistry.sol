@@ -81,10 +81,17 @@ contract AttestationRegistry {
     /// @param rawQuote the enclave quote, exactly as the attestation endpoint served it
     /// @param modelId the model this enclave answers for, e.g. deepseek/deepseek-v4-flash-0731
     /// @return signer the attested address, read out of the verified report data
-    /// @dev Anyone may call this. There is no privileged path that skips verification, which is the
-    ///      point: registry contents derive from the Intel root of trust, not from an assertion.
+    /// @dev Gated, and the reason is worth being precise about. The *signer* is not an assertion:
+    ///      it is read out of a quote this contract verified against the Intel root of trust, and no
+    ///      path exists to name one by hand. The *model binding* is different — a TDX quote says
+    ///      nothing about which model an enclave fronts, so that claim has to come from somewhere,
+    ///      and pretending otherwise would be the dishonest option. Leaving the call open would also
+    ///      let anyone re-register a stale quote forever, which would make `attestationTtl` prove
+    ///      nothing about liveness. So: Intel vouches for the enclave, the curator vouches for what
+    ///      it serves, and the difference is stated rather than blurred.
     function registerSigner(bytes calldata rawQuote, string calldata modelId)
         external
+        onlyOwner
         returns (address signer)
     {
         (bool ok, bytes32 measurement, bytes memory reportData, uint8 tcbStatus) =

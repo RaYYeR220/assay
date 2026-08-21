@@ -52,6 +52,10 @@ verified appraisal as a first-class state rather than an outage.
 - **The question is on chain too.** The exact request bytes each model was sent are rebuilt by the
   contract from prompt fragments stored in the registry. A relayer cannot quietly ask a friendlier
   question, because a changed question produces a hash the enclave never signed.
+- **The facts are committed in advance.** The issuer commits the digest of the evidence document
+  before a round can use it. Posting a round stays permissionless; inventing what the round is about
+  does not. Three roles, separated: the issuer commits to what the evidence *is*, the committee
+  decides what it is *worth*, and the chain checks both.
 - **Consensus or halt.** A NAV is published only if enough members answered validly, their answers
   fall within the configured agreement band, their responses are fresh, and the sequencer is healthy.
   Any other outcome is a recorded halt.
@@ -119,7 +123,8 @@ Refusing is the mechanism, so every refusal is named, emitted, and queryable.
 | `Malformed` | prose, markdown, or anything other than the one permitted answer line |
 | `OutOfRange` | a value of zero, an absurd value, or a confidence above 100% |
 | `LowConfidence` | the model answered but below the confidence floor for this asset |
-| `Stale` | the timestamp inside the signed response is outside the freshness window |
+| `NoTimestamp` | the response carries no readable timestamp, so its age cannot be established |
+| `Stale` | the timestamp inside the signed response is outside the freshness window, or is not newer than the last published round |
 | `DuplicateSlot` | two answers claim the same committee seat |
 
 **Per round** — recorded as `Halted`, nothing is published:
@@ -167,6 +172,9 @@ assetRegistry.registerAsset(
     committeeModelIds,
     "ipfs://..."
 );
+
+// then, before each round, commit the facts it may be run against
+assetRegistry.commitEvidence(assetId, sha256(evidence), "ipfs://...", true);
 ```
 
 Consumers only need one call:

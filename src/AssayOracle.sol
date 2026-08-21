@@ -56,7 +56,9 @@ contract AssayOracle is IAssayOracle {
     }
 
     uint256 internal constant MAX_EVIDENCE = 8192;
-    uint256 internal constant MAX_RESPONSE = 16_384;
+    /// @dev Bounded because a wrong offset hint makes the parser scan the body, and the scan is
+    ///      linear in its length. A well-formed answer to this prompt is a few hundred bytes.
+    uint256 internal constant MAX_RESPONSE = 8192;
     uint256 internal constant MAX_NAV_E6 = 1e24;
     uint256 internal constant BPS = 10_000;
 
@@ -101,6 +103,9 @@ contract AssayOracle is IAssayOracle {
     mapping(bytes32 assetId => uint32) public haltCount;
     mapping(bytes32 assetId => Dispute) public disputes;
 
+    /// @notice Bonds credited by dispute outcomes, claimable with {withdraw}.
+    mapping(address account => uint256) public pendingWithdrawals;
+
     /// @notice Timestamp floor for the next round: the observation time of the last published NAV.
     /// @dev Without this, whoever posts a round could keep a favourable set of signed answers in a
     ///      drawer and re-post it after a later round disagreed, because the signatures stay valid
@@ -140,6 +145,8 @@ contract AssayOracle is IAssayOracle {
     /// @dev Emitted instead of a halt. Halting is a strong action, so it is reserved for rounds
     ///      that actually reached the committee.
     event RoundIgnored(bytes32 indexed assetId, uint32 indexed epoch, uint8 authenticated, bytes32 evidenceHash);
+    event Credited(address indexed account, uint256 amount);
+    event Withdrawn(address indexed account, uint256 amount);
     event SequencerFeedSet(address feed, uint64 grace);
     event GrammarSet();
 
@@ -203,9 +210,7 @@ contract AssayOracle is IAssayOracle {
         if (verdicts.length != members) revert CommitteeIncomplete(verdicts.length, members);
 
         bytes32 evidenceHash = sha256(evidence);
-        if (cfg.requireAllowedEvidence && !assets.evidenceAllowed(assetId, evidenceHash)) {
-            revert EvidenceNotCommitted(evidenceHash);
-        }
+        if (!assets.evidenceAllowed(assetId, evidenceHash)) revert EvidenceNotCommitted(evidenceHash);
 
         uint32 epoch = ++epochOf[assetId];
         (bool ok, uint256 median, HaltReason reason, Round memory r) =
@@ -225,6 +230,7 @@ contract AssayOracle is IAssayOracle {
             postedAt: uint64(block.timestamp),
             observedAt: r.observedAt,
             epoch: epoch,
+            maxAgeSec: cfg.maxAgeSec,
             accepted: uint8(r.n),
             distinctSigners: r.distinct,
             state: NavState.Live,
@@ -351,69 +357,80 @@ contract AssayOracle is IAssayOracle {
             }
         }
 
-        (navE6, confBps, createdAt, reason) = _parseResponse(v);
-        if (reason != RejectReason.None) return (signer, 0, 0, 0, reason);
-
-        if (confBps < cfg.minConfidenceBps) return (signer, 0, 0, 0, RejectReason.LowConfidence);
+        // Freshness is established BEFORE the answer is read, and that ordering is load-bearing.
+        // A rejection that counts towards `authed` is what lets a round halt the oracle, so if a
+        // badly-formed answer could be counted without first proving it is recent, one authentic
+        // but unparseable response would become a bearer token that halts this asset forever.
+        {
+            bool hasTimestamp;
+            (createdAt, hasTimestamp) = _readCreated(v);
+            if (!hasTimestamp) return (signer, 0, 0, 0, RejectReason.NoTimestamp);
+        }
         if (createdAt > block.timestamp + futureSkew) return (signer, 0, 0, 0, RejectReason.Stale);
         if (block.timestamp > uint256(createdAt) + cfg.maxAgeSec) {
             return (signer, 0, 0, 0, RejectReason.Stale);
         }
         if (createdAt <= observationWatermark[assetId]) return (signer, 0, 0, 0, RejectReason.Stale);
+
+        (navE6, confBps, reason) = _readAnswer(v);
+        if (reason != RejectReason.None) return (signer, 0, 0, 0, reason);
+        if (confBps < cfg.minConfidenceBps) return (signer, 0, 0, 0, RejectReason.LowConfidence);
+
         return (signer, navE6, confBps, createdAt, RejectReason.None);
     }
 
-    /// @dev Strict reader for the one line a committee member is allowed to produce. The offsets in
-    ///      the verdict are hints only: each is confirmed by matching the literal pattern at that
-    ///      position, so pointing one somewhere convenient just yields a rejection. The patterns
-    ///      themselves open with an unescaped quote, which cannot occur inside a JSON string, so a
-    ///      model cannot fabricate a second copy of them inside its own answer.
-    function _parseResponse(Verdict calldata v)
+    /// @dev Reads the timestamp the gateway put in the signed response. Kept separate from the
+    ///      answer so that freshness can be settled before anything else is looked at.
+    function _readCreated(Verdict calldata v) internal view returns (uint64 createdAt, bool ok) {
+        bytes memory body = v.responseBody;
+        (uint256 at, bool found) = Ascii.locate(body, createdPattern);
+        if (!found) return (0, false);
+        (uint256 value,, bool okDigits) = Ascii.readUint(body, at + createdPattern.length);
+        if (!okDigits || value > type(uint64).max) return (0, false);
+        return (uint64(value), true);
+    }
+
+    /// @dev Strict reader for the one line a committee member is allowed to produce.
+    ///
+    ///      Positions are found by scanning rather than taken from the caller, so nothing outside
+    ///      the signed payload can influence how the answer is read. The patterns open with an
+    ///      unescaped quote, which cannot occur inside a JSON string value, so the first occurrence
+    ///      is necessarily the real one and a model cannot fabricate a second copy of one inside
+    ///      its own answer.
+    function _readAnswer(Verdict calldata v)
         internal
         view
-        returns (uint256 navE6, uint256 confBps, uint64 createdAt, RejectReason reason)
+        returns (uint256 navE6, uint256 confBps, RejectReason reason)
     {
         bytes memory body = v.responseBody;
 
-        if (!Ascii.matchAt(body, v.finishOffset, finishPattern)) {
-            return (0, 0, 0, RejectReason.Truncated);
-        }
-        if (!Ascii.matchAt(body, v.createdOffset, createdPattern)) {
-            return (0, 0, 0, RejectReason.Malformed);
-        }
+        (, bool hasFinish) = Ascii.locate(body, finishPattern);
+        if (!hasFinish) return (0, 0, RejectReason.Truncated);
 
-        uint256 created;
-        {
-            bool okCreated;
-            (created,, okCreated) = Ascii.readUint(body, v.createdOffset + createdPattern.length);
-            if (!okCreated || created > type(uint64).max) return (0, 0, 0, RejectReason.Malformed);
-        }
+        (uint256 contentAt, bool hasContent) = Ascii.locate(body, contentPrefix);
+        if (!hasContent) return (0, 0, RejectReason.Malformed);
 
-        if (!Ascii.matchAt(body, v.contentOffset, contentPrefix)) {
-            return (0, 0, 0, RejectReason.Malformed);
-        }
-
-        uint256 p = v.contentOffset + contentPrefix.length;
+        uint256 p = contentAt + contentPrefix.length;
         bool okNav;
         (navE6, p, okNav) = Ascii.readUint(body, p);
-        if (!okNav) return (0, 0, 0, RejectReason.Malformed);
+        if (!okNav) return (0, 0, RejectReason.Malformed);
 
-        if (!Ascii.matchAt(body, p, confidenceInfix)) return (0, 0, 0, RejectReason.Malformed);
+        if (!Ascii.matchAt(body, p, confidenceInfix)) return (0, 0, RejectReason.Malformed);
         p += confidenceInfix.length;
 
         bool okConf;
         (confBps, p, okConf) = Ascii.readUint(body, p);
-        if (!okConf) return (0, 0, 0, RejectReason.Malformed);
+        if (!okConf) return (0, 0, RejectReason.Malformed);
 
         // Past trailing whitespace, the closing quote has to come immediately. Anything else means
         // the model added commentary, and commentary is what this oracle refuses to price on.
         p = Ascii.skipJsonWhitespace(body, p, 8);
-        if (!Ascii.matchAt(body, p, contentSuffix)) return (0, 0, 0, RejectReason.Malformed);
+        if (!Ascii.matchAt(body, p, contentSuffix)) return (0, 0, RejectReason.Malformed);
 
         if (navE6 == 0 || navE6 > MAX_NAV_E6 || confBps > BPS) {
-            return (0, 0, 0, RejectReason.OutOfRange);
+            return (0, 0, RejectReason.OutOfRange);
         }
-        return (navE6, confBps, uint64(created), RejectReason.None);
+        return (navE6, confBps, RejectReason.None);
     }
 
     // ---------------------------------------------------------------------------------------
@@ -427,9 +444,7 @@ contract AssayOracle is IAssayOracle {
         if (n.state == NavState.Disputed) revert NavDisputed(assetId);
         if (n.state != NavState.Live) revert OracleHalted(assetId, lastHaltReason[assetId]);
         if (!_sequencerHealthy()) revert SequencerDown();
-
-        AssetConfig memory cfg = assets.config(assetId);
-        if (block.timestamp > uint256(n.observedAt) + cfg.maxAgeSec) {
+        if (block.timestamp > uint256(n.observedAt) + n.maxAgeSec) {
             revert NavStale(assetId, n.observedAt);
         }
         return n.valueE6;
@@ -440,8 +455,7 @@ contract AssayOracle is IAssayOracle {
         nav = _navs[assetId];
         if (nav.state != NavState.Live) return (nav, false);
         if (!_sequencerHealthy()) return (nav, false);
-        AssetConfig memory cfg = assets.config(assetId);
-        usable = block.timestamp <= uint256(nav.observedAt) + cfg.maxAgeSec;
+        usable = block.timestamp <= uint256(nav.observedAt) + nav.maxAgeSec;
     }
 
     function navOf(bytes32 assetId) external view returns (Nav memory) {
@@ -496,9 +510,7 @@ contract AssayOracle is IAssayOracle {
         }
 
         bytes32 evidenceHash = sha256(evidence);
-        if (cfg.requireAllowedEvidence && !assets.evidenceAllowed(assetId, evidenceHash)) {
-            revert EvidenceNotCommitted(evidenceHash);
-        }
+        if (!assets.evidenceAllowed(assetId, evidenceHash)) revert EvidenceNotCommitted(evidenceHash);
 
         uint32 epoch = ++epochOf[assetId];
         (bool ok, uint256 median, HaltReason reason, Round memory r) =
@@ -535,20 +547,21 @@ contract AssayOracle is IAssayOracle {
                 ++haltCount[assetId];
             }
             emit Halted(assetId, epoch, HaltReason.Disagreement, uint8(r.n), evidenceHash);
-            _pay(challenger, bond);
+            _credit(challenger, bond);
         } else {
             _navs[assetId] = Nav({
                 valueE6: uint128(median),
                 postedAt: uint64(block.timestamp),
                 observedAt: r.observedAt,
                 epoch: epoch,
+                maxAgeSec: cfg.maxAgeSec,
                 accepted: uint8(r.n),
                 distinctSigners: r.distinct,
                 state: NavState.Live,
                 evidenceHash: evidenceHash
             });
             observationWatermark[assetId] = r.newestAt;
-            _pay(cfg.issuer, bond);
+            _credit(cfg.issuer, bond);
             emit AppraisalPosted(
                 assetId, epoch, uint128(median), uint8(r.n), r.distinct, r.observedAt, evidenceHash
             );
@@ -575,7 +588,7 @@ contract AssayOracle is IAssayOracle {
         if (n.state == NavState.Disputed) n.state = NavState.Live;
 
         AssetConfig memory cfg = assets.config(assetId);
-        _pay(cfg.issuer, bond);
+        _credit(cfg.issuer, bond);
         emit DisputeResolved(assetId, n.epoch, false, n.valueE6);
     }
 
@@ -583,10 +596,25 @@ contract AssayOracle is IAssayOracle {
     // Internals
     // ---------------------------------------------------------------------------------------
 
-    function _pay(address to, uint256 amount) internal {
+    /// @dev Credited rather than sent. An issuer address that cannot receive value — a contract
+    ///      without a payable fallback, most obviously — would otherwise make every dispute
+    ///      resolution revert, and since a dispute freezes consumers the asset would be bricked with
+    ///      no way back. Nobody should be able to take an oracle offline by choosing an awkward
+    ///      address.
+    function _credit(address to, uint256 amount) internal {
         if (amount == 0) return;
-        (bool sent,) = to.call{value: amount}("");
+        pendingWithdrawals[to] += amount;
+        emit Credited(to, amount);
+    }
+
+    /// @notice Withdraw bonds credited to you by a dispute outcome.
+    function withdraw() external returns (uint256 amount) {
+        amount = pendingWithdrawals[msg.sender];
+        if (amount == 0) return 0;
+        pendingWithdrawals[msg.sender] = 0;
+        (bool sent,) = msg.sender.call{value: amount}("");
         if (!sent) revert BondTransferFailed();
+        emit Withdrawn(msg.sender, amount);
     }
 
     function _recordHalt(bytes32 assetId, uint32 epoch, HaltReason reason, uint8 accepted, bytes32 evidenceHash)

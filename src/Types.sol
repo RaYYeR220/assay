@@ -17,7 +17,8 @@ enum RejectReason {
     OutOfRange,
     LowConfidence,
     Stale,
-    DuplicateSlot
+    DuplicateSlot,
+    NoTimestamp
 }
 
 /// @notice Why the oracle refused to publish a price for a round.
@@ -43,11 +44,13 @@ enum NavState {
 /// @param slot committee position, which fixes the model the answer must have come from
 /// @param responseBody the raw HTTP response bytes; the chain hashes these itself
 /// @param signature 65-byte secp256k1 signature produced inside the enclave
-/// @param contentOffset hint locating `"content":"ASSAY1|` inside `responseBody`
-/// @param finishOffset hint locating `"finish_reason":"stop"` inside `responseBody`
-/// @param createdOffset hint locating `"created":` inside `responseBody`
-/// @dev The offsets are untrusted hints. Each one is checked by matching the literal pattern at
-///      that position, so a wrong or malicious hint can only cause a rejection, never a misread.
+/// @param contentOffset where the submitter believes `"content":"ASSAY1|` starts; not read on chain
+/// @param finishOffset where the submitter believes `"finish_reason":"stop"` starts; not read
+/// @param createdOffset where the submitter believes `"created":` starts; not read
+/// @dev The three offsets are inert. They are carried so an indexer can point at the fields without
+///      re-scanning, and the contract ignores them: an offset travels outside the signature, so
+///      anyone watching a pending round could otherwise rewrite one and change what the round says.
+///      The oracle finds each field itself, at the first position where the literal pattern occurs.
 struct Verdict {
     uint8 slot;
     bytes responseBody;
@@ -69,15 +72,19 @@ struct AssetConfig {
     uint96 disputeBond;
     bytes32 schemaId;
     bool active;
-    bool requireAllowedEvidence;
 }
 
 /// @notice The published valuation, or the recorded absence of one.
+/// @dev `maxAgeSec` is copied in at publication time rather than read from the asset config on
+///      demand. Reading it live would let an issuer widen the window afterwards and bring an
+///      already-expired valuation back into service, which is the opposite of what a freshness
+///      window is for.
 struct Nav {
     uint128 valueE6;
     uint64 postedAt;
     uint64 observedAt;
     uint32 epoch;
+    uint32 maxAgeSec;
     uint8 accepted;
     uint8 distinctSigners;
     NavState state;

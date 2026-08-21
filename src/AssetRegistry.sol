@@ -34,9 +34,12 @@ contract AssetRegistry {
     mapping(bytes32 assetId => string) public metadataURI;
 
     /// @notice Evidence documents the issuer has committed to, keyed by their sha256 digest.
-    /// @dev Optional per asset. When required, it splits the three roles apart: the issuer commits
-    ///      to what the evidence is, the committee decides what it is worth, and the chain checks
-    ///      both. Without it, whoever posts a round also chooses the facts the models see.
+    /// @dev Mandatory, not optional, and that is the point. Posting a round is permissionless, so
+    ///      if the poster also chose the evidence they would be choosing the facts the models see,
+    ///      and the entire verification chain would rest on an input nothing checks. Anyone can
+    ///      still run a round; they just cannot invent what it is about. Three roles, separated:
+    ///      the issuer commits to what the evidence IS, the committee decides what it is WORTH,
+    ///      and the chain checks both.
     mapping(bytes32 assetId => mapping(bytes32 evidenceHash => bool)) public evidenceAllowed;
 
     bytes32[] internal _assetIds;
@@ -126,7 +129,6 @@ contract AssetRegistry {
         stored.maxAgeSec = cfg.maxAgeSec;
         stored.disputeBandBps = cfg.disputeBandBps;
         stored.disputeBond = cfg.disputeBond;
-        stored.requireAllowedEvidence = cfg.requireAllowedEvidence;
         emit AssetConfigured(assetId, stored);
     }
 

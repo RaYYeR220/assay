@@ -38,7 +38,6 @@ contract Deploy is Script {
         address sequencerFeed = vm.envOr("SEQUENCER_FEED", address(0));
         string memory assetKey = vm.envOr("ASSET_KEY", string("assay.carbon.demo.v1"));
         bytes32 assetId = keccak256(bytes(assetKey));
-        bytes32 fleetAssetId;
 
         vm.startBroadcast(pk);
 
@@ -87,27 +86,6 @@ contract Deploy is Script {
             _modelDiverseCommittee(),
             "ipfs://assay/carbon/demo"
         );
-
-        fleetAssetId = keccak256(bytes(string.concat(assetKey, ".fleet")));
-        assets.registerAsset(
-            fleetAssetId,
-            AssetConfig({
-                issuer: deployer,
-                quorum: 3,
-                minDistinctSigners: 3,
-                bandBps: 1000,
-                minConfidenceBps: 5000,
-                maxAgeSec: 3600,
-                disputeBandBps: 500,
-                disputeBond: 0.01 ether,
-                schemaId: schemaId,
-                active: true,
-                requireAllowedEvidence: false
-            }),
-            _enclaveDiverseCommittee(),
-            "ipfs://assay/carbon/fleet"
-        );
-
         AssayVault vault = new AssayVault(
             "Assay Carbon Basket",
             "aCARB",
@@ -130,33 +108,23 @@ contract Deploy is Script {
         console2.log("assayVault        ", address(vault));
         console2.log("currency          ", currencyAddr);
         console2.logBytes32(assetId);
-        console2.logBytes32(fleetAssetId);
 
         _writeDeployment(adapterAddr, address(attestations), address(assets), address(oracle), address(vault), currencyAddr, assetId, assetKey);
     }
 
-    /// @dev Five model families from five different vendors, so a shared failure mode in any one of
-    ///      them cannot carry a round on its own. Model identity is bound into the signed request,
-    ///      because the contract rebuilds that request with the slot model id before checking the
-    ///      signature, so this diversity is enforced rather than advertised.
+    /// @dev Four vendors across five slots. Every member is chosen for being a non-reasoning model:
+    ///      a reasoning model spends its token budget thinking and returns a truncated generation,
+    ///      which this oracle correctly refuses, so putting one on the committee would guarantee a
+    ///      rejection every round rather than test anything. Model identity is bound into the signed
+    ///      request, because the contract rebuilds that request with the slot model id before
+    ///      checking the signature, so the diversity is enforced rather than advertised.
     function _modelDiverseCommittee() internal pure returns (string[] memory c) {
         c = new string[](5);
         c[0] = "deepseek/deepseek-v4-flash-0731";
-        c[1] = "openai/gpt-oss-120b";
+        c[1] = "google/gemma-3-27b-it";
         c[2] = "meta-llama/llama-3.3-70b-instruct";
-        c[3] = "qwen/qwen3.6-27b";
-        c[4] = "z-ai/glm-5.2";
-    }
-
-    /// @dev The other axis. Every slot is the same model, served by a fleet of separate trust
-    ///      domains, each with its own attested key. Diversity here is in the enclaves rather than
-    ///      the models, and `minDistinctSigners` is what forces it: three slots filled from one
-    ///      enclave will not reach the threshold no matter how well the answers agree.
-    function _enclaveDiverseCommittee() internal pure returns (string[] memory c) {
-        c = new string[](5);
-        for (uint256 i = 0; i < 5; ++i) {
-            c[i] = "moonshotai/kimi-k2.6";
-        }
+        c[3] = "qwen/qwen3.6-35b-a3b";
+        c[4] = "qwen/qwen3-vl-30b-a3b-instruct";
     }
 
     function _writeDeployment(

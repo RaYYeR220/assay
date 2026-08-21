@@ -107,11 +107,12 @@ routed to, would not be caught by the committee, only by the measurement allowli
 cost: nobody outside that enclave can forge a verdict, and the measurement of the gateway software is
 verified against Intel's root of trust on every registration.
 
-The mechanism to do better exists and is demonstrated rather than asserted. A second asset is listed
-against a fleet of eleven separate trust domains running the same model, each with its own attested
-key, configured with `minDistinctSigners` of 3. Three slots filled from one enclave will not reach
-that threshold however well the answers agree. A production committee should span both axes: several
-models, served by several enclaves, ideally by several providers.
+We looked for a second signer and could not buy one honestly. The same provider does run a fleet of
+eleven separate trust domains behind another model, and those quotes verify, but that fleet exposes
+no per-response signing key at all, so its answers cannot be checked by a contract. Registering it
+would have produced a listing that looks diverse and can never actually post a verdict, which is
+worse than admitting the limit. `minDistinctSigners` is enforced and covered by tests, and a
+deployment spanning two providers should set it above 1; ours cannot yet, so it does not.
 
 **Governance can widen the response grammar.** The owner can change which byte patterns count as a
 well-formed answer. That cannot manufacture a signature, so the worst case is denial of service or an

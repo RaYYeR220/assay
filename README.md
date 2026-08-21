@@ -44,9 +44,8 @@ verified appraisal as a first-class state rather than an outage.
   environment that signs its own output with a key derived inside the enclave. Which model answered
   is not a label: the contract rebuilds each request with that slot's model identifier before it
   checks the signature, so a verdict cannot be moved between slots. On the deployed committee those
-  five models are fronted by a single attested gateway enclave, so they share one signing key —
-  `docs/THREAT-MODEL.md` says what that costs and what it does not, and a second asset is listed
-  against a fleet of eleven separate trust domains to show the other axis working.
+  five models are fronted by a single attested gateway enclave, so they share one signing key.
+  `docs/THREAT-MODEL.md` says exactly what that costs and what it does not.
 - **The attestation is re-verified on chain.** An Intel TDX quote is checked by a contract on X
   Layer, and the signing address is read *out of the verified quote*. No operator gets to nominate a
   signer; the registry's contents are a consequence of Intel's root of trust.

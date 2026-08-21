@@ -244,6 +244,7 @@ docs/           threat model, evaluation protocol, verification guide
 - [`docs/VERIFY.md`](docs/VERIFY.md) — check every claim yourself, in five minutes, with no credentials.
 - [`docs/THREAT-MODEL.md`](docs/THREAT-MODEL.md) — what we tried to break, what held, and what is still open.
 - [`docs/EVAL.md`](docs/EVAL.md) — the evaluation protocol, written before the evaluation ran.
+- [`docs/REAL-VS-SIMULATED.md`](docs/REAL-VS-SIMULATED.md) — which parts touch the real world, and which do not.
 
 ## License
 

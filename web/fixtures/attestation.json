@@ -1,0 +1,49 @@
+{
+  "chainId": 1952,
+  "source": "fixture",
+  "capturedAt": 1787265900,
+  "adapter": {
+    "address": "0x5cE9a1D4b3f07E2864aB0C179d8Fe5731ab2c7E0",
+    "label": "UnverifiedQuoteAdapter",
+    "isTrusted": false
+  },
+  "attestationTtlSec": 604800,
+  "signerOffset": 0,
+  "signers": [
+    {
+      "address": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "mrTd": "0xa41f7b2c93d5e0184c6fb27a9d3e5c81f04b6ad2e7c9138ba5f6e0d2c4831b97",
+      "tcbStatus": 0,
+      "tcbStatusLabel": "UpToDate",
+      "attestedAt": 1787044364,
+      "revoked": false,
+      "models": [
+        "google/gemma-4-31b-it",
+        "z-ai/glm-5.2",
+        "openai/gpt-oss-20b"
+      ],
+      "txHash": "0x2ad7196c4f0b83e51d9a06fc7b2384ea15d0c9f7368ba24e05d1c7638fa091bc",
+      "blockNumber": "9174880",
+      "quoteBytes": 10012,
+      "gpuArch": "HOPPER",
+      "reportData": "1f016fc3244ac0c064b441a7ebe0f9cfeb48e7cc000000000000000000000000a718de911b589f6e0e1766b85c52822812d84358bc8a6dd56f9cf8aa092480b4"
+    },
+    {
+      "address": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+      "mrTd": "0xc73d19ae5f8b204c6e1d93a7f0b52c84d6a1e39fb7c058d2a4e69137bf05c2ea",
+      "tcbStatus": 2,
+      "tcbStatusLabel": "SWHardeningNeeded",
+      "attestedAt": 1787001164,
+      "revoked": false,
+      "models": [
+        "qwen/qwen3-vl-30b-a3b-instruct",
+        "meta/muse-glimmer-30b"
+      ],
+      "txHash": "0x8e340bd17c5a92f6084be3d1fa72c95d0b6318ae47f9d2c05b183ea6712d40cf",
+      "blockNumber": "9174902",
+      "quoteBytes": 10012,
+      "gpuArch": "HOPPER",
+      "reportData": "072b3b9f1e77fcf705df89b8560949938c564e70000000000000000000000000d2d442da541154181d8a5b0d369bfc1d9b14f581b3955e60c8fe0c315a033d0a"
+    }
+  ]
+}

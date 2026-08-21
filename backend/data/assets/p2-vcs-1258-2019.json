@@ -1,0 +1,62 @@
+{
+  "assetId": "p2-vcs-1258-2019",
+  "caseId": "P2",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-1258",
+    "project_name": "Saint Nikola Wind Farm",
+    "project_type": "Wind",
+    "methodology": "ACM0002 Grid-connected electricity generation from renewable sources",
+    "vintage": "2019",
+    "country": "Bulgaria",
+    "region": "Eastern Europe",
+    "registry_status": "Registered",
+    "credits_issued": "2612648",
+    "credits_retired": "1977107",
+    "credits_remaining": "635541",
+    "buffer_deposited": "0",
+    "first_vintage": "2012",
+    "durability": "emission avoidance, no storage reversal risk",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "reference": {
+    "lowUsd": 0.85,
+    "highUsd": 1.19,
+    "basis": "Carbonmark VCS-1258 vintage 2019: seller ask 0.85 USD, fee-inclusive purchase price 1.19 USD, available supply 47774 tonnes.",
+    "sourceUrl": "https://api.carbonmark.com/prices"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    },
+    {
+      "label": "Carbonmark public price API (no auth)",
+      "url": "https://api.carbonmark.com/prices"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "project_type",
+      "methodology",
+      "country",
+      "region",
+      "registry_status",
+      "credits_issued",
+      "credits_retired",
+      "credits_remaining",
+      "buffer_deposited",
+      "first_vintage",
+      "vintage"
+    ],
+    "illustrative": [],
+    "notes": "Registry fields from the Berkeley database; vintage and reference band from the live Carbonmark ask."
+  }
+}

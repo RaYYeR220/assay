@@ -1,0 +1,45 @@
+{
+  "name": "@assay/sdk",
+  "version": "0.1.0",
+  "description": "Typed client for the Assay NAV oracle on X Layer: reads, decoded refusals, and the off-chain half of the verification the contract performs.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./solidity/*": "./solidity/*"
+  },
+  "files": [
+    "dist",
+    "solidity",
+    "README.md",
+    "INTEGRATION.md",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test test/*.test.ts",
+    "abi": "node scripts/gen-abi.mjs",
+    "prepublishOnly": "npm run build",
+    "verify": "node src/cli/verify.ts",
+    "fixture": "node scripts/make-fixture.mjs"
+  },
+  "dependencies": {
+    "viem": "^2.37.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  },
+  "bin": {
+    "assay-verify": "./dist/cli/verify.js"
+  }
+}

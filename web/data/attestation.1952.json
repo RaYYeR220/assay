@@ -1,0 +1,29 @@
+{
+  "chainId": 1952,
+  "source": "live",
+  "capturedAt": 1787345563,
+  "capturedAtBlock": "38886726",
+  "adapter": {
+    "address": "0x8902b08b0BCB906239772Fde394b5048d3f92180",
+    "label": "AutomataTdxAdapter",
+    "isTrusted": true
+  },
+  "attestationTtlSec": 604800,
+  "signerOffset": 0,
+  "committee": [
+    "deepseek/deepseek-v4-flash-0731",
+    "google/gemma-3-27b-it",
+    "meta-llama/llama-3.3-70b-instruct",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3-vl-30b-a3b-instruct"
+  ],
+  "allowedImages": [
+    {
+      "measurement": "0xc7343ebcc75fc5e2f538e892769cf520947342e58dd1bca1bef643ba4ec949ce",
+      "allowed": true,
+      "txHash": "0xe03fd174d5408a43a556743d74453981ae2f15f537a51b5104f66d34ac8fa261",
+      "blockNumber": "38885438"
+    }
+  ],
+  "signers": []
+}

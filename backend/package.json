@@ -1,0 +1,33 @@
+{
+  "name": "@assay/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Assay \u2014 TEE-attested NAV oracle backend: canonical request builder, committee discovery, appraisal service.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --experimental-strip-types --test test/canonical.test.ts test/bundle.test.ts",
+    "discover": "node --experimental-strip-types scripts/discover-committee.ts",
+    "probe": "node --experimental-strip-types scripts/probe-live.ts",
+    "compliance": "node --experimental-strip-types scripts/compliance.ts",
+    "replay": "node --experimental-strip-types scripts/run-appraisal.ts --replay",
+    "evidence": "node --experimental-strip-types scripts/build-evidence.ts",
+    "serve": "node --experimental-strip-types src/server.ts",
+    "appraise": "node --experimental-strip-types scripts/run-appraisal.ts",
+    "gen-assets": "node --experimental-strip-types scripts/gen-assets.ts",
+    "eval": "node --experimental-strip-types scripts/run-eval.ts"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "viem": "^2.37.6"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  }
+}

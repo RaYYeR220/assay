@@ -1,0 +1,229 @@
+{
+  "bundleId": "fixture-kariba-quorum",
+  "createdAt": "2026-08-20T20:52:33.000Z",
+  "promptVersion": "assay.appraisal.v1",
+  "assetId": "carbon-vcs-902-2019",
+  "assetLabel": "Kariba REDD+ · Verra VCS-902 · vintage 2019",
+  "assetIdHash": "0x2ced84bd89f97770ba33d2567a9db1ea3e7478efcfd350b0758572f49d94b7d0",
+  "evidence": {
+    "line": "schema=assay.carbon.v1;asset_id=carbon-vcs-902-2019;registry=Verra VCS;project_id=VCS-902;project_name=Kariba REDD+ Project;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, miombo woodland;vintage=2019;country=Zimbabwe;region=Mashonaland West;credits_issued=23610000;credits_retired=9042118;batch_size=1;cobenefits=wildlife corridors,beekeeping,borehole rehabilitation;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=D;integrity_flags=issuance suspended 2023,baseline over-crediting disputed,verifier withdrawn;corresponding_adjustment=no;buffer_pool_pct=22;permanence_years=30;ref_price_usd=3.10;ref_price_source=bilateral OTC, thin;ref_price_date=2026-07-30;observed_at=2026-08-20T21:40:00Z;evidence_sha256=3700ed371bf82166eef26a6d493d7179ea749a0fd4aba3298fc0e184a7588724",
+    "evidenceSha256": "3700ed371bf82166eef26a6d493d7179ea749a0fd4aba3298fc0e184a7588724",
+    "lineSha256": "1b6fe4ddd01882ac5f5caf62c3bef27eeb3b3aa0fbe39cd88a1a208c6045f3cb",
+    "byteLength": 805
+  },
+  "systemPromptSha256": "49177252d3e5543ea702b6ceed75d8b37966fcece1ee208e7b2a1b50a4a0e2ac",
+  "committee": [
+    "google/gemma-4-31b-it",
+    "z-ai/glm-5.2",
+    "openai/gpt-oss-20b",
+    "qwen/qwen3-vl-30b-a3b-instruct",
+    "meta/muse-glimmer-30b"
+  ],
+  "verdicts": [
+    {
+      "model": "google/gemma-4-31b-it",
+      "slot": 0,
+      "signer": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "attestedSigner": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "receiptId": "d839b2f3d886686893537d71833d8940",
+      "requestBody": "{\"model\":\"google/gemma-4-31b-it\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=carbon-vcs-902-2019;registry=Verra VCS;project_id=VCS-902;project_name=Kariba REDD+ Project;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, miombo woodland;vintage=2019;country=Zimbabwe;region=Mashonaland West;credits_issued=23610000;credits_retired=9042118;batch_size=1;cobenefits=wildlife corridors,beekeeping,borehole rehabilitation;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=D;integrity_flags=issuance suspended 2023,baseline over-crediting disputed,verifier withdrawn;corresponding_adjustment=no;buffer_pool_pct=22;permanence_years=30;ref_price_usd=3.10;ref_price_source=bilateral OTC, thin;ref_price_date=2026-07-30;observed_at=2026-08-20T21:40:00Z;evidence_sha256=3700ed371bf82166eef26a6d493d7179ea749a0fd4aba3298fc0e184a7588724\"}]}",
+      "requestSha256": "e681fb02912e90ae332557d5c540a053aec52921a3d16b76ab988759f2624635",
+      "responseBody": "{\"id\":\"chatcmpl-62873144c11625014b4238d9\",\"object\":\"chat.completion\",\"created\":1787259153,\"model\":\"google/gemma-4-31b-it\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=3050000|confidence_bps=5400\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":508,\"completion_tokens\":21,\"total_tokens\":529},\"system_fingerprint\":\"tdx_aci_1\"}",
+      "responseSha256": "13ae3be6a28deb8e07d27ffb1e92c5b80255689194900c03c533e66e714a76d4",
+      "signature": "0x36504c2a8a220a003f81ccb86fdc7fcdbdc1935f64222bfc514f8782f7778fe05f51ebf533d90a759337a539c2614807fcdf0829c5530baf66dd20fe1934a4191c",
+      "signedText": "e681fb02912e90ae332557d5c540a053aec52921a3d16b76ab988759f2624635:13ae3be6a28deb8e07d27ffb1e92c5b80255689194900c03c533e66e714a76d4",
+      "signatureOk": true,
+      "parseOk": true,
+      "verdict": {
+        "navUsdE6": "3050000",
+        "confidenceBps": 5400,
+        "evidenceSha256": "3700ed371bf82166eef26a6d493d7179ea749a0fd4aba3298fc0e184a7588724"
+      },
+      "haltReason": null,
+      "latencyMs": 2610
+    },
+    {
+      "model": "z-ai/glm-5.2",
+      "slot": 1,
+      "signer": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "attestedSigner": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "receiptId": "92142b6739d85da8b2607c008f948d9b",
+      "requestBody": "{\"model\":\"z-ai/glm-5.2\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=carbon-vcs-902-2019;registry=Verra VCS;project_id=VCS-902;project_name=Kariba REDD+ Project;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, miombo woodland;vintage=2019;country=Zimbabwe;region=Mashonaland West;credits_issued=23610000;credits_retired=9042118;batch_size=1;cobenefits=wildlife corridors,beekeeping,borehole rehabilitation;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=D;integrity_flags=issuance suspended 2023,baseline over-crediting disputed,verifier withdrawn;corresponding_adjustment=no;buffer_pool_pct=22;permanence_years=30;ref_price_usd=3.10;ref_price_source=bilateral OTC, thin;ref_price_date=2026-07-30;observed_at=2026-08-20T21:40:00Z;evidence_sha256=3700ed371bf82166eef26a6d493d7179ea749a0fd4aba3298fc0e184a7588724\"}]}",
+      "requestSha256": "aa49e5bfff5aeacdf6ead67f7d0fb421e50de1ae593b0e0c4b3525f43082250b",
+      "responseBody": "{\"id\":\"chatcmpl-682f33af391217b7d3e13a79\",\"object\":\"chat.completion\",\"created\":1787259154,\"model\":\"z-ai/glm-5.2\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=31\"},\"logprobs\":null,\"finish_reason\":\"length\"}],\"usage\":{\"prompt_tokens\":508,\"completion_tokens\":21,\"total_tokens\":529},\"system_fingerprint\":\"tdx_aci_1\"}",
+      "responseSha256": "8d55e3288259fa9cd905aedaa6bd79152e113975e3c060f5a74197e19588c9ed",
+      "signature": "0xf34d8cc450fe8ec5b812038c4e4005d1e03cbe1094f5b38a51618ee7a943c30419feb960bc5a0dcc6d8d91750ecc5515af7dab2472d20d798d1792d25e5493581c",
+      "signedText": "aa49e5bfff5aeacdf6ead67f7d0fb421e50de1ae593b0e0c4b3525f43082250b:8d55e3288259fa9cd905aedaa6bd79152e113975e3c060f5a74197e19588c9ed",
+      "signatureOk": true,
+      "parseOk": false,
+      "verdict": null,
+      "haltReason": "HALT:TRUNCATED",
+      "latencyMs": 5320
+    },
+    {
+      "model": "openai/gpt-oss-20b",
+      "slot": 2,
+      "signer": "0xC26CA6d89bae18Ceab1Cd37AeE534c4a4d22304e",
+      "attestedSigner": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "receiptId": "10e606abc2737a87440334346457ed6e",
+      "requestBody": "{\"model\":\"openai/gpt-oss-20b\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=carbon-vcs-902-2019;registry=Verra VCS;project_id=VCS-902;project_name=Kariba REDD+ Project;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, miombo woodland;vintage=2019;country=Zimbabwe;region=Mashonaland West;credits_issued=23610000;credits_retired=9042118;batch_size=1;cobenefits=wildlife corridors,beekeeping,borehole rehabilitation;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=D;integrity_flags=issuance suspended 2023,baseline over-crediting disputed,verifier withdrawn;corresponding_adjustment=no;buffer_pool_pct=22;permanence_years=30;ref_price_usd=3.10;ref_price_source=bilateral OTC, thin;ref_price_date=2026-07-30;observed_at=2026-08-20T21:40:00Z;evidence_sha256=3700ed371bf82166eef26a6d493d7179ea749a0fd4aba3298fc0e184a7588724\"}]}",
+      "requestSha256": "9fb2ad0d569413f961a16f51beb8e7ca36456de8b9408f3926e3e1ea176ce787",
+      "responseBody": "{\"id\":\"chatcmpl-ba291660611523f2e7425acd\",\"object\":\"chat.completion\",\"created\":1787259155,\"model\":\"openai/gpt-oss-20b\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=3100000|confidence_bps=6000\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":508,\"completion_tokens\":21,\"total_tokens\":529},\"system_fingerprint\":\"tdx_aci_1\"}",
+      "responseSha256": "fb2be1fa313982a7c22e7ccc0441e2f97212f88a5c8df1a9059e1b920178f56d",
+      "signature": "0xfa790aaf340b237951e636b50e2c1ea9def470c8fd3a082f9bf6ed56d2a2e2355505775e87f544a543869204679134e6c17ac63883e7548f2610ddef6db613df1c",
+      "signedText": "9fb2ad0d569413f961a16f51beb8e7ca36456de8b9408f3926e3e1ea176ce787:fb2be1fa313982a7c22e7ccc0441e2f97212f88a5c8df1a9059e1b920178f56d",
+      "signatureOk": false,
+      "parseOk": true,
+      "verdict": {
+        "navUsdE6": "3100000",
+        "confidenceBps": 6000,
+        "evidenceSha256": "3700ed371bf82166eef26a6d493d7179ea749a0fd4aba3298fc0e184a7588724"
+      },
+      "haltReason": "HALT:BAD_SIGNATURE (recovered key not attested)",
+      "latencyMs": 2210
+    },
+    {
+      "model": "qwen/qwen3-vl-30b-a3b-instruct",
+      "slot": 3,
+      "signer": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+      "attestedSigner": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+      "receiptId": "5e8a60d900c5000182860444cb2574f5",
+      "requestBody": "{\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=carbon-vcs-902-2019;registry=Verra VCS;project_id=VCS-902;project_name=Kariba REDD+ Project;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, miombo woodland;vintage=2019;country=Zimbabwe;region=Mashonaland West;credits_issued=23610000;credits_retired=9042118;batch_size=1;cobenefits=wildlife corridors,beekeeping,borehole rehabilitation;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=D;integrity_flags=issuance suspended 2023,baseline over-crediting disputed,verifier withdrawn;corresponding_adjustment=no;buffer_pool_pct=22;permanence_years=30;ref_price_usd=3.10;ref_price_source=bilateral OTC, thin;ref_price_date=2026-07-30;observed_at=2026-08-20T21:40:00Z;evidence_sha256=3700ed371bf82166eef26a6d493d7179ea749a0fd4aba3298fc0e184a7588724\"}]}",
+      "requestSha256": "5405e0fc0d431e66bfb219c944f25806114fb054d952ab60830b5172f81109df",
+      "responseBody": "{\"id\":\"chatcmpl-415d3d86e8b8576ae04206d7\",\"object\":\"chat.completion\",\"created\":1787259156,\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=2900000|confidence_bps=3100\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":508,\"completion_tokens\":21,\"total_tokens\":529},\"system_fingerprint\":\"tdx_aci_1\"}",
+      "responseSha256": "d412d2450c49a917db4341e92edadf2cfd5709fe3c4b7cef1d828200b5045d4a",
+      "signature": "0x9f72ddd9fc1b4f5f52bcea24ea91ad43348a39837f090d4cc137986edcb7031241905bb6a7300865dc356c7402f6f7c55cb989a899363a59cf47f0d8bf3119fe1c",
+      "signedText": "5405e0fc0d431e66bfb219c944f25806114fb054d952ab60830b5172f81109df:d412d2450c49a917db4341e92edadf2cfd5709fe3c4b7cef1d828200b5045d4a",
+      "signatureOk": true,
+      "parseOk": true,
+      "verdict": {
+        "navUsdE6": "2900000",
+        "confidenceBps": 3100,
+        "evidenceSha256": "3700ed371bf82166eef26a6d493d7179ea749a0fd4aba3298fc0e184a7588724"
+      },
+      "haltReason": "HALT:LOW_CONFIDENCE(3100)",
+      "latencyMs": 3040
+    },
+    {
+      "model": "meta/muse-glimmer-30b",
+      "slot": 4,
+      "signer": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+      "attestedSigner": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+      "receiptId": "30fedafc4c0093870848d33c6197d156",
+      "requestBody": "{\"model\":\"meta/muse-glimmer-30b\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=carbon-vcs-902-2019;registry=Verra VCS;project_id=VCS-902;project_name=Kariba REDD+ Project;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, miombo woodland;vintage=2019;country=Zimbabwe;region=Mashonaland West;credits_issued=23610000;credits_retired=9042118;batch_size=1;cobenefits=wildlife corridors,beekeeping,borehole rehabilitation;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=D;integrity_flags=issuance suspended 2023,baseline over-crediting disputed,verifier withdrawn;corresponding_adjustment=no;buffer_pool_pct=22;permanence_years=30;ref_price_usd=3.10;ref_price_source=bilateral OTC, thin;ref_price_date=2026-07-30;observed_at=2026-08-20T21:40:00Z;evidence_sha256=3700ed371bf82166eef26a6d493d7179ea749a0fd4aba3298fc0e184a7588724\"}]}",
+      "requestSha256": "126cfb2f5faa1ecab6a667ef6b8b39e3c35a7e53f8bde8cd5f2b7e60120fcf5a",
+      "responseBody": "{\"id\":\"chatcmpl-8f08a88ac73c873b8919d777\",\"object\":\"chat.completion\",\"created\":1787259157,\"model\":\"meta/muse-glimmer-30b\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=3120000|confidence_bps=5800\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":508,\"completion_tokens\":21,\"total_tokens\":529},\"system_fingerprint\":\"tdx_aci_1\"}",
+      "responseSha256": "75d91d0d46e852f072390289bbd26cc1048a81e87607c4ae6a694ae9dc275ce0",
+      "signature": "0x3699fdfa96bafcdd9dc34eeac1fbb1bdd5fafe249b668cf8ce7bd32c3620b0b177f833624ebc72a7b662bd212e4c1ee75a6c2b2a865c346aabdc583261f9c7661b",
+      "signedText": "126cfb2f5faa1ecab6a667ef6b8b39e3c35a7e53f8bde8cd5f2b7e60120fcf5a:75d91d0d46e852f072390289bbd26cc1048a81e87607c4ae6a694ae9dc275ce0",
+      "signatureOk": true,
+      "parseOk": true,
+      "verdict": {
+        "navUsdE6": "3120000",
+        "confidenceBps": 5800,
+        "evidenceSha256": "3700ed371bf82166eef26a6d493d7179ea749a0fd4aba3298fc0e184a7588724"
+      },
+      "haltReason": null,
+      "latencyMs": 2380
+    }
+  ],
+  "summary": {
+    "requested": 5,
+    "signatureOk": 4,
+    "parseOk": 4,
+    "usable": 2,
+    "navsUsdE6": [
+      "3050000",
+      "3120000"
+    ],
+    "medianUsdE6": "3085000",
+    "maxDeviationBps": 113,
+    "wouldHalt": true,
+    "haltReasons": [
+      "QUORUM(2/3)",
+      "z-ai/glm-5.2:HALT:TRUNCATED",
+      "openai/gpt-oss-20b:HALT:BAD_SIGNATURE (recovered key not attested)",
+      "qwen/qwen3-vl-30b-a3b-instruct:HALT:LOW_CONFIDENCE(3100)"
+    ]
+  },
+  "policy": {
+    "quorum": 3,
+    "minDistinctSigners": 2,
+    "bandBps": 1000,
+    "minConfidenceBps": 5000,
+    "maxAgeSec": 3600,
+    "disputeBandBps": 500
+  },
+  "onChain": {
+    "chainId": 196,
+    "epoch": 12,
+    "txHash": "0x91ce02f7ab4d63158e0c7d29b5f841ea36c0d8b7194fa25e63c08da4172b5f6d",
+    "blockNumber": "9186031",
+    "timestamp": 1787259200,
+    "published": false,
+    "navE6": null,
+    "haltReason": "InsufficientQuorum",
+    "accepted": 2,
+    "distinctSigners": 2,
+    "observedAt": 1787259153,
+    "evidenceHash": "0x1b6fe4ddd01882ac5f5caf62c3bef27eeb3b3aa0fbe39cd88a1a208c6045f3cb",
+    "slots": [
+      {
+        "slot": 0,
+        "signer": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+        "accepted": true,
+        "rejectReason": null,
+        "navE6": "3050000",
+        "confidenceBps": 5400,
+        "createdAt": 1787259153
+      },
+      {
+        "slot": 1,
+        "signer": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+        "accepted": false,
+        "rejectReason": "Truncated",
+        "navE6": null,
+        "confidenceBps": null,
+        "createdAt": 1787259154
+      },
+      {
+        "slot": 2,
+        "signer": "0xC26CA6d89bae18Ceab1Cd37AeE534c4a4d22304e",
+        "accepted": false,
+        "rejectReason": "UnknownSigner",
+        "navE6": null,
+        "confidenceBps": null,
+        "createdAt": 1787259155
+      },
+      {
+        "slot": 3,
+        "signer": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+        "accepted": false,
+        "rejectReason": "LowConfidence",
+        "navE6": null,
+        "confidenceBps": null,
+        "createdAt": 1787259156
+      },
+      {
+        "slot": 4,
+        "signer": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+        "accepted": true,
+        "rejectReason": null,
+        "navE6": "3120000",
+        "confidenceBps": 5800,
+        "createdAt": 1787259157
+      }
+    ],
+    "authenticated": 4,
+    "ignored": false,
+    "evidenceCommitment": {
+      "committed": true,
+      "issuer": "0x4C21b7577C8FE8b0554b0Fc6C4C1B2eD0A9DdF63",
+      "uri": "ipfs://assay/evidence/3700ed371bf82166",
+      "txHash": "0x5c9aa25a982ac31f8b490e0ad6adf662e360e63181744c4e863805abb61e1d65",
+      "blockNumber": "9186025",
+      "timestamp": 1787258913
+    }
+  },
+  "source": "fixture"
+}

@@ -1,0 +1,896 @@
+{
+ "source": "GET https://api.carbonmark.com/prices (public, no auth)",
+ "retrievedAt": "2026-08-21",
+ "note": "baseUnitPrice is the seller ask; purchasePrice is fee-inclusive. supply=0 means the ask is quoted but not currently fillable.",
+ "asks": [
+  {
+   "projectId": "VCS-191",
+   "vintage": 2008,
+   "baseAsk": 0.1,
+   "purchasePrice": 0.14,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1190",
+   "vintage": 2018,
+   "baseAsk": 0.72,
+   "purchasePrice": 1.008,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-986",
+   "vintage": 2014,
+   "baseAsk": 0.52,
+   "purchasePrice": 0.728,
+   "supply": 0
+  },
+  {
+   "projectId": "CMARK-5",
+   "vintage": 2025,
+   "baseAsk": 10,
+   "purchasePrice": 14,
+   "supply": 0
+  },
+  {
+   "projectId": "TVER-0",
+   "vintage": 9999,
+   "baseAsk": 0.01,
+   "purchasePrice": 0.1,
+   "supply": 0
+  },
+  {
+   "projectId": "CMARK-3",
+   "vintage": 2025,
+   "baseAsk": 8.5,
+   "purchasePrice": 11.9,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1883",
+   "vintage": 2018,
+   "baseAsk": 0.75,
+   "purchasePrice": 1.05,
+   "supply": 0
+  },
+  {
+   "projectId": "ICR-112",
+   "vintage": 2019,
+   "baseAsk": 2,
+   "purchasePrice": 2.8,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-674",
+   "vintage": 2014,
+   "baseAsk": 5,
+   "purchasePrice": 7,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-985",
+   "vintage": 2013,
+   "baseAsk": 1,
+   "purchasePrice": 1.4,
+   "supply": 0
+  },
+  {
+   "projectId": "CMARK-6",
+   "vintage": 2025,
+   "baseAsk": 44,
+   "purchasePrice": 61.6,
+   "supply": 0
+  },
+  {
+   "projectId": "CMARK-2",
+   "vintage": 2024,
+   "baseAsk": 600,
+   "purchasePrice": 650,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-426",
+   "vintage": 2011,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-786",
+   "vintage": 2015,
+   "baseAsk": 0.88,
+   "purchasePrice": 1.232,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1650",
+   "vintage": 2015,
+   "baseAsk": 4,
+   "purchasePrice": 5.6,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-498",
+   "vintage": 2012,
+   "baseAsk": 0.65,
+   "purchasePrice": 0.91,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-836",
+   "vintage": 2014,
+   "baseAsk": 0.52,
+   "purchasePrice": 0.728,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-498",
+   "vintage": 2014,
+   "baseAsk": 0.61,
+   "purchasePrice": 0.854,
+   "supply": 3862
+  },
+  {
+   "projectId": "VCS-929",
+   "vintage": 2013,
+   "baseAsk": 0.9,
+   "purchasePrice": 1.26,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-2098",
+   "vintage": 2017,
+   "baseAsk": 0.55,
+   "purchasePrice": 0.77,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-68",
+   "vintage": 2010,
+   "baseAsk": 2,
+   "purchasePrice": 2.8,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-981",
+   "vintage": 2017,
+   "baseAsk": 4.7,
+   "purchasePrice": 6.58,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-426",
+   "vintage": 2016,
+   "baseAsk": 0.55,
+   "purchasePrice": 0.77,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1580",
+   "vintage": 2017,
+   "baseAsk": 0.8,
+   "purchasePrice": 1.12,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-896",
+   "vintage": 2011,
+   "baseAsk": 0.41,
+   "purchasePrice": 0.574,
+   "supply": 367816
+  },
+  {
+   "projectId": "VCS-1525",
+   "vintage": 2011,
+   "baseAsk": 0.7,
+   "purchasePrice": 0.98,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1205",
+   "vintage": 2015,
+   "baseAsk": 0.55,
+   "purchasePrice": 0.77,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-10",
+   "vintage": 2013,
+   "baseAsk": 0.55,
+   "purchasePrice": 0.77,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-929",
+   "vintage": 2014,
+   "baseAsk": 0.9,
+   "purchasePrice": 1.26,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1146",
+   "vintage": 2015,
+   "baseAsk": 2.3,
+   "purchasePrice": 3.22,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1100",
+   "vintage": 2013,
+   "baseAsk": 0.7,
+   "purchasePrice": 0.98,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-836",
+   "vintage": 2017,
+   "baseAsk": 0.55,
+   "purchasePrice": 0.77,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-631",
+   "vintage": 2014,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-836",
+   "vintage": 2016,
+   "baseAsk": 0.52,
+   "purchasePrice": 0.728,
+   "supply": 20189.99
+  },
+  {
+   "projectId": "VCS-2026",
+   "vintage": 2019,
+   "baseAsk": 0.7,
+   "purchasePrice": 0.98,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1174",
+   "vintage": 2014,
+   "baseAsk": 0.55,
+   "purchasePrice": 0.77,
+   "supply": 29352
+  },
+  {
+   "projectId": "VCS-1100",
+   "vintage": 2014,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-929",
+   "vintage": 2015,
+   "baseAsk": 0.8,
+   "purchasePrice": 1.12,
+   "supply": 30657
+  },
+  {
+   "projectId": "VCS-1258",
+   "vintage": 2017,
+   "baseAsk": 0.87,
+   "purchasePrice": 1.218,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-812",
+   "vintage": 2009,
+   "baseAsk": 1.12,
+   "purchasePrice": 1.568,
+   "supply": 57866
+  },
+  {
+   "projectId": "VCS-917",
+   "vintage": 2017,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-2098",
+   "vintage": 2018,
+   "baseAsk": 0.52,
+   "purchasePrice": 0.728,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-566",
+   "vintage": 2015,
+   "baseAsk": 0.5,
+   "purchasePrice": 0.7,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1205",
+   "vintage": 2014,
+   "baseAsk": 0.65,
+   "purchasePrice": 0.91,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-498",
+   "vintage": 2010,
+   "baseAsk": 0.7,
+   "purchasePrice": 0.98,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-917",
+   "vintage": 2014,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1525",
+   "vintage": 2012,
+   "baseAsk": 0.74,
+   "purchasePrice": 1.036,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-566",
+   "vintage": 2013,
+   "baseAsk": 0.65,
+   "purchasePrice": 0.91,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-896",
+   "vintage": 2012,
+   "baseAsk": 0.5,
+   "purchasePrice": 0.7,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-426",
+   "vintage": 2012,
+   "baseAsk": 0.8,
+   "purchasePrice": 1.12,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-631",
+   "vintage": 2015,
+   "baseAsk": 0.55,
+   "purchasePrice": 0.77,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1758",
+   "vintage": 2019,
+   "baseAsk": 0.64,
+   "purchasePrice": 0.896,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1174",
+   "vintage": 2018,
+   "baseAsk": 0.59,
+   "purchasePrice": 0.826,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-708",
+   "vintage": 2016,
+   "baseAsk": 0.52,
+   "purchasePrice": 0.728,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-498",
+   "vintage": 2013,
+   "baseAsk": 0.7,
+   "purchasePrice": 0.98,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-631",
+   "vintage": 2016,
+   "baseAsk": 0.75,
+   "purchasePrice": 1.05,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1205",
+   "vintage": 2018,
+   "baseAsk": 0.59,
+   "purchasePrice": 0.826,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-836",
+   "vintage": 2013,
+   "baseAsk": 0.55,
+   "purchasePrice": 0.77,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-10",
+   "vintage": 2014,
+   "baseAsk": 0.59,
+   "purchasePrice": 0.826,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-849",
+   "vintage": 2017,
+   "baseAsk": 0.5,
+   "purchasePrice": 0.7,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-766",
+   "vintage": 2009,
+   "baseAsk": 0.5,
+   "purchasePrice": 0.7,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-391",
+   "vintage": 2017,
+   "baseAsk": 0.62,
+   "purchasePrice": 0.868,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-850",
+   "vintage": 2016,
+   "baseAsk": 0.49,
+   "purchasePrice": 0.686,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-708",
+   "vintage": 2012,
+   "baseAsk": 0.57,
+   "purchasePrice": 0.798,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1578",
+   "vintage": 2012,
+   "baseAsk": 0.65,
+   "purchasePrice": 0.91,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-784",
+   "vintage": 2011,
+   "baseAsk": 0.29,
+   "purchasePrice": 0.406,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1464",
+   "vintage": 2017,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1580",
+   "vintage": 2016,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1356",
+   "vintage": 2017,
+   "baseAsk": 0.49,
+   "purchasePrice": 0.686,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-566",
+   "vintage": 2014,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1427",
+   "vintage": 2017,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1190",
+   "vintage": 2017,
+   "baseAsk": 0.7,
+   "purchasePrice": 0.98,
+   "supply": 985
+  },
+  {
+   "projectId": "VCS-1195",
+   "vintage": 2016,
+   "baseAsk": 0.7,
+   "purchasePrice": 0.98,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-836",
+   "vintage": 2012,
+   "baseAsk": 0.2,
+   "purchasePrice": 0.28,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1427",
+   "vintage": 2015,
+   "baseAsk": 0.67,
+   "purchasePrice": 0.938,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1205",
+   "vintage": 2016,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-655",
+   "vintage": 2016,
+   "baseAsk": 0.025,
+   "purchasePrice": 0.1,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-766",
+   "vintage": 2010,
+   "baseAsk": 0.49,
+   "purchasePrice": 0.686,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-498",
+   "vintage": 2011,
+   "baseAsk": 0.85,
+   "purchasePrice": 1.19,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-292",
+   "vintage": 2020,
+   "baseAsk": 1.03,
+   "purchasePrice": 1.442,
+   "supply": 49990
+  },
+  {
+   "projectId": "CMARK-4",
+   "vintage": 2022,
+   "baseAsk": 15,
+   "purchasePrice": 21,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1718",
+   "vintage": 2013,
+   "baseAsk": 0.57,
+   "purchasePrice": 0.798,
+   "supply": 0
+  },
+  {
+   "projectId": "ICR-172",
+   "vintage": 2023,
+   "baseAsk": 15,
+   "purchasePrice": 21,
+   "supply": 0
+  },
+  {
+   "projectId": "ICR-172",
+   "vintage": 2022,
+   "baseAsk": 14,
+   "purchasePrice": 19.6,
+   "supply": 0
+  },
+  {
+   "projectId": "ICR-172",
+   "vintage": 2021,
+   "baseAsk": 13,
+   "purchasePrice": 18.2,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-981",
+   "vintage": 2014,
+   "baseAsk": 2,
+   "purchasePrice": 2.8,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-982",
+   "vintage": 2010,
+   "baseAsk": 2,
+   "purchasePrice": 2.8,
+   "supply": 0
+  },
+  {
+   "projectId": "CMARK-0",
+   "vintage": 9999,
+   "baseAsk": 0.01,
+   "purchasePrice": 0.1,
+   "supply": 0
+  },
+  {
+   "projectId": "TVER-40",
+   "vintage": 2021,
+   "baseAsk": 17,
+   "purchasePrice": 23.8,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1547",
+   "vintage": 2020,
+   "baseAsk": 1,
+   "purchasePrice": 1.4,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-476",
+   "vintage": 2016,
+   "baseAsk": 0.5,
+   "purchasePrice": 0.7,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-191",
+   "vintage": 2011,
+   "baseAsk": 10,
+   "purchasePrice": 14,
+   "supply": 0
+  },
+  {
+   "projectId": "PUR-175613",
+   "vintage": 2023,
+   "baseAsk": 110.01,
+   "purchasePrice": 154.014,
+   "supply": 0
+  },
+  {
+   "projectId": "ECO-114",
+   "vintage": 2022,
+   "baseAsk": 4,
+   "purchasePrice": 5.6,
+   "supply": 0
+  },
+  {
+   "projectId": "ECO-22",
+   "vintage": 2018,
+   "baseAsk": 4,
+   "purchasePrice": 5.6,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1052",
+   "vintage": 2012,
+   "baseAsk": 1.3,
+   "purchasePrice": 1.82,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1764",
+   "vintage": 2020,
+   "baseAsk": 30,
+   "purchasePrice": 42,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-1140",
+   "vintage": 2015,
+   "baseAsk": 1,
+   "purchasePrice": 1.4,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-426",
+   "vintage": 20160101,
+   "baseAsk": 0.02,
+   "purchasePrice": 0.1,
+   "supply": 0
+  },
+  {
+   "projectId": "VCS-986",
+   "vintage": 20130401,
+   "baseAsk": 0.5,
+   "purchasePrice": 0.7,
+   "supply": 71
+  },
+  {
+   "projectId": "VCS-1580",
+   "vintage": 20170101,
+   "baseAsk": 0.9,
+   "purchasePrice": 1.26,
+   "supply": 84.24
+  },
+  {
+   "projectId": "VCS-1764",
+   "vintage": 20200615,
+   "baseAsk": 27,
+   "purchasePrice": 37.8,
+   "supply": 87.771
+  },
+  {
+   "projectId": "ICR-48",
+   "vintage": 2022,
+   "baseAsk": 58,
+   "purchasePrice": 81.2,
+   "supply": 155
+  },
+  {
+   "projectId": "ICR-91",
+   "vintage": 2024,
+   "baseAsk": 179,
+   "purchasePrice": 229,
+   "supply": 949.999
+  },
+  {
+   "projectId": "VCS-817",
+   "vintage": 2016,
+   "baseAsk": 0.5,
+   "purchasePrice": 0.7,
+   "supply": 1999.998
+  },
+  {
+   "projectId": "CMARK-1",
+   "vintage": 2022,
+   "baseAsk": 15,
+   "purchasePrice": 21,
+   "supply": 2423.917
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2008,
+   "baseAsk": 6.98,
+   "purchasePrice": 9.772,
+   "supply": 2576.873
+  },
+  {
+   "projectId": "VCS-1190",
+   "vintage": 20180101,
+   "baseAsk": 0.72,
+   "purchasePrice": 1.008,
+   "supply": 2779
+  },
+  {
+   "projectId": "VCS-836",
+   "vintage": 2018,
+   "baseAsk": 0.5,
+   "purchasePrice": 0.7,
+   "supply": 2876.899
+  },
+  {
+   "projectId": "CMARK-1",
+   "vintage": 2023,
+   "baseAsk": 15,
+   "purchasePrice": 21,
+   "supply": 2966.939
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2010,
+   "baseAsk": 7.9,
+   "purchasePrice": 11.06,
+   "supply": 2997.097
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2009,
+   "baseAsk": 7.43,
+   "purchasePrice": 10.402,
+   "supply": 3071
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2011,
+   "baseAsk": 8.32,
+   "purchasePrice": 11.648,
+   "supply": 3500
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2012,
+   "baseAsk": 8.76,
+   "purchasePrice": 12.264,
+   "supply": 3500
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2014,
+   "baseAsk": 9.71,
+   "purchasePrice": 13.594,
+   "supply": 3999.999
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2013,
+   "baseAsk": 9.22,
+   "purchasePrice": 12.908,
+   "supply": 3999.999
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2020,
+   "baseAsk": 16.31,
+   "purchasePrice": 22.834,
+   "supply": 5000
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2015,
+   "baseAsk": 10.23,
+   "purchasePrice": 14.322,
+   "supply": 6496
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2016,
+   "baseAsk": 11.47,
+   "purchasePrice": 16.058,
+   "supply": 6996
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2017,
+   "baseAsk": 12.19,
+   "purchasePrice": 17.066,
+   "supply": 7636.584
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2018,
+   "baseAsk": 12.97,
+   "purchasePrice": 18.158,
+   "supply": 8000
+  },
+  {
+   "projectId": "ICR-349",
+   "vintage": 2019,
+   "baseAsk": 13.8,
+   "purchasePrice": 19.32,
+   "supply": 10000
+  },
+  {
+   "projectId": "VCS-836",
+   "vintage": 2015,
+   "baseAsk": 0.55,
+   "purchasePrice": 0.77,
+   "supply": 17439
+  },
+  {
+   "projectId": "VCS-1100",
+   "vintage": 2012,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 19999
+  },
+  {
+   "projectId": "VCS-1525",
+   "vintage": 20110311,
+   "baseAsk": 0.62,
+   "purchasePrice": 0.868,
+   "supply": 36395.99
+  },
+  {
+   "projectId": "VCS-1464",
+   "vintage": 2018,
+   "baseAsk": 0.6,
+   "purchasePrice": 0.84,
+   "supply": 42133.7
+  },
+  {
+   "projectId": "VCS-1258",
+   "vintage": 2019,
+   "baseAsk": 0.85,
+   "purchasePrice": 1.19,
+   "supply": 47774
+  }
+ ]
+}

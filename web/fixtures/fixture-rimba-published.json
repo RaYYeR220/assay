@@ -1,0 +1,231 @@
+{
+  "bundleId": "fixture-rimba-published",
+  "createdAt": "2026-08-20T21:41:12.000Z",
+  "promptVersion": "assay.appraisal.v1",
+  "assetId": "carbon-vcs-985-2021",
+  "assetLabel": "Rimba Raya REDD+ · Verra VCS-985 · vintage 2021",
+  "assetIdHash": "0xc950707fccabbc3f8dc7caec6549ab64c9ee71c7944ed10862f73df6a8e96cfd",
+  "evidence": {
+    "line": "schema=assay.carbon.v1;asset_id=carbon-vcs-985-2021;registry=Verra VCS;project_id=VCS-985;project_name=Rimba Raya Biodiversity Reserve REDD+;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, tropical peat swamp;vintage=2021;country=Indonesia;region=Central Kalimantan;credits_issued=3120450;credits_retired=1874233;batch_size=1;cobenefits=orangutan habitat,peatland hydrology,community clinics;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=BBB;integrity_flags=baseline revised 2023,over-crediting review closed 2024;corresponding_adjustment=no;buffer_pool_pct=18;permanence_years=30;ref_price_usd=8.55;ref_price_source=Xpansiv CBL N-GEO spot;ref_price_date=2026-08-19;observed_at=2026-08-20T21:40:00Z;evidence_sha256=cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8",
+    "evidenceSha256": "cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8",
+    "lineSha256": "a68e0aa29302c1f997961ddfd071d53d1c46ac9395eb97aacfc52f513f022d36",
+    "byteLength": 814
+  },
+  "systemPromptSha256": "49177252d3e5543ea702b6ceed75d8b37966fcece1ee208e7b2a1b50a4a0e2ac",
+  "committee": [
+    "google/gemma-4-31b-it",
+    "z-ai/glm-5.2",
+    "openai/gpt-oss-20b",
+    "qwen/qwen3-vl-30b-a3b-instruct",
+    "meta/muse-glimmer-30b"
+  ],
+  "verdicts": [
+    {
+      "model": "google/gemma-4-31b-it",
+      "slot": 0,
+      "signer": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "attestedSigner": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "receiptId": "a70f724ce281e9f5e47bd3a25cfaaf1d",
+      "requestBody": "{\"model\":\"google/gemma-4-31b-it\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=carbon-vcs-985-2021;registry=Verra VCS;project_id=VCS-985;project_name=Rimba Raya Biodiversity Reserve REDD+;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, tropical peat swamp;vintage=2021;country=Indonesia;region=Central Kalimantan;credits_issued=3120450;credits_retired=1874233;batch_size=1;cobenefits=orangutan habitat,peatland hydrology,community clinics;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=BBB;integrity_flags=baseline revised 2023,over-crediting review closed 2024;corresponding_adjustment=no;buffer_pool_pct=18;permanence_years=30;ref_price_usd=8.55;ref_price_source=Xpansiv CBL N-GEO spot;ref_price_date=2026-08-19;observed_at=2026-08-20T21:40:00Z;evidence_sha256=cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8\"}]}",
+      "requestSha256": "bc6fe5236da55a2f30de7016e6da2b0d8e8a6e45ad92738b1f8d5f33ae6b8d9d",
+      "responseBody": "{\"id\":\"chatcmpl-5b7a75802c108cf285b03b95\",\"object\":\"chat.completion\",\"created\":1787262072,\"model\":\"google/gemma-4-31b-it\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=8420000|confidence_bps=7200\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":508,\"completion_tokens\":21,\"total_tokens\":529},\"system_fingerprint\":\"tdx_aci_1\"}",
+      "responseSha256": "7534d0f0be4bbd8e622a7ea52b50edc28a2f67b4e004c790ad29d3faaefed2f8",
+      "signature": "0x2e5c919cded8e09cb0f2adae6d98cf6e5c0393cdd6351d20e6243a84ebca2f272dab64650f74775ad2c1cfb665367724d730384ef3bafb0bf218a2b638375bc81c",
+      "signedText": "bc6fe5236da55a2f30de7016e6da2b0d8e8a6e45ad92738b1f8d5f33ae6b8d9d:7534d0f0be4bbd8e622a7ea52b50edc28a2f67b4e004c790ad29d3faaefed2f8",
+      "signatureOk": true,
+      "parseOk": true,
+      "verdict": {
+        "navUsdE6": "8420000",
+        "confidenceBps": 7200,
+        "evidenceSha256": "cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8"
+      },
+      "haltReason": null,
+      "latencyMs": 2140
+    },
+    {
+      "model": "z-ai/glm-5.2",
+      "slot": 1,
+      "signer": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "attestedSigner": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "receiptId": "f440455302b408fe6fa0cfe3d0995586",
+      "requestBody": "{\"model\":\"z-ai/glm-5.2\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=carbon-vcs-985-2021;registry=Verra VCS;project_id=VCS-985;project_name=Rimba Raya Biodiversity Reserve REDD+;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, tropical peat swamp;vintage=2021;country=Indonesia;region=Central Kalimantan;credits_issued=3120450;credits_retired=1874233;batch_size=1;cobenefits=orangutan habitat,peatland hydrology,community clinics;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=BBB;integrity_flags=baseline revised 2023,over-crediting review closed 2024;corresponding_adjustment=no;buffer_pool_pct=18;permanence_years=30;ref_price_usd=8.55;ref_price_source=Xpansiv CBL N-GEO spot;ref_price_date=2026-08-19;observed_at=2026-08-20T21:40:00Z;evidence_sha256=cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8\"}]}",
+      "requestSha256": "44738c1c84f559db28d795721fc587883a1f82314d477b82b5b2eb3f016ed3fe",
+      "responseBody": "{\"id\":\"chatcmpl-584df6b4dac04d01d5f82083\",\"object\":\"chat.completion\",\"created\":1787262073,\"model\":\"z-ai/glm-5.2\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=8610000|confidence_bps=8100\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":508,\"completion_tokens\":21,\"total_tokens\":529},\"system_fingerprint\":\"tdx_aci_1\"}",
+      "responseSha256": "fd6e5a3c364cd2359bdf6afa81d97e4371a169aae7fd5dc6e64d654d922f3b98",
+      "signature": "0x1f6c3b4a3f30ad1eff8fb24813241db1c657d0278dfa17636d47ccdddedf01d377104f6ed37317c263a7f37a53f0dd2485ffd487932141092a3f02942d42efdf1b",
+      "signedText": "44738c1c84f559db28d795721fc587883a1f82314d477b82b5b2eb3f016ed3fe:fd6e5a3c364cd2359bdf6afa81d97e4371a169aae7fd5dc6e64d654d922f3b98",
+      "signatureOk": true,
+      "parseOk": true,
+      "verdict": {
+        "navUsdE6": "8610000",
+        "confidenceBps": 8100,
+        "evidenceSha256": "cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8"
+      },
+      "haltReason": null,
+      "latencyMs": 3380
+    },
+    {
+      "model": "openai/gpt-oss-20b",
+      "slot": 2,
+      "signer": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "attestedSigner": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+      "receiptId": "7c2e092e85cfd7efd832e3464e3d3504",
+      "requestBody": "{\"model\":\"openai/gpt-oss-20b\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=carbon-vcs-985-2021;registry=Verra VCS;project_id=VCS-985;project_name=Rimba Raya Biodiversity Reserve REDD+;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, tropical peat swamp;vintage=2021;country=Indonesia;region=Central Kalimantan;credits_issued=3120450;credits_retired=1874233;batch_size=1;cobenefits=orangutan habitat,peatland hydrology,community clinics;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=BBB;integrity_flags=baseline revised 2023,over-crediting review closed 2024;corresponding_adjustment=no;buffer_pool_pct=18;permanence_years=30;ref_price_usd=8.55;ref_price_source=Xpansiv CBL N-GEO spot;ref_price_date=2026-08-19;observed_at=2026-08-20T21:40:00Z;evidence_sha256=cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8\"}]}",
+      "requestSha256": "28c747abe0b67dcd1f19c2ccc0864b2059dd47c3dc14f01ba5673e14b363950e",
+      "responseBody": "{\"id\":\"chatcmpl-d63fee38f433c37da21a9892\",\"object\":\"chat.completion\",\"created\":1787262074,\"model\":\"openai/gpt-oss-20b\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=8500000|confidence_bps=6900\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":508,\"completion_tokens\":21,\"total_tokens\":529},\"system_fingerprint\":\"tdx_aci_1\"}",
+      "responseSha256": "fd29b98d8e3e794d8b7b12a7bc0d3fa0e339a4662333e669bbbff69233a40efd",
+      "signature": "0x83e08ad188d0a0ab2f8dd68a3f1de0df5edfe3a36d44c9b6038659eae9c00acb4aedd987b78443daec6d3aeaca8ece336d455adea9b43e672df03a68dfed5e1f1b",
+      "signedText": "28c747abe0b67dcd1f19c2ccc0864b2059dd47c3dc14f01ba5673e14b363950e:fd29b98d8e3e794d8b7b12a7bc0d3fa0e339a4662333e669bbbff69233a40efd",
+      "signatureOk": true,
+      "parseOk": true,
+      "verdict": {
+        "navUsdE6": "8500000",
+        "confidenceBps": 6900,
+        "evidenceSha256": "cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8"
+      },
+      "haltReason": null,
+      "latencyMs": 1720
+    },
+    {
+      "model": "qwen/qwen3-vl-30b-a3b-instruct",
+      "slot": 3,
+      "signer": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+      "attestedSigner": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+      "receiptId": "10231951ed719ec886d15a012f1f5fa9",
+      "requestBody": "{\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=carbon-vcs-985-2021;registry=Verra VCS;project_id=VCS-985;project_name=Rimba Raya Biodiversity Reserve REDD+;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, tropical peat swamp;vintage=2021;country=Indonesia;region=Central Kalimantan;credits_issued=3120450;credits_retired=1874233;batch_size=1;cobenefits=orangutan habitat,peatland hydrology,community clinics;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=BBB;integrity_flags=baseline revised 2023,over-crediting review closed 2024;corresponding_adjustment=no;buffer_pool_pct=18;permanence_years=30;ref_price_usd=8.55;ref_price_source=Xpansiv CBL N-GEO spot;ref_price_date=2026-08-19;observed_at=2026-08-20T21:40:00Z;evidence_sha256=cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8\"}]}",
+      "requestSha256": "a657d17b7b33efeaf539599dd776f755c7db1f815febc2ac909483caa5546d75",
+      "responseBody": "{\"id\":\"chatcmpl-20f5a2613687e94cbf6a2021\",\"object\":\"chat.completion\",\"created\":1787262075,\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=8390000|confidence_bps=7500\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":508,\"completion_tokens\":21,\"total_tokens\":529},\"system_fingerprint\":\"tdx_aci_1\"}",
+      "responseSha256": "86ea3570f5d73b21ae02ef8b4e7470cf201393cf130361f08da2c8aee4906896",
+      "signature": "0x8ac12ff3d094b0e05204d8952db7e479fafb8161849780a43aa0d4b25bf31d54675c74ed4601384314962afa315cab88269d55d886ce12c894c8328d69aa67a71c",
+      "signedText": "a657d17b7b33efeaf539599dd776f755c7db1f815febc2ac909483caa5546d75:86ea3570f5d73b21ae02ef8b4e7470cf201393cf130361f08da2c8aee4906896",
+      "signatureOk": true,
+      "parseOk": true,
+      "verdict": {
+        "navUsdE6": "8390000",
+        "confidenceBps": 7500,
+        "evidenceSha256": "cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8"
+      },
+      "haltReason": null,
+      "latencyMs": 2905
+    },
+    {
+      "model": "meta/muse-glimmer-30b",
+      "slot": 4,
+      "signer": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+      "attestedSigner": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+      "receiptId": "37987a1030829e7ae758b3bc9b35dea3",
+      "requestBody": "{\"model\":\"meta/muse-glimmer-30b\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=carbon-vcs-985-2021;registry=Verra VCS;project_id=VCS-985;project_name=Rimba Raya Biodiversity Reserve REDD+;methodology=VM0007 REDD+ MF v1.6;project_type=avoided unplanned deforestation, tropical peat swamp;vintage=2021;country=Indonesia;region=Central Kalimantan;credits_issued=3120450;credits_retired=1874233;batch_size=1;cobenefits=orangutan habitat,peatland hydrology,community clinics;sdgs=1,3,13,15;rating_agency=BeZero Carbon;rating=BBB;integrity_flags=baseline revised 2023,over-crediting review closed 2024;corresponding_adjustment=no;buffer_pool_pct=18;permanence_years=30;ref_price_usd=8.55;ref_price_source=Xpansiv CBL N-GEO spot;ref_price_date=2026-08-19;observed_at=2026-08-20T21:40:00Z;evidence_sha256=cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8\"}]}",
+      "requestSha256": "91599f1f99075ff45f60d8c60522dd326abc27dc2d665192ee17e506d7c603a1",
+      "responseBody": "{\"id\":\"chatcmpl-a9dab60bed15a5b3de549f2a\",\"object\":\"chat.completion\",\"created\":1787262076,\"model\":\"meta/muse-glimmer-30b\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=8550000|confidence_bps=8800\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":508,\"completion_tokens\":21,\"total_tokens\":529},\"system_fingerprint\":\"tdx_aci_1\"}",
+      "responseSha256": "502ff24f69d9895f78d0571310d13ccc2e3cc801abe89a4283980a57cdb1fdba",
+      "signature": "0x436cf5ec55974d55164a55bfb75150a756dd4daf00b3136349cfa9b00b7b0d886183e23e9a771321cbf293f91205da95cc1f2ed0099c0f1dfb948e0e8a21ca5e1c",
+      "signedText": "91599f1f99075ff45f60d8c60522dd326abc27dc2d665192ee17e506d7c603a1:502ff24f69d9895f78d0571310d13ccc2e3cc801abe89a4283980a57cdb1fdba",
+      "signatureOk": true,
+      "parseOk": true,
+      "verdict": {
+        "navUsdE6": "8550000",
+        "confidenceBps": 8800,
+        "evidenceSha256": "cfb42d3847275fc8b4f8b80c2537cac73d3331047722c25568f2ab2a6c12c2a8"
+      },
+      "haltReason": null,
+      "latencyMs": 2460
+    }
+  ],
+  "summary": {
+    "requested": 5,
+    "signatureOk": 5,
+    "parseOk": 5,
+    "usable": 5,
+    "navsUsdE6": [
+      "8390000",
+      "8420000",
+      "8500000",
+      "8550000",
+      "8610000"
+    ],
+    "medianUsdE6": "8500000",
+    "maxDeviationBps": 129,
+    "wouldHalt": false,
+    "haltReasons": []
+  },
+  "policy": {
+    "quorum": 3,
+    "minDistinctSigners": 2,
+    "bandBps": 1000,
+    "minConfidenceBps": 5000,
+    "maxAgeSec": 3600,
+    "disputeBandBps": 500
+  },
+  "onChain": {
+    "chainId": 196,
+    "epoch": 47,
+    "txHash": "0x7b19f4c0a1d8e35b2f6c907ae4d13b8c25f0e9a7d64b3c18ef2a05d7913cc4a2",
+    "blockNumber": "9184402",
+    "timestamp": 1787262119,
+    "published": true,
+    "navE6": "8500000",
+    "haltReason": null,
+    "accepted": 5,
+    "distinctSigners": 2,
+    "observedAt": 1787262072,
+    "evidenceHash": "0xa68e0aa29302c1f997961ddfd071d53d1c46ac9395eb97aacfc52f513f022d36",
+    "slots": [
+      {
+        "slot": 0,
+        "signer": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+        "accepted": true,
+        "rejectReason": null,
+        "navE6": "8420000",
+        "confidenceBps": 7200,
+        "createdAt": 1787262072
+      },
+      {
+        "slot": 1,
+        "signer": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+        "accepted": true,
+        "rejectReason": null,
+        "navE6": "8610000",
+        "confidenceBps": 8100,
+        "createdAt": 1787262073
+      },
+      {
+        "slot": 2,
+        "signer": "0x1F016Fc3244ac0C064b441A7EBE0f9CFeb48E7Cc",
+        "accepted": true,
+        "rejectReason": null,
+        "navE6": "8500000",
+        "confidenceBps": 6900,
+        "createdAt": 1787262074
+      },
+      {
+        "slot": 3,
+        "signer": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+        "accepted": true,
+        "rejectReason": null,
+        "navE6": "8390000",
+        "confidenceBps": 7500,
+        "createdAt": 1787262075
+      },
+      {
+        "slot": 4,
+        "signer": "0x072b3b9f1E77Fcf705df89b8560949938c564E70",
+        "accepted": true,
+        "rejectReason": null,
+        "navE6": "8550000",
+        "confidenceBps": 8800,
+        "createdAt": 1787262076
+      }
+    ],
+    "authenticated": 5,
+    "ignored": false,
+    "evidenceCommitment": {
+      "committed": true,
+      "issuer": "0x4C21b7577C8FE8b0554b0Fc6C4C1B2eD0A9DdF63",
+      "uri": "ipfs://assay/evidence/cfb42d3847275fc8",
+      "txHash": "0x15a75f8018a459e4ad0e6319662005494cfb4725110f2ccb0ec856d476eee891",
+      "blockNumber": "9184396",
+      "timestamp": 1787261832
+    }
+  },
+  "source": "fixture"
+}

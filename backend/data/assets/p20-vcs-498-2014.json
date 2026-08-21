@@ -1,0 +1,62 @@
+{
+  "assetId": "p20-vcs-498-2014",
+  "caseId": "P20",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-498",
+    "project_name": "Grid-connected wind electricity generation project in Tamil Nadu, India",
+    "project_type": "Wind",
+    "methodology": "AMS-I.D. Grid connected renewable electricity generation",
+    "vintage": "2014",
+    "country": "India",
+    "region": "Southern Asia",
+    "registry_status": "Registered",
+    "credits_issued": "29626",
+    "credits_retired": "28626",
+    "credits_remaining": "1000",
+    "buffer_deposited": "0",
+    "first_vintage": "2010",
+    "durability": "emission avoidance, no storage reversal risk",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "reference": {
+    "lowUsd": 0.61,
+    "highUsd": 0.854,
+    "basis": "Carbonmark VCS-498 vintage 2014: seller ask 0.61 USD, fee-inclusive purchase price 0.854 USD, available supply 3862 tonnes.",
+    "sourceUrl": "https://api.carbonmark.com/prices"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    },
+    {
+      "label": "Carbonmark public price API (no auth)",
+      "url": "https://api.carbonmark.com/prices"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "project_type",
+      "methodology",
+      "country",
+      "region",
+      "registry_status",
+      "credits_issued",
+      "credits_retired",
+      "credits_remaining",
+      "buffer_deposited",
+      "first_vintage",
+      "vintage"
+    ],
+    "illustrative": [],
+    "notes": "Registry fields from the Berkeley database; vintage and reference band from the live Carbonmark ask."
+  }
+}

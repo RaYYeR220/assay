@@ -1,0 +1,62 @@
+{
+  "assetId": "p12-vcs-1764-2020",
+  "caseId": "P12",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-1764",
+    "project_name": "Reforestation and Restoration of degraded mangrove lands, sustainable livelihoods and community development in Myanmar",
+    "project_type": "Wetland Restoration",
+    "methodology": "AR-AM0014 Afforestation and reforestation of degraded mangrove habitats",
+    "vintage": "2020",
+    "country": "Myanmar",
+    "region": "South-Eastern Asia",
+    "registry_status": "Registered",
+    "credits_issued": "290025",
+    "credits_retired": "220641",
+    "credits_remaining": "69384",
+    "buffer_deposited": "48937",
+    "first_vintage": "2018",
+    "durability": "land sector, reversal risk covered by a registry buffer pool",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "reference": {
+    "lowUsd": 27,
+    "highUsd": 37.8,
+    "basis": "Carbonmark VCS-1764 vintage 20200615: seller ask 27 USD, fee-inclusive purchase price 37.8 USD, available supply 87.771 tonnes.",
+    "sourceUrl": "https://api.carbonmark.com/prices"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    },
+    {
+      "label": "Carbonmark public price API (no auth)",
+      "url": "https://api.carbonmark.com/prices"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "project_type",
+      "methodology",
+      "country",
+      "region",
+      "registry_status",
+      "credits_issued",
+      "credits_retired",
+      "credits_remaining",
+      "buffer_deposited",
+      "first_vintage",
+      "vintage"
+    ],
+    "illustrative": [],
+    "notes": "Registry fields from the Berkeley database; vintage and reference band from the live Carbonmark ask."
+  }
+}

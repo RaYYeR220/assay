@@ -1,0 +1,106 @@
+{
+  "schema": {
+    "head": "0x7b226d6f64656c223a22",
+    "mid": "0x222c2274656d7065726174757265223a302c226d61785f746f6b656e73223a3531322c226d65737361676573223a5b7b22726f6c65223a2273797374656d222c22636f6e74656e74223a22596f752061726520616e20696e646570656e64656e742061737365742061707072616973657220776f726b696e6720666f722061207075626c69632076616c756174696f6e206f7261636c652e20596f752077696c6c2062652073686f776e206f6e652065766964656e6365207265636f726420666f722061207265616c2d776f726c642061737365742e205265706c7920776974682065786163746c79206f6e65206c696e6520616e64206e6f7468696e6720656c73652c20696e207468697320657861637420666f726d61743a204153534159317c6e61765f7573645f65363d3c696e74656765723e7c636f6e666964656e63655f6270733d3c696e74656765723e2e206e61765f7573645f65362069732074686520666169722076616c7565206f66204f4e4520756e6974206f662074686520617373657420696e20555320646f6c6c6172732c206d756c7469706c696564206279203130303030303020616e6420726f756e64656420746f20616e20696e74656765722e20636f6e666964656e63655f62707320697320686f7720636f6e666964656e7420796f7520617265207468617420796f75722076616c75652069732077697468696e2031302070657263656e74206f6620666169722076616c75652c20696e20626173697320706f696e74732066726f6d203020746f2031303030302e204f7574707574206e6f2070726f73652c206e6f206d61726b646f776e2c206e6f20636f64652066656e63657320616e64206e6f206578706c616e6174696f6e2e227d2c7b22726f6c65223a2275736572222c22636f6e74656e74223a224170707261697365206f6e6520756e6974206f66207468652061737365742064657363726962656420627920746869732065766964656e6365207265636f72642e2045564944454e43453a20",
+    "schemaId": "0xb5c98bdc502ede2fe911af4d7f7dbec8ffff5ab2c88837475cf3d160a9c22c2c",
+    "tail": "0x227d5d7d"
+  },
+  "evidence": "registry=Verra;project=VCS-1234;vintage=2023;methodology=VM0007;quantity=1 tCO2e;retired=false;last_trade_usd=4.21;observed=2026-08-20T22:00:00Z",
+  "createdAt": 1787000000,
+  "now": 1787000300,
+  "committee": [
+    "deepseek/deepseek-v4-flash-0731",
+    "openai/gpt-oss-20b",
+    "meta-llama/llama-3.3-70b-instruct",
+    "phala/qwen-2.5-7b-instruct",
+    "deepseek/deepseek-chat-v3-0324"
+  ],
+  "policy": {
+    "quorum": 3,
+    "minDistinctSigners": 2,
+    "bandBps": 1000,
+    "minConfidenceBps": 5000,
+    "maxAgeSec": 3600
+  },
+  "members": [
+    {
+      "slot": 0,
+      "modelId": "deepseek/deepseek-v4-flash-0731",
+      "signer": "0x19E7E376E7C213B7E7e7e46cc70A5dD086DAff2A",
+      "privateKey": "0x1111111111111111111111111111111111111111111111111111111111111111",
+      "responseBody": "{\"id\":\"chatcmpl-assay-deepseekdeepseekv4flash0731\",\"object\":\"chat.completion\",\"created\":1787000000,\"model\":\"deepseek/deepseek-v4-flash-0731\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=4210000|confidence_bps=8200\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":412,\"completion_tokens\":21,\"total_tokens\":433}}",
+      "signature": "0x4117899e59a4655b31b52feaba19aae911e8990e7998bf360e377928fab651c607553bebee47de399cfa55aa707333cf5c737dc1c765a537fa25f8ec52a244d61c",
+      "offsets": {
+        "contentOffset": 193,
+        "finishOffset": 252,
+        "createdOffset": 78
+      }
+    },
+    {
+      "slot": 1,
+      "modelId": "openai/gpt-oss-20b",
+      "signer": "0x1563915e194D8CfBA1943570603F7606A3115508",
+      "privateKey": "0x2222222222222222222222222222222222222222222222222222222222222222",
+      "responseBody": "{\"id\":\"chatcmpl-assay-openaigptoss20b\",\"object\":\"chat.completion\",\"created\":1787000000,\"model\":\"openai/gpt-oss-20b\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=4180000|confidence_bps=7600\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":412,\"completion_tokens\":21,\"total_tokens\":433}}",
+      "signature": "0x2f19e679e86944dfffb7f30136271bc82e72a4b17ec9649e3f30882506e245861185989bbfcfef0e34b6c432e83afb2bc93a3559ad0845bbdfe3386f5b4927af1c",
+      "offsets": {
+        "contentOffset": 168,
+        "finishOffset": 227,
+        "createdOffset": 66
+      }
+    },
+    {
+      "slot": 2,
+      "modelId": "meta-llama/llama-3.3-70b-instruct",
+      "signer": "0x5CbDd86a2FA8Dc4bDdd8a8f69dBa48572EeC07FB",
+      "privateKey": "0x3333333333333333333333333333333333333333333333333333333333333333",
+      "responseBody": "{\"id\":\"chatcmpl-assay-metallamallama3370binstruct\",\"object\":\"chat.completion\",\"created\":1787000000,\"model\":\"meta-llama/llama-3.3-70b-instruct\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=4250000|confidence_bps=7100\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":412,\"completion_tokens\":21,\"total_tokens\":433}}",
+      "signature": "0xeafa6a7b81ba2604b38b22e42a3b79bc7420cf99b1c9d743621b729152eb51a24fd260fc6d7c49aedc18de1a9caf29ac697704358624b710a1edd8f5ea3383e61b",
+      "offsets": {
+        "contentOffset": 195,
+        "finishOffset": 254,
+        "createdOffset": 78
+      }
+    },
+    {
+      "slot": 3,
+      "modelId": "phala/qwen-2.5-7b-instruct",
+      "signer": "0x7564105E977516C53bE337314c7E53838967bDaC",
+      "privateKey": "0x4444444444444444444444444444444444444444444444444444444444444444",
+      "responseBody": "{\"id\":\"chatcmpl-assay-phalaqwen257binstruct\",\"object\":\"chat.completion\",\"created\":1787000000,\"model\":\"phala/qwen-2.5-7b-instruct\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=4200000|confidence_bps=6900 (based on recent trades)\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":412,\"completion_tokens\":21,\"total_tokens\":433}}",
+      "signature": "0x6260cc2f4734819efd74415007975aba7acfc2b735ffef2405a80f9282925aab394368d4b42abd91eeaba48c3baa8a0c630a87de28da54a0d03bacfbf8aa7aa51c",
+      "offsets": {
+        "contentOffset": 182,
+        "finishOffset": 266,
+        "createdOffset": 72
+      }
+    },
+    {
+      "slot": 4,
+      "modelId": "deepseek/deepseek-chat-v3-0324",
+      "signer": "0xe1fAE9b4fAB2F5726677ECfA912d96b0B683e6a9",
+      "privateKey": "0x5555555555555555555555555555555555555555555555555555555555555555",
+      "responseBody": "{\"id\":\"chatcmpl-assay-deepseekdeepseekchatv30324\",\"object\":\"chat.completion\",\"created\":1787000000,\"model\":\"deepseek/deepseek-chat-v3-0324\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=4190000|confidence_bps=7400\"},\"finish_reason\":\"length\"}],\"usage\":{\"prompt_tokens\":412,\"completion_tokens\":21,\"total_tokens\":433}}",
+      "signature": "0xbf5f98648fe841aae778fbce5b4ec5a2e6cf06449915fe6cf2f0f159ad742d960defb0d26fd28f2016c3f1054c5b4fb2627c12c596e8f41e1ac3a291a25335ef1b",
+      "offsets": {
+        "contentOffset": 0,
+        "finishOffset": 0,
+        "createdOffset": 0
+      }
+    },
+    {
+      "slot": 0,
+      "modelId": "deepseek/deepseek-v4-flash-0731",
+      "signer": "0x1563915e194D8CfBA1943570603F7606A3115508",
+      "privateKey": "0x2222222222222222222222222222222222222222222222222222222222222222",
+      "responseBody": "{\"id\":\"chatcmpl-assay-deepseekdeepseekv4flash0731\",\"object\":\"chat.completion\",\"created\":1787000000,\"model\":\"deepseek/deepseek-v4-flash-0731\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=4210000|confidence_bps=8200\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":412,\"completion_tokens\":21,\"total_tokens\":433}}",
+      "signature": "0x7b25e53f5098c07fbcceb37b133fe4681566dff7b70d7925cc43734e29816973526544e3bde45dcee301eb452d442adfc9966da306f00ff86591e220b84958221b",
+      "offsets": {
+        "contentOffset": 193,
+        "finishOffset": 252,
+        "createdOffset": 78
+      },
+      "note": "signed over evidence the round did not use; must recover to an unexpected address"
+    }
+  ]
+}

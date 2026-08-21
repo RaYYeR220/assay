@@ -1,0 +1,37 @@
+{
+  "assetId": "t3-unidentifiable-credit",
+  "caseId": "T3",
+  "fields": {
+    "registry": "NA",
+    "project_id": "NA",
+    "project_name": "Run-of-river hydropower project",
+    "project_type": "Hydropower",
+    "methodology": "ACM0002 Grid-connected electricity generation from renewable sources",
+    "vintage": "NA",
+    "country": "NA",
+    "region": "Southeast Asia",
+    "registry_status": "NA",
+    "credits_issued": "NA",
+    "credits_retired": "NA",
+    "credits_remaining": "NA",
+    "buffer_deposited": "NA",
+    "first_vintage": "NA",
+    "durability": "emission avoidance, no storage reversal risk",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "sources": [],
+  "provenance": {
+    "verified": [],
+    "illustrative": [
+      "project_name",
+      "project_type",
+      "methodology",
+      "region"
+    ],
+    "notes": "SYNTHETIC. Deliberately unidentifiable: no registry, no project id, no vintage, no country. A credit that cannot be identified cannot be priced, and the methodology and region alone are not enough to pin a value."
+  }
+}

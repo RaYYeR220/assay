@@ -1,0 +1,62 @@
+{
+  "assetId": "p5-vcs-292-2020",
+  "caseId": "P5",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-292",
+    "project_name": "150 MW grid connected Wind Power based electricity generation project in Gujarat, India.",
+    "project_type": "Wind",
+    "methodology": "ACM0002 Grid-connected electricity generation from renewable sources",
+    "vintage": "2020",
+    "country": "India",
+    "region": "Southern Asia",
+    "registry_status": "Registered",
+    "credits_issued": "1981537",
+    "credits_retired": "1596283",
+    "credits_remaining": "385254",
+    "buffer_deposited": "0",
+    "first_vintage": "2009",
+    "durability": "emission avoidance, no storage reversal risk",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "reference": {
+    "lowUsd": 1.03,
+    "highUsd": 1.442,
+    "basis": "Carbonmark VCS-292 vintage 2020: seller ask 1.03 USD, fee-inclusive purchase price 1.442 USD, available supply 49990 tonnes.",
+    "sourceUrl": "https://api.carbonmark.com/prices"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    },
+    {
+      "label": "Carbonmark public price API (no auth)",
+      "url": "https://api.carbonmark.com/prices"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "project_type",
+      "methodology",
+      "country",
+      "region",
+      "registry_status",
+      "credits_issued",
+      "credits_retired",
+      "credits_remaining",
+      "buffer_deposited",
+      "first_vintage",
+      "vintage"
+    ],
+    "illustrative": [],
+    "notes": "Registry fields from the Berkeley database; vintage and reference band from the live Carbonmark ask."
+  }
+}

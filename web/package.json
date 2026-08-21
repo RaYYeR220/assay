@@ -1,0 +1,34 @@
+{
+  "name": "assay-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "predev": "node scripts/sync-data.mjs",
+    "dev": "next dev",
+    "prebuild": "node scripts/sync-data.mjs",
+    "build": "next build",
+    "export": "next build",
+    "start": "npx serve out",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "abi": "node scripts/extract-abis.mjs",
+    "fixtures": "node scripts/make-fixtures.mjs && node scripts/sync-data.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "viem": "^2.55.19"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

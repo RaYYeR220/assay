@@ -1,0 +1,62 @@
+{
+  "assetId": "p15-vcs-929-2015",
+  "caseId": "P15",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-929",
+    "project_name": "Energy Efficiency and Solid Waste Diversion Activities within the Quebec Sustainable Community",
+    "project_type": "Energy Efficiency",
+    "methodology": "VM0018 Energy Efficiency and Solid Waste Diversion Activities within a Sustainable Community",
+    "vintage": "2015",
+    "country": "Canada",
+    "region": "North America",
+    "registry_status": "Registered",
+    "credits_issued": "6275969",
+    "credits_retired": "1067703",
+    "credits_remaining": "5208266",
+    "buffer_deposited": "0",
+    "first_vintage": "2010",
+    "durability": "emission avoidance, no storage reversal risk",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "reference": {
+    "lowUsd": 0.8,
+    "highUsd": 1.12,
+    "basis": "Carbonmark VCS-929 vintage 2015: seller ask 0.8 USD, fee-inclusive purchase price 1.12 USD, available supply 30657 tonnes.",
+    "sourceUrl": "https://api.carbonmark.com/prices"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    },
+    {
+      "label": "Carbonmark public price API (no auth)",
+      "url": "https://api.carbonmark.com/prices"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "project_type",
+      "methodology",
+      "country",
+      "region",
+      "registry_status",
+      "credits_issued",
+      "credits_retired",
+      "credits_remaining",
+      "buffer_deposited",
+      "first_vintage",
+      "vintage"
+    ],
+    "illustrative": [],
+    "notes": "Registry fields from the Berkeley database; vintage and reference band from the live Carbonmark ask."
+  }
+}

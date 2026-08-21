@@ -1,0 +1,62 @@
+{
+  "assetId": "p18-vcs-1100-2012",
+  "caseId": "P18",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-1100",
+    "project_name": "SANIBEY DAM AND HYDROELECTRIC POWER PLANT",
+    "project_type": "Hydropower",
+    "methodology": "ACM0002 Grid-connected electricity generation from renewable sources",
+    "vintage": "2012",
+    "country": "Türkiye",
+    "region": "Western Asia",
+    "registry_status": "Registered",
+    "credits_issued": "5485316",
+    "credits_retired": "1681221",
+    "credits_remaining": "3804095",
+    "buffer_deposited": "0",
+    "first_vintage": "2012",
+    "durability": "emission avoidance, no storage reversal risk",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "reference": {
+    "lowUsd": 0.6,
+    "highUsd": 0.84,
+    "basis": "Carbonmark VCS-1100 vintage 2012: seller ask 0.6 USD, fee-inclusive purchase price 0.84 USD, available supply 19999 tonnes.",
+    "sourceUrl": "https://api.carbonmark.com/prices"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    },
+    {
+      "label": "Carbonmark public price API (no auth)",
+      "url": "https://api.carbonmark.com/prices"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "project_type",
+      "methodology",
+      "country",
+      "region",
+      "registry_status",
+      "credits_issued",
+      "credits_retired",
+      "credits_remaining",
+      "buffer_deposited",
+      "first_vintage",
+      "vintage"
+    ],
+    "illustrative": [],
+    "notes": "Registry fields from the Berkeley database; vintage and reference band from the live Carbonmark ask."
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "assetId": "p1-vcs-896-2011",
+  "caseId": "P1",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-896",
+    "project_name": "Foz do Chapecó Project",
+    "project_type": "Hydropower",
+    "methodology": "ACM0002 Grid-connected electricity generation from renewable sources",
+    "vintage": "2011",
+    "country": "Brazil",
+    "region": "Latin America and the Caribbean",
+    "registry_status": "Registered",
+    "credits_issued": "13740183",
+    "credits_retired": "2416581",
+    "credits_remaining": "11323602",
+    "buffer_deposited": "0",
+    "first_vintage": "2010",
+    "durability": "emission avoidance, no storage reversal risk",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "reference": {
+    "lowUsd": 0.41,
+    "highUsd": 0.574,
+    "basis": "Carbonmark VCS-896 vintage 2011: seller ask 0.41 USD, fee-inclusive purchase price 0.574 USD, available supply 367816 tonnes.",
+    "sourceUrl": "https://api.carbonmark.com/prices"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    },
+    {
+      "label": "Carbonmark public price API (no auth)",
+      "url": "https://api.carbonmark.com/prices"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "project_type",
+      "methodology",
+      "country",
+      "region",
+      "registry_status",
+      "credits_issued",
+      "credits_retired",
+      "credits_remaining",
+      "buffer_deposited",
+      "first_vintage",
+      "vintage"
+    ],
+    "illustrative": [],
+    "notes": "Registry fields from the Berkeley database; vintage and reference band from the live Carbonmark ask."
+  }
+}

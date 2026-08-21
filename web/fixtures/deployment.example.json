@@ -1,0 +1,12 @@
+{
+  "_comment": "Shape of deployments/<chainId>.json, written by script/Deploy.s.sol. This file is documentation only and is not loaded. Once the real manifest exists at assay/deployments/196.json the dashboard picks it up on the next build with no further configuration.",
+  "chainId": 196,
+  "quoteAdapter": "0x0000000000000000000000000000000000000000",
+  "attestationRegistry": "0x0000000000000000000000000000000000000000",
+  "assetRegistry": "0x0000000000000000000000000000000000000000",
+  "assayOracle": "0x0000000000000000000000000000000000000000",
+  "assayVault": "0x0000000000000000000000000000000000000000",
+  "currency": "0x0000000000000000000000000000000000000000",
+  "assetKey": "assay.carbon.demo.v1",
+  "assetId": "0x0000000000000000000000000000000000000000000000000000000000000000"
+}

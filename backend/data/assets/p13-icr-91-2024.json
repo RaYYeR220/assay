@@ -1,0 +1,49 @@
+{
+  "assetId": "p13-icr-91-2024",
+  "caseId": "P13",
+  "fields": {
+    "registry": "ICR",
+    "project_id": "ICR-91",
+    "project_name": "NA",
+    "project_type": "Blue carbon, mangrove restoration",
+    "methodology": "NA",
+    "vintage": "2024",
+    "country": "NA",
+    "region": "NA",
+    "registry_status": "NA",
+    "credits_issued": "NA",
+    "credits_retired": "NA",
+    "credits_remaining": "NA",
+    "buffer_deposited": "NA",
+    "first_vintage": "NA",
+    "durability": "emission avoidance, no storage reversal risk",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "reference": {
+    "lowUsd": 179,
+    "highUsd": 229,
+    "basis": "Carbonmark ICR-91 vintage 2024: seller ask 179 USD, fee-inclusive purchase price 229 USD, available supply 949.999 tonnes.",
+    "sourceUrl": "https://api.carbonmark.com/prices"
+  },
+  "sources": [
+    {
+      "label": "Carbonmark public price API (no auth)",
+      "url": "https://api.carbonmark.com/prices"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "vintage"
+    ],
+    "illustrative": [
+      "project_type"
+    ],
+    "notes": "Not in the Berkeley database (it covers VCS/GS/ACR/CAR only), so only the Carbonmark listing is sourced. project_type is an unverified category label."
+  }
+}

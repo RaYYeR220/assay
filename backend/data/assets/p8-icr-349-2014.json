@@ -1,0 +1,49 @@
+{
+  "assetId": "p8-icr-349-2014",
+  "caseId": "P8",
+  "fields": {
+    "registry": "ICR",
+    "project_id": "ICR-349",
+    "project_name": "NA",
+    "project_type": "Improved cookstoves",
+    "methodology": "NA",
+    "vintage": "2014",
+    "country": "NA",
+    "region": "NA",
+    "registry_status": "NA",
+    "credits_issued": "NA",
+    "credits_retired": "NA",
+    "credits_remaining": "NA",
+    "buffer_deposited": "NA",
+    "first_vintage": "NA",
+    "durability": "emission avoidance, no storage reversal risk",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "reference": {
+    "lowUsd": 9.71,
+    "highUsd": 13.594,
+    "basis": "Carbonmark ICR-349 vintage 2014: seller ask 9.71 USD, fee-inclusive purchase price 13.594 USD, available supply 3999.999 tonnes.",
+    "sourceUrl": "https://api.carbonmark.com/prices"
+  },
+  "sources": [
+    {
+      "label": "Carbonmark public price API (no auth)",
+      "url": "https://api.carbonmark.com/prices"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "vintage"
+    ],
+    "illustrative": [
+      "project_type"
+    ],
+    "notes": "Not in the Berkeley database (it covers VCS/GS/ACR/CAR only), so only the Carbonmark listing is sourced. project_type is an unverified category label."
+  }
+}

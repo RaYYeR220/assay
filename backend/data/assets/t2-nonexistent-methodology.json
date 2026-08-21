@@ -1,0 +1,44 @@
+{
+  "assetId": "t2-nonexistent-methodology",
+  "caseId": "T2",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-1580",
+    "project_name": "Solar Grouped project by ACME Group (EKIESL-VCS-Aug-16-01)",
+    "project_type": "Solar - Centralized",
+    "methodology": "VM0451 Methodology for Accelerated Mineral Weathering in Managed Grassland",
+    "vintage": "2016",
+    "country": "India",
+    "region": "Southern Asia",
+    "registry_status": "Registered",
+    "credits_issued": "3816393",
+    "credits_retired": "3576404",
+    "credits_remaining": "239989",
+    "buffer_deposited": "0",
+    "first_vintage": "2015",
+    "durability": "emission avoidance, no storage reversal risk",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "credits_issued",
+      "credits_retired"
+    ],
+    "illustrative": [
+      "methodology"
+    ],
+    "notes": "SYNTHETIC DEFECT. VM0451 does not exist in any registry, and the methodology it names (mineral weathering) is incompatible with the stated project type (centralised solar). The rest is the genuine VCS-1580 record."
+  }
+}

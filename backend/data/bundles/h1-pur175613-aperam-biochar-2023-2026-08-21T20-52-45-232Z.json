@@ -1,0 +1,378 @@
+{
+  "bundleId": "4f4912d0-d345-46dd-bc47-9f1d0cb74440",
+  "createdAt": "2026-08-21T20:52:45.232Z",
+  "promptVersion": "assay.appraisal.v1",
+  "schemaId": "0xb5c98bdc502ede2fe911af4d7f7dbec8ffff5ab2c88837475cf3d160a9c22c2c",
+  "assetId": "h1-pur175613-aperam-biochar-2023",
+  "assetIdHex": "0xc950707fccabbc3f8dc7caec6549ab64c9ee71c7944ed10862f73df6a8e96cfd",
+  "evidence": {
+    "line": "schema=assay.carbon.v1;asset_id=h1-pur175613-aperam-biochar-2023;registry=Puro.earth;project_id=PUR-175613;project_name=Aperam Bioenergia biochar;project_type=engineered carbon removal, biochar;methodology=Puro.earth Biochar Methodology;vintage=2023;country=Brazil;region=South America;registry_status=issued;credits_issued=161507;credits_retired=98144;credits_remaining=63363;buffer_deposited=NA;first_vintage=2023;durability=CORC durability class 100 plus years;integrity_flags=none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21",
+    "hex": "0x736368656d613d61737361792e636172626f6e2e76313b61737365745f69643d68312d7075723137353631332d61706572616d2d62696f636861722d323032333b72656769737472793d5075726f2e65617274683b70726f6a6563745f69643d5055522d3137353631333b70726f6a6563745f6e616d653d41706572616d2042696f656e65726769612062696f636861723b70726f6a6563745f747970653d656e67696e656572656420636172626f6e2072656d6f76616c2c2062696f636861723b6d6574686f646f6c6f67793d5075726f2e65617274682042696f63686172204d6574686f646f6c6f67793b76696e746167653d323032333b636f756e7472793d4272617a696c3b726567696f6e3d536f75746820416d65726963613b72656769737472795f7374617475733d6973737565643b637265646974735f6973737565643d3136313530373b637265646974735f726574697265643d39383134343b637265646974735f72656d61696e696e673d36333336333b6275666665725f6465706f73697465643d4e413b66697273745f76696e746167653d323032333b6475726162696c6974793d434f5243206475726162696c69747920636c6173732031303020706c75732079656172733b696e746567726974795f666c6167733d6e6f6e65207265636f72646564206174207468652072656769737472792c207072696e636970616c20756e6365727461696e74696573206172652062696f63686172207065726d616e656e6365206d6f64656c6c696e6720616e642062696f6d617373206665656473746f636b20736f757263696e673b7265665f70726963655f7573643d4e413b7265665f70726963655f736f757263653d4e413b7265665f70726963655f646174653d4e413b6f627365727665645f61743d323032362d30382d3231",
+    "sha256": "faa039ead565b16a878e27633487884d05c3273681c00266eea3a2fd3beb1d1e",
+    "byteLength": 676
+  },
+  "chain": {
+    "evidenceCommitted": true,
+    "observationWatermark": 0,
+    "epoch": 2,
+    "configured": true,
+    "error": null,
+    "commitEvidenceCall": null
+  },
+  "committee": [
+    "deepseek/deepseek-v4-flash-0731",
+    "google/gemma-3-27b-it",
+    "meta-llama/llama-3.3-70b-instruct",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3-vl-30b-a3b-instruct"
+  ],
+  "slots": [
+    {
+      "slot": 0,
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-705a84170910a951ee03391d",
+      "requestBody": "{\"model\":\"deepseek/deepseek-v4-flash-0731\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h1-pur175613-aperam-biochar-2023;registry=Puro.earth;project_id=PUR-175613;project_name=Aperam Bioenergia biochar;project_type=engineered carbon removal, biochar;methodology=Puro.earth Biochar Methodology;vintage=2023;country=Brazil;region=South America;registry_status=issued;credits_issued=161507;credits_retired=98144;credits_remaining=63363;buffer_deposited=NA;first_vintage=2023;durability=CORC durability class 100 plus years;integrity_flags=none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "e04ce5772a1faca833fd274c9ead4760c7d2ae0da3ef6b432266143a3bf1dc43",
+      "responseBody": "{\"id\":\"req_a250cb0fb5e236cb8535ae05121971e9\",\"object\":\"chat.completion\",\"created\":1787345562,\"model\":\"deepseek/deepseek-v4-flash-0731\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=120|confidence_bps=6500\",\"reasoning_content\":null,\"tool_calls\":null},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":353,\"total_tokens\":373,\"completion_tokens\":20,\"prompt_tokens_details\":{\"cached_tokens\":256},\"reasoning_tokens\":0,\"completion_tokens_details\":{\"reasoning_tokens\":0},\"cost\":0.00004532}}",
+      "responseSha256": "6a5d00d74d9730b1ec2582f72875b341316f3c8e6a3ffc3beb5b2185d24316ae",
+      "signature": "0xdd7cc67ed4019500d091040f5fb762c8b9108a86906d72667a28afe9a0b256e4228ba1b74159ee17183466bb18b930b237b6b2a38ae54ae57d3541f9cf4ac2921c",
+      "gatewayText": "e04ce5772a1faca833fd274c9ead4760c7d2ae0da3ef6b432266143a3bf1dc43:6a5d00d74d9730b1ec2582f72875b341316f3c8e6a3ffc3beb5b2185d24316ae",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 0,
+        "modelId": "deepseek/deepseek-v4-flash-0731",
+        "ok": true,
+        "failedCheck": null,
+        "reason": "None",
+        "detail": null,
+        "requestBody": "{\"model\":\"deepseek/deepseek-v4-flash-0731\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h1-pur175613-aperam-biochar-2023;registry=Puro.earth;project_id=PUR-175613;project_name=Aperam Bioenergia biochar;project_type=engineered carbon removal, biochar;methodology=Puro.earth Biochar Methodology;vintage=2023;country=Brazil;region=South America;registry_status=issued;credits_issued=161507;credits_retired=98144;credits_remaining=63363;buffer_deposited=NA;first_vintage=2023;durability=CORC durability class 100 plus years;integrity_flags=none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "e04ce5772a1faca833fd274c9ead4760c7d2ae0da3ef6b432266143a3bf1dc43",
+        "responseSha256": "6a5d00d74d9730b1ec2582f72875b341316f3c8e6a3ffc3beb5b2185d24316ae",
+        "signedText": "e04ce5772a1faca833fd274c9ead4760c7d2ae0da3ef6b432266143a3bf1dc43:6a5d00d74d9730b1ec2582f72875b341316f3c8e6a3ffc3beb5b2185d24316ae",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "120",
+        "confBps": 6500,
+        "createdAt": 1787345562,
+        "ageSec": 1,
+        "offsets": {
+          "contentOffset": 187,
+          "finishOffset": 301,
+          "createdOffset": 72
+        },
+        "roundBlocker": null
+      },
+      "onChain": {
+        "slot": 0,
+        "responseBody": "0x7b226964223a227265715f6132353063623066623565323336636238353335616530353132313937316539222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334353536322c226d6f64656c223a22646565707365656b2f646565707365656b2d76342d666c6173682d30373331222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3132307c636f6e666964656e63655f6270733d36353030222c22726561736f6e696e675f636f6e74656e74223a6e756c6c2c22746f6f6c5f63616c6c73223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c227573616765223a7b2270726f6d70745f746f6b656e73223a3335332c22746f74616c5f746f6b656e73223a3337332c22636f6d706c6574696f6e5f746f6b656e73223a32302c2270726f6d70745f746f6b656e735f64657461696c73223a7b226361636865645f746f6b656e73223a3235367d2c22726561736f6e696e675f746f6b656e73223a302c22636f6d706c6574696f6e5f746f6b656e735f64657461696c73223a7b22726561736f6e696e675f746f6b656e73223a307d2c22636f7374223a302e30303030343533327d7d",
+        "signature": "0xdd7cc67ed4019500d091040f5fb762c8b9108a86906d72667a28afe9a0b256e4228ba1b74159ee17183466bb18b930b237b6b2a38ae54ae57d3541f9cf4ac2921c"
+      },
+      "available": true,
+      "failure": null,
+      "latencyMs": 3810
+    },
+    {
+      "slot": 1,
+      "model": "google/gemma-3-27b-it",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-3b49f8cbb8df288eee5c425f",
+      "requestBody": "{\"model\":\"google/gemma-3-27b-it\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h1-pur175613-aperam-biochar-2023;registry=Puro.earth;project_id=PUR-175613;project_name=Aperam Bioenergia biochar;project_type=engineered carbon removal, biochar;methodology=Puro.earth Biochar Methodology;vintage=2023;country=Brazil;region=South America;registry_status=issued;credits_issued=161507;credits_retired=98144;credits_remaining=63363;buffer_deposited=NA;first_vintage=2023;durability=CORC durability class 100 plus years;integrity_flags=none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "0cdf957b736bbc433595010ab71aa922454f840cecbf2f2e3b74d678f51855c8",
+      "responseBody": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"logprobs\":null,\"message\":{\"content\":\"ASSAY1|nav_usd_e6=150000000|confidence_bps=7500\",\"role\":\"assistant\"}}],\"created\":1787345562,\"id\":\"req_23bdf49e21ed9777a1e2e607ab444de0\",\"model\":\"google/gemma-3-27b-it\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":30,\"prompt_tokens\":412,\"total_tokens\":442,\"cost\":0.0000756}}",
+      "responseSha256": "099be06e8e8abed40c5b482942e68b3bf629f19dcd18c4f191934ce7816d7d4b",
+      "signature": "0xbd7ff6dfcc9682ae05d12b1cbbeca27bf860d35cb07faf572f36a462b0c5174550ffc20c25e1a02b78456b9b000c9d5187595ad532b1a048d0f7917e998fa52f1b",
+      "gatewayText": "0cdf957b736bbc433595010ab71aa922454f840cecbf2f2e3b74d678f51855c8:099be06e8e8abed40c5b482942e68b3bf629f19dcd18c4f191934ce7816d7d4b",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 1,
+        "modelId": "google/gemma-3-27b-it",
+        "ok": true,
+        "failedCheck": null,
+        "reason": "None",
+        "detail": null,
+        "requestBody": "{\"model\":\"google/gemma-3-27b-it\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h1-pur175613-aperam-biochar-2023;registry=Puro.earth;project_id=PUR-175613;project_name=Aperam Bioenergia biochar;project_type=engineered carbon removal, biochar;methodology=Puro.earth Biochar Methodology;vintage=2023;country=Brazil;region=South America;registry_status=issued;credits_issued=161507;credits_retired=98144;credits_remaining=63363;buffer_deposited=NA;first_vintage=2023;durability=CORC durability class 100 plus years;integrity_flags=none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "0cdf957b736bbc433595010ab71aa922454f840cecbf2f2e3b74d678f51855c8",
+        "responseSha256": "099be06e8e8abed40c5b482942e68b3bf629f19dcd18c4f191934ce7816d7d4b",
+        "signedText": "0cdf957b736bbc433595010ab71aa922454f840cecbf2f2e3b74d678f51855c8:099be06e8e8abed40c5b482942e68b3bf629f19dcd18c4f191934ce7816d7d4b",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "150000000",
+        "confBps": 7500,
+        "createdAt": 1787345562,
+        "ageSec": 1,
+        "offsets": {
+          "contentOffset": 73,
+          "finishOffset": 13,
+          "createdOffset": 155
+        },
+        "roundBlocker": null
+      },
+      "onChain": {
+        "slot": 1,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3135303030303030307c636f6e666964656e63655f6270733d37353030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353536322c226964223a227265715f3233626466343965323165643937373761316532653630376162343434646530222c226d6f64656c223a22676f6f676c652f67656d6d612d332d3237622d6974222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a33302c2270726f6d70745f746f6b656e73223a3431322c22746f74616c5f746f6b656e73223a3434322c22636f7374223a302e303030303735367d7d",
+        "signature": "0xbd7ff6dfcc9682ae05d12b1cbbeca27bf860d35cb07faf572f36a462b0c5174550ffc20c25e1a02b78456b9b000c9d5187595ad532b1a048d0f7917e998fa52f1b"
+      },
+      "available": true,
+      "failure": null,
+      "latencyMs": 4492
+    },
+    {
+      "slot": 2,
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-431850044703f60ae4249e21",
+      "requestBody": "{\"model\":\"meta-llama/llama-3.3-70b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h1-pur175613-aperam-biochar-2023;registry=Puro.earth;project_id=PUR-175613;project_name=Aperam Bioenergia biochar;project_type=engineered carbon removal, biochar;methodology=Puro.earth Biochar Methodology;vintage=2023;country=Brazil;region=South America;registry_status=issued;credits_issued=161507;credits_retired=98144;credits_remaining=63363;buffer_deposited=NA;first_vintage=2023;durability=CORC durability class 100 plus years;integrity_flags=none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "60fcdd93a6bc2d3ef19a4f609fa5b674d1189de6ee5f7b83587d528c5b79377c",
+      "responseBody": "{\"id\":\"req_d1d677d1ade6a2e46e5f891cef80b415\",\"object\":\"chat.completion\",\"created\":1787345563,\"model\":\"meta-llama/llama-3.3-70b-instruct\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=1200000|confidence_bps=8000\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":null},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"service_tier\":null,\"usage\":{\"prompt_tokens\":381,\"total_tokens\":402,\"completion_tokens\":21,\"prompt_tokens_details\":null,\"cost\":0.000804}}",
+      "responseSha256": "bda973965c7cdea925f04c982da68a0576e06d39e8e2be84b00968bad33a5097",
+      "signature": "0x5affde372349dbae689c7a2ca6a4539f92ab6524ad8c7d0dba8f3b73e35d4903592637154751be6f7e0417596877e697648ba81d07bc69d1e4adb3a95daba42e1c",
+      "gatewayText": "60fcdd93a6bc2d3ef19a4f609fa5b674d1189de6ee5f7b83587d528c5b79377c:bda973965c7cdea925f04c982da68a0576e06d39e8e2be84b00968bad33a5097",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 2,
+        "modelId": "meta-llama/llama-3.3-70b-instruct",
+        "ok": true,
+        "failedCheck": null,
+        "reason": "None",
+        "detail": null,
+        "requestBody": "{\"model\":\"meta-llama/llama-3.3-70b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h1-pur175613-aperam-biochar-2023;registry=Puro.earth;project_id=PUR-175613;project_name=Aperam Bioenergia biochar;project_type=engineered carbon removal, biochar;methodology=Puro.earth Biochar Methodology;vintage=2023;country=Brazil;region=South America;registry_status=issued;credits_issued=161507;credits_retired=98144;credits_remaining=63363;buffer_deposited=NA;first_vintage=2023;durability=CORC durability class 100 plus years;integrity_flags=none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "60fcdd93a6bc2d3ef19a4f609fa5b674d1189de6ee5f7b83587d528c5b79377c",
+        "responseSha256": "bda973965c7cdea925f04c982da68a0576e06d39e8e2be84b00968bad33a5097",
+        "signedText": "60fcdd93a6bc2d3ef19a4f609fa5b674d1189de6ee5f7b83587d528c5b79377c:bda973965c7cdea925f04c982da68a0576e06d39e8e2be84b00968bad33a5097",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "1200000",
+        "confBps": 8000,
+        "createdAt": 1787345563,
+        "ageSec": -1,
+        "offsets": {
+          "contentOffset": 189,
+          "finishOffset": 365,
+          "createdOffset": 72
+        },
+        "roundBlocker": null
+      },
+      "onChain": {
+        "slot": 2,
+        "responseBody": "0x7b226964223a227265715f6431643637376431616465366132653436653566383931636566383062343135222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334353536332c226d6f64656c223a226d6574612d6c6c616d612f6c6c616d612d332e332d3730622d696e737472756374222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d313230303030307c636f6e666964656e63655f6270733d38303030222c227265667573616c223a6e756c6c2c22616e6e6f746174696f6e73223a6e756c6c2c22617564696f223a6e756c6c2c2266756e6374696f6e5f63616c6c223a6e756c6c2c22746f6f6c5f63616c6c73223a5b5d2c22726561736f6e696e67223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c22736572766963655f74696572223a6e756c6c2c227573616765223a7b2270726f6d70745f746f6b656e73223a3338312c22746f74616c5f746f6b656e73223a3430322c22636f6d706c6574696f6e5f746f6b656e73223a32312c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22636f7374223a302e3030303830347d7d",
+        "signature": "0x5affde372349dbae689c7a2ca6a4539f92ab6524ad8c7d0dba8f3b73e35d4903592637154751be6f7e0417596877e697648ba81d07bc69d1e4adb3a95daba42e1c"
+      },
+      "available": true,
+      "failure": null,
+      "latencyMs": 3197
+    },
+    {
+      "slot": 3,
+      "model": "qwen/qwen3.6-35b-a3b",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-28a705dc495aed1a464bc509",
+      "requestBody": "{\"model\":\"qwen/qwen3.6-35b-a3b\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h1-pur175613-aperam-biochar-2023;registry=Puro.earth;project_id=PUR-175613;project_name=Aperam Bioenergia biochar;project_type=engineered carbon removal, biochar;methodology=Puro.earth Biochar Methodology;vintage=2023;country=Brazil;region=South America;registry_status=issued;credits_issued=161507;credits_retired=98144;credits_remaining=63363;buffer_deposited=NA;first_vintage=2023;durability=CORC durability class 100 plus years;integrity_flags=none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "4cc4f372b04a5335fa9d70c488c2025fc1a231dd6a7220d56d20a404e53596df",
+      "responseBody": "{\"choices\":[{\"finish_reason\":\"length\",\"index\":0,\"logprobs\":null,\"message\":{\"content\":null,\"reasoning_content\":\"Here's a thinking process:\\n\\n1.  **Analyze User Input:**\\n   - **Role:** Independent asset appraiser for a public valuation oracle.\\n   - **Task:** Appraise one unit of the asset described in the evidence record.\\n   - **Output Format:** Exactly one line, no prose, no markdown, no code fences, no explanation. Format: `ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>`\\n   - **Evidence Record:**\\n     - Schema: assay.carbon.v1\\n     - Asset ID: h1-pur175613-aperam-biochar-2023\\n     - Registry: Puro.earth\\n     - Project ID: PUR-175613\\n     - Project Name: Aperam Bioenergia biochar\\n     - Project Type: engineered carbon removal, biochar\\n     - Methodology: Puro.earth Biochar Methodology\\n     - Vintage: 2023\\n     - Country: Brazil\\n     - Region: South America\\n     - Registry Status: issued\\n     - Credits Issued: 161,507\\n     - Credits Retired: 98,144\\n     - Credits Remaining: 63,363\\n     - Buffer Deposited: NA\\n     - First Vintage: 2023\\n     - Durability: CORC durability class 100 plus years\\n     - Integrity Flags: none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing\\n     - Ref Price USD: NA\\n     - Ref Price Source: NA\\n     - Ref Price Date: NA\\n     - Observed At: 2026-08-21\\n\\n2.  **Identify Asset Type & Market Context:**\\n   - This is a carbon credit (specifically, a biochar carbon removal credit) from the Puro.earth registry.\\n   - Puro.earth is a premium carbon removal registry known for high-quality, durable removal credits.\\n   - Biochar credits typically trade at a premium compared to avoidance credits.\\n   - Market prices for high-quality carbon removal credits (like those from Puro.earth, Climeworks, etc.) have been in the range of $300-$600+ per tonne in recent years, with Puro.earth specifically often commanding $40\",\"role\":\"assistant\"}}],\"created\":1787345562,\"id\":\"req_8df4f85565fe503efc28213560ba3742\",\"model\":\"qwen/qwen3.6-35b-a3b\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":512,\"prompt_tokens\":397,\"prompt_tokens_details\":null,\"reasoning_tokens\":514,\"total_tokens\":909,\"completion_tokens_details\":{\"reasoning_tokens\":514},\"cost\":0.00072964}}",
+      "responseSha256": "7bb766fb39d9746881634f943edcb20baf9d890469024ddf4f1bc739e6e7cf8e",
+      "signature": "0xb5d9c46c09feb8903ff80c804d2193208c6010d884a1a96e0a0a290790085ac814c02ced6b679df7b76671f6ba59c6750366a4144454194ddcd01ca6cc4b80781b",
+      "gatewayText": "4cc4f372b04a5335fa9d70c488c2025fc1a231dd6a7220d56d20a404e53596df:7bb766fb39d9746881634f943edcb20baf9d890469024ddf4f1bc739e6e7cf8e",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 3,
+        "modelId": "qwen/qwen3.6-35b-a3b",
+        "ok": false,
+        "failedCheck": "_readAnswer",
+        "reason": "Truncated",
+        "detail": "finish_reason != stop (model hit the token cap or errored)",
+        "requestBody": "{\"model\":\"qwen/qwen3.6-35b-a3b\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h1-pur175613-aperam-biochar-2023;registry=Puro.earth;project_id=PUR-175613;project_name=Aperam Bioenergia biochar;project_type=engineered carbon removal, biochar;methodology=Puro.earth Biochar Methodology;vintage=2023;country=Brazil;region=South America;registry_status=issued;credits_issued=161507;credits_retired=98144;credits_remaining=63363;buffer_deposited=NA;first_vintage=2023;durability=CORC durability class 100 plus years;integrity_flags=none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "4cc4f372b04a5335fa9d70c488c2025fc1a231dd6a7220d56d20a404e53596df",
+        "responseSha256": "7bb766fb39d9746881634f943edcb20baf9d890469024ddf4f1bc739e6e7cf8e",
+        "signedText": "4cc4f372b04a5335fa9d70c488c2025fc1a231dd6a7220d56d20a404e53596df:7bb766fb39d9746881634f943edcb20baf9d890469024ddf4f1bc739e6e7cf8e",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": null,
+        "confBps": null,
+        "createdAt": 1787345562,
+        "ageSec": 3,
+        "offsets": null,
+        "roundBlocker": null
+      },
+      "onChain": {
+        "slot": 3,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a226c656e677468222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a6e756c6c2c22726561736f6e696e675f636f6e74656e74223a224865726527732061207468696e6b696e672070726f636573733a5c6e5c6e312e20202a2a416e616c797a65205573657220496e7075743a2a2a5c6e2020202d202a2a526f6c653a2a2a20496e646570656e64656e742061737365742061707072616973657220666f722061207075626c69632076616c756174696f6e206f7261636c652e5c6e2020202d202a2a5461736b3a2a2a204170707261697365206f6e6520756e6974206f66207468652061737365742064657363726962656420696e207468652065766964656e6365207265636f72642e5c6e2020202d202a2a4f757470757420466f726d61743a2a2a2045786163746c79206f6e65206c696e652c206e6f2070726f73652c206e6f206d61726b646f776e2c206e6f20636f64652066656e6365732c206e6f206578706c616e6174696f6e2e20466f726d61743a20604153534159317c6e61765f7573645f65363d3c696e74656765723e7c636f6e666964656e63655f6270733d3c696e74656765723e605c6e2020202d202a2a45766964656e6365205265636f72643a2a2a5c6e20202020202d20536368656d613a2061737361792e636172626f6e2e76315c6e20202020202d2041737365742049443a2068312d7075723137353631332d61706572616d2d62696f636861722d323032335c6e20202020202d2052656769737472793a205075726f2e65617274685c6e20202020202d2050726f6a6563742049443a205055522d3137353631335c6e20202020202d2050726f6a656374204e616d653a2041706572616d2042696f656e65726769612062696f636861725c6e20202020202d2050726f6a65637420547970653a20656e67696e656572656420636172626f6e2072656d6f76616c2c2062696f636861725c6e20202020202d204d6574686f646f6c6f67793a205075726f2e65617274682042696f63686172204d6574686f646f6c6f67795c6e20202020202d2056696e746167653a20323032335c6e20202020202d20436f756e7472793a204272617a696c5c6e20202020202d20526567696f6e3a20536f75746820416d65726963615c6e20202020202d205265676973747279205374617475733a206973737565645c6e20202020202d2043726564697473204973737565643a203136312c3530375c6e20202020202d204372656469747320526574697265643a2039382c3134345c6e20202020202d20437265646974732052656d61696e696e673a2036332c3336335c6e20202020202d20427566666572204465706f73697465643a204e415c6e20202020202d2046697273742056696e746167653a20323032335c6e20202020202d204475726162696c6974793a20434f5243206475726162696c69747920636c6173732031303020706c75732079656172735c6e20202020202d20496e7465677269747920466c6167733a206e6f6e65207265636f72646564206174207468652072656769737472792c207072696e636970616c20756e6365727461696e74696573206172652062696f63686172207065726d616e656e6365206d6f64656c6c696e6720616e642062696f6d617373206665656473746f636b20736f757263696e675c6e20202020202d20526566205072696365205553443a204e415c6e20202020202d2052656620507269636520536f757263653a204e415c6e20202020202d2052656620507269636520446174653a204e415c6e20202020202d204f627365727665642041743a20323032362d30382d32315c6e5c6e322e20202a2a4964656e7469667920417373657420547970652026204d61726b657420436f6e746578743a2a2a5c6e2020202d2054686973206973206120636172626f6e2063726564697420287370656369666963616c6c792c20612062696f6368617220636172626f6e2072656d6f76616c20637265646974292066726f6d20746865205075726f2e65617274682072656769737472792e5c6e2020202d205075726f2e65617274682069732061207072656d69756d20636172626f6e2072656d6f76616c207265676973747279206b6e6f776e20666f7220686967682d7175616c6974792c2064757261626c652072656d6f76616c20637265646974732e5c6e2020202d2042696f636861722063726564697473207479706963616c6c792074726164652061742061207072656d69756d20636f6d706172656420746f2061766f6964616e636520637265646974732e5c6e2020202d204d61726b65742070726963657320666f7220686967682d7175616c69747920636172626f6e2072656d6f76616c206372656469747320286c696b652074686f73652066726f6d205075726f2e65617274682c20436c696d65776f726b732c206574632e292068617665206265656e20696e207468652072616e6765206f6620243330302d243630302b2070657220746f6e6e6520696e20726563656e742079656172732c2077697468205075726f2e6561727468207370656369666963616c6c79206f6674656e20636f6d6d616e64696e6720243430222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353536322c226964223a227265715f3864663466383535363566653530336566633238323133353630626133373432222c226d6f64656c223a227177656e2f7177656e332e362d3335622d613362222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a3531322c2270726f6d70745f746f6b656e73223a3339372c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22726561736f6e696e675f746f6b656e73223a3531342c22746f74616c5f746f6b656e73223a3930392c22636f6d706c6574696f6e5f746f6b656e735f64657461696c73223a7b22726561736f6e696e675f746f6b656e73223a3531347d2c22636f7374223a302e30303037323936347d7d",
+        "signature": "0xb5d9c46c09feb8903ff80c804d2193208c6010d884a1a96e0a0a290790085ac814c02ced6b679df7b76671f6ba59c6750366a4144454194ddcd01ca6cc4b80781b"
+      },
+      "available": true,
+      "failure": "Truncated at _readAnswer: finish_reason != stop (model hit the token cap or errored)",
+      "latencyMs": 5955
+    },
+    {
+      "slot": 4,
+      "model": "qwen/qwen3-vl-30b-a3b-instruct",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-5cd15113cdf631eb387e3866",
+      "requestBody": "{\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h1-pur175613-aperam-biochar-2023;registry=Puro.earth;project_id=PUR-175613;project_name=Aperam Bioenergia biochar;project_type=engineered carbon removal, biochar;methodology=Puro.earth Biochar Methodology;vintage=2023;country=Brazil;region=South America;registry_status=issued;credits_issued=161507;credits_retired=98144;credits_remaining=63363;buffer_deposited=NA;first_vintage=2023;durability=CORC durability class 100 plus years;integrity_flags=none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "c8147ac9e12bc80bfebad5bc728f449dadb764b9a948427552223b2ea24876d2",
+      "responseBody": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"logprobs\":null,\"message\":{\"content\":\"ASSAY1|nav_usd_e6=1000000|confidence_bps=8500\",\"role\":\"assistant\"}}],\"created\":1787345562,\"id\":\"req_78cbafc36777c915cc7cb651caceb6aa\",\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":27,\"prompt_tokens\":397,\"prompt_tokens_details\":{\"cached_tokens\":384},\"total_tokens\":424,\"cost\":0.0000983}}",
+      "responseSha256": "758765dcc5ccacb1f26fd7c837f868e69162d36f315d75ce9bf3039aa42cbe20",
+      "signature": "0x95e48056316bc93c1b4c9dfc7d65cb906b5b2ffb938e2ca72f75c3ae1f62c2e61f5841011f94b8540f7c154816ca35f5b7aa40f3085bf3bd22a720bc0a8b65a71c",
+      "gatewayText": "c8147ac9e12bc80bfebad5bc728f449dadb764b9a948427552223b2ea24876d2:758765dcc5ccacb1f26fd7c837f868e69162d36f315d75ce9bf3039aa42cbe20",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 4,
+        "modelId": "qwen/qwen3-vl-30b-a3b-instruct",
+        "ok": true,
+        "failedCheck": null,
+        "reason": "None",
+        "detail": null,
+        "requestBody": "{\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h1-pur175613-aperam-biochar-2023;registry=Puro.earth;project_id=PUR-175613;project_name=Aperam Bioenergia biochar;project_type=engineered carbon removal, biochar;methodology=Puro.earth Biochar Methodology;vintage=2023;country=Brazil;region=South America;registry_status=issued;credits_issued=161507;credits_retired=98144;credits_remaining=63363;buffer_deposited=NA;first_vintage=2023;durability=CORC durability class 100 plus years;integrity_flags=none recorded at the registry, principal uncertainties are biochar permanence modelling and biomass feedstock sourcing;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "c8147ac9e12bc80bfebad5bc728f449dadb764b9a948427552223b2ea24876d2",
+        "responseSha256": "758765dcc5ccacb1f26fd7c837f868e69162d36f315d75ce9bf3039aa42cbe20",
+        "signedText": "c8147ac9e12bc80bfebad5bc728f449dadb764b9a948427552223b2ea24876d2:758765dcc5ccacb1f26fd7c837f868e69162d36f315d75ce9bf3039aa42cbe20",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "1000000",
+        "confBps": 8500,
+        "createdAt": 1787345562,
+        "ageSec": 1,
+        "offsets": {
+          "contentOffset": 73,
+          "finishOffset": 13,
+          "createdOffset": 153
+        },
+        "roundBlocker": null
+      },
+      "onChain": {
+        "slot": 4,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d313030303030307c636f6e666964656e63655f6270733d38353030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353536322c226964223a227265715f3738636261666333363737376339313563633763623635316361636562366161222c226d6f64656c223a227177656e2f7177656e332d766c2d3330622d6133622d696e737472756374222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a32372c2270726f6d70745f746f6b656e73223a3339372c2270726f6d70745f746f6b656e735f64657461696c73223a7b226361636865645f746f6b656e73223a3338347d2c22746f74616c5f746f6b656e73223a3432342c22636f7374223a302e303030303938337d7d",
+        "signature": "0x95e48056316bc93c1b4c9dfc7d65cb906b5b2ffb938e2ca72f75c3ae1f62c2e61f5841011f94b8540f7c154816ca35f5b7aa40f3085bf3bd22a720bc0a8b65a71c"
+      },
+      "available": true,
+      "failure": null,
+      "latencyMs": 4273
+    }
+  ],
+  "submission": {
+    "assetId": "h1-pur175613-aperam-biochar-2023",
+    "evidence": "0x736368656d613d61737361792e636172626f6e2e76313b61737365745f69643d68312d7075723137353631332d61706572616d2d62696f636861722d323032333b72656769737472793d5075726f2e65617274683b70726f6a6563745f69643d5055522d3137353631333b70726f6a6563745f6e616d653d41706572616d2042696f656e65726769612062696f636861723b70726f6a6563745f747970653d656e67696e656572656420636172626f6e2072656d6f76616c2c2062696f636861723b6d6574686f646f6c6f67793d5075726f2e65617274682042696f63686172204d6574686f646f6c6f67793b76696e746167653d323032333b636f756e7472793d4272617a696c3b726567696f6e3d536f75746820416d65726963613b72656769737472795f7374617475733d6973737565643b637265646974735f6973737565643d3136313530373b637265646974735f726574697265643d39383134343b637265646974735f72656d61696e696e673d36333336333b6275666665725f6465706f73697465643d4e413b66697273745f76696e746167653d323032333b6475726162696c6974793d434f5243206475726162696c69747920636c6173732031303020706c75732079656172733b696e746567726974795f666c6167733d6e6f6e65207265636f72646564206174207468652072656769737472792c207072696e636970616c20756e6365727461696e74696573206172652062696f63686172207065726d616e656e6365206d6f64656c6c696e6720616e642062696f6d617373206665656473746f636b20736f757263696e673b7265665f70726963655f7573643d4e413b7265665f70726963655f736f757263653d4e413b7265665f70726963655f646174653d4e413b6f627365727665645f61743d323032362d30382d3231",
+    "verdicts": [
+      {
+        "slot": 0,
+        "responseBody": "0x7b226964223a227265715f6132353063623066623565323336636238353335616530353132313937316539222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334353536322c226d6f64656c223a22646565707365656b2f646565707365656b2d76342d666c6173682d30373331222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3132307c636f6e666964656e63655f6270733d36353030222c22726561736f6e696e675f636f6e74656e74223a6e756c6c2c22746f6f6c5f63616c6c73223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c227573616765223a7b2270726f6d70745f746f6b656e73223a3335332c22746f74616c5f746f6b656e73223a3337332c22636f6d706c6574696f6e5f746f6b656e73223a32302c2270726f6d70745f746f6b656e735f64657461696c73223a7b226361636865645f746f6b656e73223a3235367d2c22726561736f6e696e675f746f6b656e73223a302c22636f6d706c6574696f6e5f746f6b656e735f64657461696c73223a7b22726561736f6e696e675f746f6b656e73223a307d2c22636f7374223a302e30303030343533327d7d",
+        "signature": "0xdd7cc67ed4019500d091040f5fb762c8b9108a86906d72667a28afe9a0b256e4228ba1b74159ee17183466bb18b930b237b6b2a38ae54ae57d3541f9cf4ac2921c"
+      },
+      {
+        "slot": 1,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3135303030303030307c636f6e666964656e63655f6270733d37353030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353536322c226964223a227265715f3233626466343965323165643937373761316532653630376162343434646530222c226d6f64656c223a22676f6f676c652f67656d6d612d332d3237622d6974222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a33302c2270726f6d70745f746f6b656e73223a3431322c22746f74616c5f746f6b656e73223a3434322c22636f7374223a302e303030303735367d7d",
+        "signature": "0xbd7ff6dfcc9682ae05d12b1cbbeca27bf860d35cb07faf572f36a462b0c5174550ffc20c25e1a02b78456b9b000c9d5187595ad532b1a048d0f7917e998fa52f1b"
+      },
+      {
+        "slot": 2,
+        "responseBody": "0x7b226964223a227265715f6431643637376431616465366132653436653566383931636566383062343135222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334353536332c226d6f64656c223a226d6574612d6c6c616d612f6c6c616d612d332e332d3730622d696e737472756374222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d313230303030307c636f6e666964656e63655f6270733d38303030222c227265667573616c223a6e756c6c2c22616e6e6f746174696f6e73223a6e756c6c2c22617564696f223a6e756c6c2c2266756e6374696f6e5f63616c6c223a6e756c6c2c22746f6f6c5f63616c6c73223a5b5d2c22726561736f6e696e67223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c22736572766963655f74696572223a6e756c6c2c227573616765223a7b2270726f6d70745f746f6b656e73223a3338312c22746f74616c5f746f6b656e73223a3430322c22636f6d706c6574696f6e5f746f6b656e73223a32312c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22636f7374223a302e3030303830347d7d",
+        "signature": "0x5affde372349dbae689c7a2ca6a4539f92ab6524ad8c7d0dba8f3b73e35d4903592637154751be6f7e0417596877e697648ba81d07bc69d1e4adb3a95daba42e1c"
+      },
+      {
+        "slot": 3,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a226c656e677468222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a6e756c6c2c22726561736f6e696e675f636f6e74656e74223a224865726527732061207468696e6b696e672070726f636573733a5c6e5c6e312e20202a2a416e616c797a65205573657220496e7075743a2a2a5c6e2020202d202a2a526f6c653a2a2a20496e646570656e64656e742061737365742061707072616973657220666f722061207075626c69632076616c756174696f6e206f7261636c652e5c6e2020202d202a2a5461736b3a2a2a204170707261697365206f6e6520756e6974206f66207468652061737365742064657363726962656420696e207468652065766964656e6365207265636f72642e5c6e2020202d202a2a4f757470757420466f726d61743a2a2a2045786163746c79206f6e65206c696e652c206e6f2070726f73652c206e6f206d61726b646f776e2c206e6f20636f64652066656e6365732c206e6f206578706c616e6174696f6e2e20466f726d61743a20604153534159317c6e61765f7573645f65363d3c696e74656765723e7c636f6e666964656e63655f6270733d3c696e74656765723e605c6e2020202d202a2a45766964656e6365205265636f72643a2a2a5c6e20202020202d20536368656d613a2061737361792e636172626f6e2e76315c6e20202020202d2041737365742049443a2068312d7075723137353631332d61706572616d2d62696f636861722d323032335c6e20202020202d2052656769737472793a205075726f2e65617274685c6e20202020202d2050726f6a6563742049443a205055522d3137353631335c6e20202020202d2050726f6a656374204e616d653a2041706572616d2042696f656e65726769612062696f636861725c6e20202020202d2050726f6a65637420547970653a20656e67696e656572656420636172626f6e2072656d6f76616c2c2062696f636861725c6e20202020202d204d6574686f646f6c6f67793a205075726f2e65617274682042696f63686172204d6574686f646f6c6f67795c6e20202020202d2056696e746167653a20323032335c6e20202020202d20436f756e7472793a204272617a696c5c6e20202020202d20526567696f6e3a20536f75746820416d65726963615c6e20202020202d205265676973747279205374617475733a206973737565645c6e20202020202d2043726564697473204973737565643a203136312c3530375c6e20202020202d204372656469747320526574697265643a2039382c3134345c6e20202020202d20437265646974732052656d61696e696e673a2036332c3336335c6e20202020202d20427566666572204465706f73697465643a204e415c6e20202020202d2046697273742056696e746167653a20323032335c6e20202020202d204475726162696c6974793a20434f5243206475726162696c69747920636c6173732031303020706c75732079656172735c6e20202020202d20496e7465677269747920466c6167733a206e6f6e65207265636f72646564206174207468652072656769737472792c207072696e636970616c20756e6365727461696e74696573206172652062696f63686172207065726d616e656e6365206d6f64656c6c696e6720616e642062696f6d617373206665656473746f636b20736f757263696e675c6e20202020202d20526566205072696365205553443a204e415c6e20202020202d2052656620507269636520536f757263653a204e415c6e20202020202d2052656620507269636520446174653a204e415c6e20202020202d204f627365727665642041743a20323032362d30382d32315c6e5c6e322e20202a2a4964656e7469667920417373657420547970652026204d61726b657420436f6e746578743a2a2a5c6e2020202d2054686973206973206120636172626f6e2063726564697420287370656369666963616c6c792c20612062696f6368617220636172626f6e2072656d6f76616c20637265646974292066726f6d20746865205075726f2e65617274682072656769737472792e5c6e2020202d205075726f2e65617274682069732061207072656d69756d20636172626f6e2072656d6f76616c207265676973747279206b6e6f776e20666f7220686967682d7175616c6974792c2064757261626c652072656d6f76616c20637265646974732e5c6e2020202d2042696f636861722063726564697473207479706963616c6c792074726164652061742061207072656d69756d20636f6d706172656420746f2061766f6964616e636520637265646974732e5c6e2020202d204d61726b65742070726963657320666f7220686967682d7175616c69747920636172626f6e2072656d6f76616c206372656469747320286c696b652074686f73652066726f6d205075726f2e65617274682c20436c696d65776f726b732c206574632e292068617665206265656e20696e207468652072616e6765206f6620243330302d243630302b2070657220746f6e6e6520696e20726563656e742079656172732c2077697468205075726f2e6561727468207370656369666963616c6c79206f6674656e20636f6d6d616e64696e6720243430222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353536322c226964223a227265715f3864663466383535363566653530336566633238323133353630626133373432222c226d6f64656c223a227177656e2f7177656e332e362d3335622d613362222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a3531322c2270726f6d70745f746f6b656e73223a3339372c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22726561736f6e696e675f746f6b656e73223a3531342c22746f74616c5f746f6b656e73223a3930392c22636f6d706c6574696f6e5f746f6b656e735f64657461696c73223a7b22726561736f6e696e675f746f6b656e73223a3531347d2c22636f7374223a302e30303037323936347d7d",
+        "signature": "0xb5d9c46c09feb8903ff80c804d2193208c6010d884a1a96e0a0a290790085ac814c02ced6b679df7b76671f6ba59c6750366a4144454194ddcd01ca6cc4b80781b"
+      },
+      {
+        "slot": 4,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d313030303030307c636f6e666964656e63655f6270733d38353030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353536322c226964223a227265715f3738636261666333363737376339313563633763623635316361636562366161222c226d6f64656c223a227177656e2f7177656e332d766c2d3330622d6133622d696e737472756374222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a32372c2270726f6d70745f746f6b656e73223a3339372c2270726f6d70745f746f6b656e735f64657461696c73223a7b226361636865645f746f6b656e73223a3338347d2c22746f74616c5f746f6b656e73223a3432342c22636f7374223a302e303030303938337d7d",
+        "signature": "0x95e48056316bc93c1b4c9dfc7d65cb906b5b2ffb938e2ca72f75c3ae1f62c2e61f5841011f94b8540f7c154816ca35f5b7aa40f3085bf3bd22a720bc0a8b65a71c"
+      }
+    ]
+  },
+  "summary": {
+    "slots": 5,
+    "available": 5,
+    "signatureOk": 5,
+    "preflightOk": 4,
+    "navsE6": [
+      "120",
+      "150000000",
+      "1200000",
+      "1000000"
+    ],
+    "medianE6": "1100000",
+    "maxDeviationBps": 1353636,
+    "wouldHalt": true,
+    "wouldRevert": false,
+    "haltReasons": [
+      "BAND(1353636bps > 1500bps)"
+    ],
+    "rejectReasons": [
+      {
+        "slot": 3,
+        "model": "qwen/qwen3.6-35b-a3b",
+        "reason": "Truncated",
+        "check": "_readAnswer",
+        "detail": "finish_reason != stop (model hit the token cap or errored)"
+      }
+    ]
+  },
+  "onChain": {
+    "chainId": 1952,
+    "explorer": "https://web3.okx.com/explorer/x-layer-testnet",
+    "oracle": "0xEd888DC5b67038fF66D9a5DeB76B323655f21b23",
+    "assetId": "0xc950707fccabbc3f8dc7caec6549ab64c9ee71c7944ed10862f73df6a8e96cfd",
+    "epoch": 3,
+    "txHash": "0xf6c649b3cba13971f4f88de1060813bda8a52d9366dbd760e533519637eb1cb4",
+    "txUrl": "https://web3.okx.com/explorer/x-layer-testnet/tx/0xf6c649b3cba13971f4f88de1060813bda8a52d9366dbd760e533519637eb1cb4",
+    "blockNumber": 38886731,
+    "gasUsed": 1010918,
+    "published": false,
+    "navE6": null,
+    "haltReason": "Band",
+    "accepted": 4,
+    "distinctSigners": 0,
+    "observedAt": null,
+    "evidenceHash": "0xfaa039ead565b16a878e27633487884d05c3273681c00266eea3a2fd3beb1d1e",
+    "slots": [
+      {
+        "slot": 0,
+        "accepted": true,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "120",
+        "confidenceBps": 6500,
+        "createdAt": 1787345562
+      },
+      {
+        "slot": 1,
+        "accepted": true,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "150000000",
+        "confidenceBps": 7500,
+        "createdAt": 1787345562
+      },
+      {
+        "slot": 2,
+        "accepted": true,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "1200000",
+        "confidenceBps": 8000,
+        "createdAt": 1787345563
+      },
+      {
+        "slot": 3,
+        "accepted": false,
+        "signer": "0x0000000000000000000000000000000000000000",
+        "reason": "BadSignature"
+      },
+      {
+        "slot": 4,
+        "accepted": true,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "1000000",
+        "confidenceBps": 8500,
+        "createdAt": 1787345562
+      }
+    ],
+    "evidenceCommitment": {
+      "committed": true,
+      "evidenceHash": "0xfaa039ead565b16a878e27633487884d05c3273681c00266eea3a2fd3beb1d1e",
+      "txHash": null,
+      "txUrl": null,
+      "registry": "0xE6FBd750cf852149185c226c770B6d484398a71F",
+      "preCommitted": true
+    }
+  },
+  "timing": {
+    "appraiseMs": 7742,
+    "firstCompletionToPostedMs": 10824,
+    "slowestSlotMs": 5955,
+    "receiptTtlSec": 3600
+  }
+}

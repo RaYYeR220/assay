@@ -1,0 +1,60 @@
+{
+  "assetId": "t4-vcs902-kariba-withdrawn",
+  "caseId": "T4",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-902",
+    "project_name": "KARIBA REDD+ PROJECT",
+    "project_type": "REDD+",
+    "methodology": "VM0009 Methodology for Avoided Ecosystem Conversion",
+    "vintage": "2014",
+    "country": "Zimbabwe",
+    "region": "Sub-Saharan Africa",
+    "registry_status": "Withdrawn from the VCS Program",
+    "credits_issued": "29016364",
+    "credits_retired": "25706781",
+    "credits_remaining": "3309583",
+    "buffer_deposited": "5049473",
+    "first_vintage": "2011",
+    "durability": "avoided conversion, reversal risk covered by a registry buffer pool",
+    "integrity_flags": "project withdrawn from the VCS Program; registry review identified 15220520 excess credits, being 52.5 percent of issuance, against which buffer cancellation covers 33.2 percent; methodology VM0009 inactivated by the registry for new projects and excluded by ICVCM from Core Carbon Principles assessment",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    },
+    {
+      "label": "Verra registry project page (VCS 902)",
+      "url": "https://registry.verra.org/app/projectDetail/VCS/902"
+    },
+    {
+      "label": "The New Yorker, The Great Cash-for-Carbon Hustle (Oct 2023)",
+      "url": "https://www.newyorker.com/magazine/2023/10/23/the-great-cash-for-carbon-hustle"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "project_type",
+      "methodology",
+      "country",
+      "region",
+      "registry_status",
+      "credits_issued",
+      "credits_retired",
+      "credits_remaining",
+      "buffer_deposited",
+      "first_vintage",
+      "integrity_flags"
+    ],
+    "illustrative": [],
+    "notes": "NO SYNTHETIC EDIT. Every field is the real registry record. The defect is real: the project is withdrawn."
+  }
+}

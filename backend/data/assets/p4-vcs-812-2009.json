@@ -1,0 +1,62 @@
+{
+  "assetId": "p4-vcs-812-2009",
+  "caseId": "P4",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-812",
+    "project_name": "Bull Run Overseas Forest Carbon Project",
+    "project_type": "REDD+",
+    "methodology": "VM0007 REDD+ Methodology Framework (REDD-MF)",
+    "vintage": "2009",
+    "country": "Belize",
+    "region": "Latin America and the Caribbean",
+    "registry_status": "Late to verify",
+    "credits_issued": "244057",
+    "credits_retired": "213822",
+    "credits_remaining": "30235",
+    "buffer_deposited": "72901",
+    "first_vintage": "2009",
+    "durability": "land sector, reversal risk covered by a registry buffer pool",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "reference": {
+    "lowUsd": 1.12,
+    "highUsd": 1.568,
+    "basis": "Carbonmark VCS-812 vintage 2009: seller ask 1.12 USD, fee-inclusive purchase price 1.568 USD, available supply 57866 tonnes.",
+    "sourceUrl": "https://api.carbonmark.com/prices"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    },
+    {
+      "label": "Carbonmark public price API (no auth)",
+      "url": "https://api.carbonmark.com/prices"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "project_type",
+      "methodology",
+      "country",
+      "region",
+      "registry_status",
+      "credits_issued",
+      "credits_retired",
+      "credits_remaining",
+      "buffer_deposited",
+      "first_vintage",
+      "vintage"
+    ],
+    "illustrative": [],
+    "notes": "Registry fields from the Berkeley database; vintage and reference band from the live Carbonmark ask."
+  }
+}

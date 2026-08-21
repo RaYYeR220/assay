@@ -1,0 +1,57 @@
+{
+  "assetId": "h1-pur175613-aperam-biochar-2023",
+  "caseId": "H1",
+  "fields": {
+    "registry": "Puro.earth",
+    "project_id": "PUR-175613",
+    "project_name": "Aperam Bioenergia biochar",
+    "project_type": "engineered carbon removal, biochar",
+    "methodology": "Puro.earth Biochar Methodology",
+    "vintage": "2023",
+    "country": "Brazil",
+    "region": "South America",
+    "registry_status": "issued",
+    "credits_issued": "161507",
+    "credits_retired": "98144",
+    "credits_remaining": "63363",
+    "buffer_deposited": "NA",
+    "first_vintage": "2023",
+    "durability": "CORC durability class 100 plus years",
+    "integrity_flags": "none recorded at the registry; principal uncertainties are biochar permanence modelling and biomass feedstock sourcing",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "reference": {
+    "lowUsd": 110.01,
+    "highUsd": 154.01,
+    "basis": "Carbonmark PUR-175613 vintage 2023: seller ask 110.01 USD, fee-inclusive purchase price 154.01 USD. Quoted with supply 0, i.e. the ask is published but not currently fillable.",
+    "sourceUrl": "https://api.carbonmark.com/prices"
+  },
+  "sources": [
+    {
+      "label": "Puro.earth registry",
+      "url": "https://puro.earth/carbon-removal-registry/"
+    },
+    {
+      "label": "Carbonmark public price API (no auth)",
+      "url": "https://api.carbonmark.com/prices"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "project_type",
+      "vintage",
+      "country",
+      "credits_issued",
+      "credits_retired",
+      "durability"
+    ],
+    "illustrative": [],
+    "notes": "credits_remaining is derived as issued minus retired. The Carbonmark ask carries supply 0, so the reference band is a published quote rather than evidence of a fillable market."
+  }
+}

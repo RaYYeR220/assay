@@ -1,0 +1,47 @@
+{
+  "assetId": "t1-contradictory-quantities",
+  "caseId": "T1",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-985",
+    "project_name": "Cordillera Azul National Park REDD Project",
+    "project_type": "REDD+",
+    "methodology": "VM0007 REDD+ Methodology Framework (REDD-MF)",
+    "vintage": "2016",
+    "country": "Peru",
+    "region": "Latin America and the Caribbean",
+    "registry_status": "Registered",
+    "credits_issued": "15807571",
+    "credits_retired": "36612042",
+    "credits_remaining": "20804471",
+    "buffer_deposited": "4068005",
+    "first_vintage": "2012",
+    "durability": "land sector, reversal risk covered by a registry buffer pool",
+    "integrity_flags": "none recorded in the sources consulted",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "methodology",
+      "country",
+      "region"
+    ],
+    "illustrative": [
+      "credits_issued",
+      "credits_retired"
+    ],
+    "notes": "SYNTHETIC DEFECT. Real VCS-985 record with credits_issued and credits_retired SWAPPED, so retirements (36612042) exceed issuance (15807571), which is impossible. Everything else is the genuine registry record."
+  }
+}

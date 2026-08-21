@@ -1,0 +1,406 @@
+{
+  "bundleId": "3b4c9366-f734-4f10-abb2-a0aa58b7e222",
+  "createdAt": "2026-08-21T20:50:36.359Z",
+  "promptVersion": "assay.appraisal.v1",
+  "schemaId": "0xb5c98bdc502ede2fe911af4d7f7dbec8ffff5ab2c88837475cf3d160a9c22c2c",
+  "assetId": "h2-vcs1748-southern-cardamom-2018",
+  "assetIdHex": "0xc950707fccabbc3f8dc7caec6549ab64c9ee71c7944ed10862f73df6a8e96cfd",
+  "evidence": {
+    "line": "schema=assay.carbon.v1;asset_id=h2-vcs1748-southern-cardamom-2018;registry=VCS;project_id=VCS-1748;project_name=Southern Cardamom REDD+ Project;project_type=REDD+;methodology=VM0009 Methodology for Avoided Ecosystem Conversion;vintage=2018;country=Cambodia;region=South-Eastern Asia;registry_status=Verification approval requested;credits_issued=27627237;credits_retired=8580848;credits_remaining=19046389;buffer_deposited=3093780;first_vintage=2015;durability=avoided conversion, reversal risk covered by a registry buffer pool;integrity_flags=methodology VM0009 has been inactivated by the registry for new projects, ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible, project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation, no listings with available supply on public secondary marketplaces;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21",
+    "hex": "0x736368656d613d61737361792e636172626f6e2e76313b61737365745f69643d68322d766373313734382d736f75746865726e2d63617264616d6f6d2d323031383b72656769737472793d5643533b70726f6a6563745f69643d5643532d313734383b70726f6a6563745f6e616d653d536f75746865726e2043617264616d6f6d20524544442b2050726f6a6563743b70726f6a6563745f747970653d524544442b3b6d6574686f646f6c6f67793d564d30303039204d6574686f646f6c6f677920666f722041766f696465642045636f73797374656d20436f6e76657273696f6e3b76696e746167653d323031383b636f756e7472793d43616d626f6469613b726567696f6e3d536f7574682d4561737465726e20417369613b72656769737472795f7374617475733d566572696669636174696f6e20617070726f76616c207265717565737465643b637265646974735f6973737565643d32373632373233373b637265646974735f726574697265643d383538303834383b637265646974735f72656d61696e696e673d31393034363338393b6275666665725f6465706f73697465643d333039333738303b66697273745f76696e746167653d323031353b6475726162696c6974793d61766f6964656420636f6e76657273696f6e2c20726576657273616c207269736b20636f766572656420627920612072656769737472792062756666657220706f6f6c3b696e746567726974795f666c6167733d6d6574686f646f6c6f677920564d3030303920686173206265656e20696e6163746976617465642062792074686520726567697374727920666f72206e65772070726f6a656374732c20494356434d206578636c7564656420564d303030392066726f6d20436f726520436172626f6e205072696e6369706c6573206173736573736d656e742c20736f206372656469747320617265204343502d696e656c696769626c652c2070726f6a6563742069737375616e6365207761732073757370656e64656420696e204a756e65203230323320666f6c6c6f77696e672068756d616e2072696768747320616c6c65676174696f6e7320616e64207265696e73746174656420696e2053657074656d6265722032303234207375626a65637420746f206d616e6461746f72792072656d6564696174696f6e2c206e6f206c697374696e6773207769746820617661696c61626c6520737570706c79206f6e207075626c6963207365636f6e64617279206d61726b6574706c616365733b7265665f70726963655f7573643d4e413b7265665f70726963655f736f757263653d4e413b7265665f70726963655f646174653d4e413b6f627365727665645f61743d323032362d30382d3231",
+    "sha256": "bc74e01ad5252438efc49acde338a9cd20820c11b9eafed1a499803340884b15",
+    "byteLength": 1002
+  },
+  "chain": {
+    "evidenceCommitted": false,
+    "observationWatermark": 0,
+    "epoch": 1,
+    "configured": true,
+    "error": null,
+    "commitEvidenceCall": {
+      "to": "0xE6FBd750cf852149185c226c770B6d484398a71F",
+      "abi": "AssetRegistry",
+      "functionName": "commitEvidence",
+      "args": [
+        "0xc950707fccabbc3f8dc7caec6549ab64c9ee71c7944ed10862f73df6a8e96cfd",
+        "0xbc74e01ad5252438efc49acde338a9cd20820c11b9eafed1a499803340884b15",
+        "",
+        true
+      ],
+      "signature": "commitEvidence(bytes32,bytes32,string,bool)",
+      "note": "Must be sent by the asset issuer. Until it lands, postAppraisal reverts with EvidenceNotCommitted."
+    }
+  },
+  "committee": [
+    "deepseek/deepseek-v4-flash-0731",
+    "google/gemma-3-27b-it",
+    "meta-llama/llama-3.3-70b-instruct",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3-vl-30b-a3b-instruct"
+  ],
+  "slots": [
+    {
+      "slot": 0,
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-ce45e94f34c8619c91f4a792",
+      "requestBody": "{\"model\":\"deepseek/deepseek-v4-flash-0731\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h2-vcs1748-southern-cardamom-2018;registry=VCS;project_id=VCS-1748;project_name=Southern Cardamom REDD+ Project;project_type=REDD+;methodology=VM0009 Methodology for Avoided Ecosystem Conversion;vintage=2018;country=Cambodia;region=South-Eastern Asia;registry_status=Verification approval requested;credits_issued=27627237;credits_retired=8580848;credits_remaining=19046389;buffer_deposited=3093780;first_vintage=2015;durability=avoided conversion, reversal risk covered by a registry buffer pool;integrity_flags=methodology VM0009 has been inactivated by the registry for new projects, ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible, project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation, no listings with available supply on public secondary marketplaces;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "19215247318593e07c0dff33df5e8254e88ba875cc290d07b1a24e180eb44905",
+      "responseBody": "{\"id\":\"req_fcaf7fda64ea9ea68a5e3e22eab579c5\",\"object\":\"chat.completion\",\"created\":1787345430,\"model\":\"deepseek/deepseek-v4-flash-0731\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=0|confidence_bps=0\",\"reasoning_content\":null,\"tool_calls\":null},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":420,\"total_tokens\":439,\"completion_tokens\":19,\"prompt_tokens_details\":null,\"reasoning_tokens\":0,\"completion_tokens_details\":{\"reasoning_tokens\":0},\"cost\":0.0000916}}",
+      "responseSha256": "af51983145eb0ce28cb1a3830aca7a7f8e45498b7d8eb838d98409c2572ba2a3",
+      "signature": "0xf60610537b364dae7403bdec3d95b2a318b6c81180e803367b4ea32da31e469701058cc2e8322a263793ea6065a7b7ac740e1aacd6051def97d54ce944d0df841b",
+      "gatewayText": "19215247318593e07c0dff33df5e8254e88ba875cc290d07b1a24e180eb44905:af51983145eb0ce28cb1a3830aca7a7f8e45498b7d8eb838d98409c2572ba2a3",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 0,
+        "modelId": "deepseek/deepseek-v4-flash-0731",
+        "ok": false,
+        "failedCheck": "_readAnswer",
+        "reason": "OutOfRange",
+        "detail": "nav=0 conf=0",
+        "requestBody": "{\"model\":\"deepseek/deepseek-v4-flash-0731\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h2-vcs1748-southern-cardamom-2018;registry=VCS;project_id=VCS-1748;project_name=Southern Cardamom REDD+ Project;project_type=REDD+;methodology=VM0009 Methodology for Avoided Ecosystem Conversion;vintage=2018;country=Cambodia;region=South-Eastern Asia;registry_status=Verification approval requested;credits_issued=27627237;credits_retired=8580848;credits_remaining=19046389;buffer_deposited=3093780;first_vintage=2015;durability=avoided conversion, reversal risk covered by a registry buffer pool;integrity_flags=methodology VM0009 has been inactivated by the registry for new projects, ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible, project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation, no listings with available supply on public secondary marketplaces;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "19215247318593e07c0dff33df5e8254e88ba875cc290d07b1a24e180eb44905",
+        "responseSha256": "af51983145eb0ce28cb1a3830aca7a7f8e45498b7d8eb838d98409c2572ba2a3",
+        "signedText": "19215247318593e07c0dff33df5e8254e88ba875cc290d07b1a24e180eb44905:af51983145eb0ce28cb1a3830aca7a7f8e45498b7d8eb838d98409c2572ba2a3",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": null,
+        "confBps": null,
+        "createdAt": 1787345430,
+        "ageSec": 0,
+        "offsets": null,
+        "roundBlocker": "EvidenceNotCommitted(sha256=bc74e01ad5252438efc49acde338a9cd20820c11b9eafed1a499803340884b15) — the issuer must call AssetRegistry.commitEvidence(assetId, evidenceHash, uri, true) before this round can post"
+      },
+      "onChain": {
+        "slot": 0,
+        "responseBody": "0x7b226964223a227265715f6663616637666461363465613965613638613565336532326561623537396335222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334353433302c226d6f64656c223a22646565707365656b2f646565707365656b2d76342d666c6173682d30373331222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d307c636f6e666964656e63655f6270733d30222c22726561736f6e696e675f636f6e74656e74223a6e756c6c2c22746f6f6c5f63616c6c73223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c227573616765223a7b2270726f6d70745f746f6b656e73223a3432302c22746f74616c5f746f6b656e73223a3433392c22636f6d706c6574696f6e5f746f6b656e73223a31392c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22726561736f6e696e675f746f6b656e73223a302c22636f6d706c6574696f6e5f746f6b656e735f64657461696c73223a7b22726561736f6e696e675f746f6b656e73223a307d2c22636f7374223a302e303030303931367d7d",
+        "signature": "0xf60610537b364dae7403bdec3d95b2a318b6c81180e803367b4ea32da31e469701058cc2e8322a263793ea6065a7b7ac740e1aacd6051def97d54ce944d0df841b"
+      },
+      "available": true,
+      "failure": "OutOfRange at _readAnswer: nav=0 conf=0",
+      "latencyMs": 3635
+    },
+    {
+      "slot": 1,
+      "model": "google/gemma-3-27b-it",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-59e814a43ab33b756afd3beb",
+      "requestBody": "{\"model\":\"google/gemma-3-27b-it\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h2-vcs1748-southern-cardamom-2018;registry=VCS;project_id=VCS-1748;project_name=Southern Cardamom REDD+ Project;project_type=REDD+;methodology=VM0009 Methodology for Avoided Ecosystem Conversion;vintage=2018;country=Cambodia;region=South-Eastern Asia;registry_status=Verification approval requested;credits_issued=27627237;credits_retired=8580848;credits_remaining=19046389;buffer_deposited=3093780;first_vintage=2015;durability=avoided conversion, reversal risk covered by a registry buffer pool;integrity_flags=methodology VM0009 has been inactivated by the registry for new projects, ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible, project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation, no listings with available supply on public secondary marketplaces;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "956ea955021f8377ef2f7a9c64fe4d70b24bc0ef361e1b38ae6e31c7a72f7829",
+      "responseBody": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"logprobs\":null,\"message\":{\"content\":\"ASSAY1|nav_usd_e6=150000|confidence_bps=6000\",\"role\":\"assistant\"}}],\"created\":1787345429,\"id\":\"req_927f6352543892e0fcb53d0c90006768\",\"model\":\"google/gemma-3-27b-it\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":27,\"prompt_tokens\":489,\"total_tokens\":516,\"cost\":0.00008577}}",
+      "responseSha256": "99707af93b73840ef16231fdab2916c8e0e8193685145648cd926af55316059e",
+      "signature": "0xa22f2ff9e8f55f0a68d8f728e02d059d9f201fc3d0167ccb3b7710a2a57aa1c12daa203cc4a150bd66290c00e0484132ad1684b32ae7d7c6d991ab08767e9adc1b",
+      "gatewayText": "956ea955021f8377ef2f7a9c64fe4d70b24bc0ef361e1b38ae6e31c7a72f7829:99707af93b73840ef16231fdab2916c8e0e8193685145648cd926af55316059e",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 1,
+        "modelId": "google/gemma-3-27b-it",
+        "ok": false,
+        "failedCheck": null,
+        "reason": "None",
+        "detail": null,
+        "requestBody": "{\"model\":\"google/gemma-3-27b-it\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h2-vcs1748-southern-cardamom-2018;registry=VCS;project_id=VCS-1748;project_name=Southern Cardamom REDD+ Project;project_type=REDD+;methodology=VM0009 Methodology for Avoided Ecosystem Conversion;vintage=2018;country=Cambodia;region=South-Eastern Asia;registry_status=Verification approval requested;credits_issued=27627237;credits_retired=8580848;credits_remaining=19046389;buffer_deposited=3093780;first_vintage=2015;durability=avoided conversion, reversal risk covered by a registry buffer pool;integrity_flags=methodology VM0009 has been inactivated by the registry for new projects, ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible, project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation, no listings with available supply on public secondary marketplaces;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "956ea955021f8377ef2f7a9c64fe4d70b24bc0ef361e1b38ae6e31c7a72f7829",
+        "responseSha256": "99707af93b73840ef16231fdab2916c8e0e8193685145648cd926af55316059e",
+        "signedText": "956ea955021f8377ef2f7a9c64fe4d70b24bc0ef361e1b38ae6e31c7a72f7829:99707af93b73840ef16231fdab2916c8e0e8193685145648cd926af55316059e",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "150000",
+        "confBps": 6000,
+        "createdAt": 1787345429,
+        "ageSec": 1,
+        "offsets": {
+          "contentOffset": 73,
+          "finishOffset": 13,
+          "createdOffset": 152
+        },
+        "roundBlocker": "EvidenceNotCommitted(sha256=bc74e01ad5252438efc49acde338a9cd20820c11b9eafed1a499803340884b15) — the issuer must call AssetRegistry.commitEvidence(assetId, evidenceHash, uri, true) before this round can post"
+      },
+      "onChain": {
+        "slot": 1,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3135303030307c636f6e666964656e63655f6270733d36303030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353432392c226964223a227265715f3932376636333532353433383932653066636235336430633930303036373638222c226d6f64656c223a22676f6f676c652f67656d6d612d332d3237622d6974222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a32372c2270726f6d70745f746f6b656e73223a3438392c22746f74616c5f746f6b656e73223a3531362c22636f7374223a302e30303030383537377d7d",
+        "signature": "0xa22f2ff9e8f55f0a68d8f728e02d059d9f201fc3d0167ccb3b7710a2a57aa1c12daa203cc4a150bd66290c00e0484132ad1684b32ae7d7c6d991ab08767e9adc1b"
+      },
+      "available": true,
+      "failure": "None at null: ",
+      "latencyMs": 3780
+    },
+    {
+      "slot": 2,
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-b3a60f01b20c374ec1a37fe2",
+      "requestBody": "{\"model\":\"meta-llama/llama-3.3-70b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h2-vcs1748-southern-cardamom-2018;registry=VCS;project_id=VCS-1748;project_name=Southern Cardamom REDD+ Project;project_type=REDD+;methodology=VM0009 Methodology for Avoided Ecosystem Conversion;vintage=2018;country=Cambodia;region=South-Eastern Asia;registry_status=Verification approval requested;credits_issued=27627237;credits_retired=8580848;credits_remaining=19046389;buffer_deposited=3093780;first_vintage=2015;durability=avoided conversion, reversal risk covered by a registry buffer pool;integrity_flags=methodology VM0009 has been inactivated by the registry for new projects, ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible, project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation, no listings with available supply on public secondary marketplaces;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "3cefbfa907a6338085339a071865a853a9ec8fb4632dd14d3c855b5b67728c9b",
+      "responseBody": "{\"id\":\"req_460e223f0d26dda49d1b2f5cd76a211d\",\"object\":\"chat.completion\",\"created\":1787345431,\"model\":\"meta-llama/llama-3.3-70b-instruct\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"ASSAY1|nav_usd_e6=235000|confidence_bps=8000\",\"refusal\":null,\"annotations\":null,\"audio\":null,\"function_call\":null,\"tool_calls\":[],\"reasoning\":null},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"service_tier\":null,\"usage\":{\"prompt_tokens\":450,\"total_tokens\":470,\"completion_tokens\":20,\"prompt_tokens_details\":null,\"cost\":0.00094}}",
+      "responseSha256": "73db7ab0a42b8e4bdf1bd193a897b112dbbb09e09a9f9f9eb1cb7e5f93a3a3f9",
+      "signature": "0xbf2d622a6dc39deae1603c5b7eb5c960c5c4b47fb6d235756dc52e8f186be290703b9d054d6693b4bfa4eeb744985e33c05f2f40cc688009c8098cb2ca4fe7d61c",
+      "gatewayText": "3cefbfa907a6338085339a071865a853a9ec8fb4632dd14d3c855b5b67728c9b:73db7ab0a42b8e4bdf1bd193a897b112dbbb09e09a9f9f9eb1cb7e5f93a3a3f9",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 2,
+        "modelId": "meta-llama/llama-3.3-70b-instruct",
+        "ok": false,
+        "failedCheck": null,
+        "reason": "None",
+        "detail": null,
+        "requestBody": "{\"model\":\"meta-llama/llama-3.3-70b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h2-vcs1748-southern-cardamom-2018;registry=VCS;project_id=VCS-1748;project_name=Southern Cardamom REDD+ Project;project_type=REDD+;methodology=VM0009 Methodology for Avoided Ecosystem Conversion;vintage=2018;country=Cambodia;region=South-Eastern Asia;registry_status=Verification approval requested;credits_issued=27627237;credits_retired=8580848;credits_remaining=19046389;buffer_deposited=3093780;first_vintage=2015;durability=avoided conversion, reversal risk covered by a registry buffer pool;integrity_flags=methodology VM0009 has been inactivated by the registry for new projects, ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible, project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation, no listings with available supply on public secondary marketplaces;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "3cefbfa907a6338085339a071865a853a9ec8fb4632dd14d3c855b5b67728c9b",
+        "responseSha256": "73db7ab0a42b8e4bdf1bd193a897b112dbbb09e09a9f9f9eb1cb7e5f93a3a3f9",
+        "signedText": "3cefbfa907a6338085339a071865a853a9ec8fb4632dd14d3c855b5b67728c9b:73db7ab0a42b8e4bdf1bd193a897b112dbbb09e09a9f9f9eb1cb7e5f93a3a3f9",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "235000",
+        "confBps": 8000,
+        "createdAt": 1787345431,
+        "ageSec": -1,
+        "offsets": {
+          "contentOffset": 189,
+          "finishOffset": 364,
+          "createdOffset": 72
+        },
+        "roundBlocker": "EvidenceNotCommitted(sha256=bc74e01ad5252438efc49acde338a9cd20820c11b9eafed1a499803340884b15) — the issuer must call AssetRegistry.commitEvidence(assetId, evidenceHash, uri, true) before this round can post"
+      },
+      "onChain": {
+        "slot": 2,
+        "responseBody": "0x7b226964223a227265715f3436306532323366306432366464613439643162326635636437366132313164222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334353433312c226d6f64656c223a226d6574612d6c6c616d612f6c6c616d612d332e332d3730622d696e737472756374222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3233353030307c636f6e666964656e63655f6270733d38303030222c227265667573616c223a6e756c6c2c22616e6e6f746174696f6e73223a6e756c6c2c22617564696f223a6e756c6c2c2266756e6374696f6e5f63616c6c223a6e756c6c2c22746f6f6c5f63616c6c73223a5b5d2c22726561736f6e696e67223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c22736572766963655f74696572223a6e756c6c2c227573616765223a7b2270726f6d70745f746f6b656e73223a3435302c22746f74616c5f746f6b656e73223a3437302c22636f6d706c6574696f6e5f746f6b656e73223a32302c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22636f7374223a302e30303039347d7d",
+        "signature": "0xbf2d622a6dc39deae1603c5b7eb5c960c5c4b47fb6d235756dc52e8f186be290703b9d054d6693b4bfa4eeb744985e33c05f2f40cc688009c8098cb2ca4fe7d61c"
+      },
+      "available": true,
+      "failure": "None at null: ",
+      "latencyMs": 3094
+    },
+    {
+      "slot": 3,
+      "model": "qwen/qwen3.6-35b-a3b",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-117a8c0dc411afcb5b0aa794",
+      "requestBody": "{\"model\":\"qwen/qwen3.6-35b-a3b\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h2-vcs1748-southern-cardamom-2018;registry=VCS;project_id=VCS-1748;project_name=Southern Cardamom REDD+ Project;project_type=REDD+;methodology=VM0009 Methodology for Avoided Ecosystem Conversion;vintage=2018;country=Cambodia;region=South-Eastern Asia;registry_status=Verification approval requested;credits_issued=27627237;credits_retired=8580848;credits_remaining=19046389;buffer_deposited=3093780;first_vintage=2015;durability=avoided conversion, reversal risk covered by a registry buffer pool;integrity_flags=methodology VM0009 has been inactivated by the registry for new projects, ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible, project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation, no listings with available supply on public secondary marketplaces;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "49153dcd9cb2fd4878edd4e9cf7f900f15d216b7582477323e063a7faeb2e344",
+      "responseBody": "{\"choices\":[{\"finish_reason\":\"length\",\"index\":0,\"logprobs\":null,\"message\":{\"content\":null,\"reasoning_content\":\"Here's a thinking process:\\n\\n1.  **Analyze User Input:**\\n   - **Role:** Independent asset appraiser for a public valuation oracle.\\n   - **Task:** Appraise one unit of the asset described in the evidence record.\\n   - **Output Format:** Exactly one line, no prose, no markdown, no code fences, no explanation. Format: `ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>`\\n   - **Evidence Record:**\\n     - Schema: assay.carbon.v1\\n     - Asset ID: h2-vcs1748-southern-cardamom-2018\\n     - Registry: VCS (Verified Carbon Standard)\\n     - Project: Southern Cardamom REDD+ Project (VCS-1748)\\n     - Type: REDD+\\n     - Methodology: VM0009 (Avoided Ecosystem Conversion)\\n     - Vintage: 2018\\n     - Country: Cambodia\\n     - Registry Status: Verification approval requested\\n     - Credits Remaining: ~19M\\n     - Buffer Deposited: ~3.1M\\n     - Integrity Flags: VM0009 inactivated for new projects, ICVCM excluded from CCP, issuance suspended June 2023 due to human rights allegations, reinstated Sept 2024 subject to remediation, no listings on public secondary marketplaces.\\n     - Reference Price: NA\\n     - Observed At: 2026-08-21\\n\\n2.  **Identify Key Valuation Factors:**\\n   - **Asset Type:** Carbon credit (REDD+, VCS registry, 2018 vintage)\\n   - **Methodology/Integrity:** VM0009 is inactivated/excluded from Core Carbon Principles (CCP). This significantly reduces demand and value.\\n   - **Project Status:** Suspended due to human rights allegations, reinstated with remediation. This adds risk and stigma.\\n   - **Market Availability:** No listings on public secondary marketplaces. Illiquid.\\n   - **Reference Price:** NA (no direct market data)\\n   - **General Carbon Market Context (as of 2024/2025/2026):** High-integrity, CCP-compliant credits trade at premiums ($5-$15+). Non-CCP, older methodologies\",\"role\":\"assistant\"}}],\"created\":1787345430,\"id\":\"req_36cdee300753e60ffb54148f3713cb27\",\"model\":\"qwen/qwen3.6-35b-a3b\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":512,\"prompt_tokens\":480,\"prompt_tokens_details\":null,\"reasoning_tokens\":512,\"total_tokens\":992,\"completion_tokens_details\":{\"reasoning_tokens\":512},\"cost\":0.00074624}}",
+      "responseSha256": "1f325bfa7c7e32e832c39534874f25162bb518b5c75b9de7ca09d59a66143145",
+      "signature": "0xef971fcb1e139c3829a2027f44b17645aa6f2c89580411efc8fb647fc5cb509e7736485ac593342f32221cf9790165e0356e64b529e3fd0f0b9020d08a5c6aa31c",
+      "gatewayText": "49153dcd9cb2fd4878edd4e9cf7f900f15d216b7582477323e063a7faeb2e344:1f325bfa7c7e32e832c39534874f25162bb518b5c75b9de7ca09d59a66143145",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 3,
+        "modelId": "qwen/qwen3.6-35b-a3b",
+        "ok": false,
+        "failedCheck": "_readAnswer",
+        "reason": "Truncated",
+        "detail": "finish_reason != stop (model hit the token cap or errored)",
+        "requestBody": "{\"model\":\"qwen/qwen3.6-35b-a3b\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h2-vcs1748-southern-cardamom-2018;registry=VCS;project_id=VCS-1748;project_name=Southern Cardamom REDD+ Project;project_type=REDD+;methodology=VM0009 Methodology for Avoided Ecosystem Conversion;vintage=2018;country=Cambodia;region=South-Eastern Asia;registry_status=Verification approval requested;credits_issued=27627237;credits_retired=8580848;credits_remaining=19046389;buffer_deposited=3093780;first_vintage=2015;durability=avoided conversion, reversal risk covered by a registry buffer pool;integrity_flags=methodology VM0009 has been inactivated by the registry for new projects, ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible, project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation, no listings with available supply on public secondary marketplaces;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "49153dcd9cb2fd4878edd4e9cf7f900f15d216b7582477323e063a7faeb2e344",
+        "responseSha256": "1f325bfa7c7e32e832c39534874f25162bb518b5c75b9de7ca09d59a66143145",
+        "signedText": "49153dcd9cb2fd4878edd4e9cf7f900f15d216b7582477323e063a7faeb2e344:1f325bfa7c7e32e832c39534874f25162bb518b5c75b9de7ca09d59a66143145",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": null,
+        "confBps": null,
+        "createdAt": 1787345430,
+        "ageSec": 6,
+        "offsets": null,
+        "roundBlocker": "EvidenceNotCommitted(sha256=bc74e01ad5252438efc49acde338a9cd20820c11b9eafed1a499803340884b15) — the issuer must call AssetRegistry.commitEvidence(assetId, evidenceHash, uri, true) before this round can post"
+      },
+      "onChain": {
+        "slot": 3,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a226c656e677468222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a6e756c6c2c22726561736f6e696e675f636f6e74656e74223a224865726527732061207468696e6b696e672070726f636573733a5c6e5c6e312e20202a2a416e616c797a65205573657220496e7075743a2a2a5c6e2020202d202a2a526f6c653a2a2a20496e646570656e64656e742061737365742061707072616973657220666f722061207075626c69632076616c756174696f6e206f7261636c652e5c6e2020202d202a2a5461736b3a2a2a204170707261697365206f6e6520756e6974206f66207468652061737365742064657363726962656420696e207468652065766964656e6365207265636f72642e5c6e2020202d202a2a4f757470757420466f726d61743a2a2a2045786163746c79206f6e65206c696e652c206e6f2070726f73652c206e6f206d61726b646f776e2c206e6f20636f64652066656e6365732c206e6f206578706c616e6174696f6e2e20466f726d61743a20604153534159317c6e61765f7573645f65363d3c696e74656765723e7c636f6e666964656e63655f6270733d3c696e74656765723e605c6e2020202d202a2a45766964656e6365205265636f72643a2a2a5c6e20202020202d20536368656d613a2061737361792e636172626f6e2e76315c6e20202020202d2041737365742049443a2068322d766373313734382d736f75746865726e2d63617264616d6f6d2d323031385c6e20202020202d2052656769737472793a205643532028566572696669656420436172626f6e205374616e64617264295c6e20202020202d2050726f6a6563743a20536f75746865726e2043617264616d6f6d20524544442b2050726f6a65637420285643532d31373438295c6e20202020202d20547970653a20524544442b5c6e20202020202d204d6574686f646f6c6f67793a20564d30303039202841766f696465642045636f73797374656d20436f6e76657273696f6e295c6e20202020202d2056696e746167653a20323031385c6e20202020202d20436f756e7472793a2043616d626f6469615c6e20202020202d205265676973747279205374617475733a20566572696669636174696f6e20617070726f76616c207265717565737465645c6e20202020202d20437265646974732052656d61696e696e673a207e31394d5c6e20202020202d20427566666572204465706f73697465643a207e332e314d5c6e20202020202d20496e7465677269747920466c6167733a20564d3030303920696e61637469766174656420666f72206e65772070726f6a656374732c20494356434d206578636c756465642066726f6d204343502c2069737375616e63652073757370656e646564204a756e6520323032332064756520746f2068756d616e2072696768747320616c6c65676174696f6e732c207265696e73746174656420536570742032303234207375626a65637420746f2072656d6564696174696f6e2c206e6f206c697374696e6773206f6e207075626c6963207365636f6e64617279206d61726b6574706c616365732e5c6e20202020202d205265666572656e63652050726963653a204e415c6e20202020202d204f627365727665642041743a20323032362d30382d32315c6e5c6e322e20202a2a4964656e74696679204b65792056616c756174696f6e20466163746f72733a2a2a5c6e2020202d202a2a417373657420547970653a2a2a20436172626f6e206372656469742028524544442b2c205643532072656769737472792c20323031382076696e74616765295c6e2020202d202a2a4d6574686f646f6c6f67792f496e746567726974793a2a2a20564d3030303920697320696e6163746976617465642f6578636c756465642066726f6d20436f726520436172626f6e205072696e6369706c65732028434350292e2054686973207369676e69666963616e746c7920726564756365732064656d616e6420616e642076616c75652e5c6e2020202d202a2a50726f6a656374205374617475733a2a2a2053757370656e6465642064756520746f2068756d616e2072696768747320616c6c65676174696f6e732c207265696e73746174656420776974682072656d6564696174696f6e2e20546869732061646473207269736b20616e6420737469676d612e5c6e2020202d202a2a4d61726b657420417661696c6162696c6974793a2a2a204e6f206c697374696e6773206f6e207075626c6963207365636f6e64617279206d61726b6574706c616365732e20496c6c69717569642e5c6e2020202d202a2a5265666572656e63652050726963653a2a2a204e4120286e6f20646972656374206d61726b65742064617461295c6e2020202d202a2a47656e6572616c20436172626f6e204d61726b657420436f6e7465787420286173206f6620323032342f323032352f32303236293a2a2a20486967682d696e746567726974792c204343502d636f6d706c69616e742063726564697473207472616465206174207072656d69756d73202824352d2431352b292e204e6f6e2d4343502c206f6c646572206d6574686f646f6c6f67696573222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353433302c226964223a227265715f3336636465653330303735336536306666623534313438663337313363623237222c226d6f64656c223a227177656e2f7177656e332e362d3335622d613362222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a3531322c2270726f6d70745f746f6b656e73223a3438302c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22726561736f6e696e675f746f6b656e73223a3531322c22746f74616c5f746f6b656e73223a3939322c22636f6d706c6574696f6e5f746f6b656e735f64657461696c73223a7b22726561736f6e696e675f746f6b656e73223a3531327d2c22636f7374223a302e30303037343632347d7d",
+        "signature": "0xef971fcb1e139c3829a2027f44b17645aa6f2c89580411efc8fb647fc5cb509e7736485ac593342f32221cf9790165e0356e64b529e3fd0f0b9020d08a5c6aa31c"
+      },
+      "available": true,
+      "failure": "Truncated at _readAnswer: finish_reason != stop (model hit the token cap or errored)",
+      "latencyMs": 8810
+    },
+    {
+      "slot": 4,
+      "model": "qwen/qwen3-vl-30b-a3b-instruct",
+      "attestedSigner": "0x79a5061efe5a46b0d1f33b11cf1c5adbedae6b79",
+      "receiptId": "rcpt-843c50918bfade92e3e63d93",
+      "requestBody": "{\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h2-vcs1748-southern-cardamom-2018;registry=VCS;project_id=VCS-1748;project_name=Southern Cardamom REDD+ Project;project_type=REDD+;methodology=VM0009 Methodology for Avoided Ecosystem Conversion;vintage=2018;country=Cambodia;region=South-Eastern Asia;registry_status=Verification approval requested;credits_issued=27627237;credits_retired=8580848;credits_remaining=19046389;buffer_deposited=3093780;first_vintage=2015;durability=avoided conversion, reversal risk covered by a registry buffer pool;integrity_flags=methodology VM0009 has been inactivated by the registry for new projects, ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible, project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation, no listings with available supply on public secondary marketplaces;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+      "requestSha256": "68c2a8e0ad22ab73150976077d8d5c8e2971269cba7f3bcea6fbd1a0f6588d4a",
+      "responseBody": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"logprobs\":null,\"message\":{\"content\":\"ASSAY1|nav_usd_e6=100|confidence_bps=2000\",\"role\":\"assistant\"}}],\"created\":1787345429,\"id\":\"req_5db5a2a67183b4a6c6fa4899b5943219\",\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":23,\"prompt_tokens\":478,\"prompt_tokens_details\":{\"cached_tokens\":176},\"total_tokens\":501,\"cost\":0.0001117}}",
+      "responseSha256": "afc959470ab44c0799bd52c298b698cde75b3a0ba55b2e2e2e279ca19db33170",
+      "signature": "0xc65945c86b62fc129f01e99442ab860b54210a732f4dbcdcdce9b7083df4d61930a924b9d893a8830afbacddca41726a746768ba7834d63a5e9932d72bb734c91c",
+      "gatewayText": "68c2a8e0ad22ab73150976077d8d5c8e2971269cba7f3bcea6fbd1a0f6588d4a:afc959470ab44c0799bd52c298b698cde75b3a0ba55b2e2e2e279ca19db33170",
+      "gatewayTextMatches": true,
+      "preflight": {
+        "slot": 4,
+        "modelId": "qwen/qwen3-vl-30b-a3b-instruct",
+        "ok": false,
+        "failedCheck": null,
+        "reason": "None",
+        "detail": null,
+        "requestBody": "{\"model\":\"qwen/qwen3-vl-30b-a3b-instruct\",\"temperature\":0,\"max_tokens\":512,\"messages\":[{\"role\":\"system\",\"content\":\"You are an independent asset appraiser working for a public valuation oracle. You will be shown one evidence record for a real-world asset. Reply with exactly one line and nothing else, in this exact format: ASSAY1|nav_usd_e6=<integer>|confidence_bps=<integer>. nav_usd_e6 is the fair value of ONE unit of the asset in US dollars, multiplied by 1000000 and rounded to an integer. confidence_bps is how confident you are that your value is within 10 percent of fair value, in basis points from 0 to 10000. Output no prose, no markdown, no code fences and no explanation.\"},{\"role\":\"user\",\"content\":\"Appraise one unit of the asset described by this evidence record. EVIDENCE: schema=assay.carbon.v1;asset_id=h2-vcs1748-southern-cardamom-2018;registry=VCS;project_id=VCS-1748;project_name=Southern Cardamom REDD+ Project;project_type=REDD+;methodology=VM0009 Methodology for Avoided Ecosystem Conversion;vintage=2018;country=Cambodia;region=South-Eastern Asia;registry_status=Verification approval requested;credits_issued=27627237;credits_retired=8580848;credits_remaining=19046389;buffer_deposited=3093780;first_vintage=2015;durability=avoided conversion, reversal risk covered by a registry buffer pool;integrity_flags=methodology VM0009 has been inactivated by the registry for new projects, ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible, project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation, no listings with available supply on public secondary marketplaces;ref_price_usd=NA;ref_price_source=NA;ref_price_date=NA;observed_at=2026-08-21\"}]}",
+        "requestSha256": "68c2a8e0ad22ab73150976077d8d5c8e2971269cba7f3bcea6fbd1a0f6588d4a",
+        "responseSha256": "afc959470ab44c0799bd52c298b698cde75b3a0ba55b2e2e2e279ca19db33170",
+        "signedText": "68c2a8e0ad22ab73150976077d8d5c8e2971269cba7f3bcea6fbd1a0f6588d4a:afc959470ab44c0799bd52c298b698cde75b3a0ba55b2e2e2e279ca19db33170",
+        "recovered": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "100",
+        "confBps": 2000,
+        "createdAt": 1787345429,
+        "ageSec": 1,
+        "offsets": {
+          "contentOffset": 73,
+          "finishOffset": 13,
+          "createdOffset": 149
+        },
+        "roundBlocker": "EvidenceNotCommitted(sha256=bc74e01ad5252438efc49acde338a9cd20820c11b9eafed1a499803340884b15) — the issuer must call AssetRegistry.commitEvidence(assetId, evidenceHash, uri, true) before this round can post"
+      },
+      "onChain": {
+        "slot": 4,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3130307c636f6e666964656e63655f6270733d32303030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353432392c226964223a227265715f3564623561326136373138336234613663366661343839396235393433323139222c226d6f64656c223a227177656e2f7177656e332d766c2d3330622d6133622d696e737472756374222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a32332c2270726f6d70745f746f6b656e73223a3437382c2270726f6d70745f746f6b656e735f64657461696c73223a7b226361636865645f746f6b656e73223a3137367d2c22746f74616c5f746f6b656e73223a3530312c22636f7374223a302e303030313131377d7d",
+        "signature": "0xc65945c86b62fc129f01e99442ab860b54210a732f4dbcdcdce9b7083df4d61930a924b9d893a8830afbacddca41726a746768ba7834d63a5e9932d72bb734c91c"
+      },
+      "available": true,
+      "failure": "None at null: ",
+      "latencyMs": 3285
+    }
+  ],
+  "submission": {
+    "assetId": "h2-vcs1748-southern-cardamom-2018",
+    "evidence": "0x736368656d613d61737361792e636172626f6e2e76313b61737365745f69643d68322d766373313734382d736f75746865726e2d63617264616d6f6d2d323031383b72656769737472793d5643533b70726f6a6563745f69643d5643532d313734383b70726f6a6563745f6e616d653d536f75746865726e2043617264616d6f6d20524544442b2050726f6a6563743b70726f6a6563745f747970653d524544442b3b6d6574686f646f6c6f67793d564d30303039204d6574686f646f6c6f677920666f722041766f696465642045636f73797374656d20436f6e76657273696f6e3b76696e746167653d323031383b636f756e7472793d43616d626f6469613b726567696f6e3d536f7574682d4561737465726e20417369613b72656769737472795f7374617475733d566572696669636174696f6e20617070726f76616c207265717565737465643b637265646974735f6973737565643d32373632373233373b637265646974735f726574697265643d383538303834383b637265646974735f72656d61696e696e673d31393034363338393b6275666665725f6465706f73697465643d333039333738303b66697273745f76696e746167653d323031353b6475726162696c6974793d61766f6964656420636f6e76657273696f6e2c20726576657273616c207269736b20636f766572656420627920612072656769737472792062756666657220706f6f6c3b696e746567726974795f666c6167733d6d6574686f646f6c6f677920564d3030303920686173206265656e20696e6163746976617465642062792074686520726567697374727920666f72206e65772070726f6a656374732c20494356434d206578636c7564656420564d303030392066726f6d20436f726520436172626f6e205072696e6369706c6573206173736573736d656e742c20736f206372656469747320617265204343502d696e656c696769626c652c2070726f6a6563742069737375616e6365207761732073757370656e64656420696e204a756e65203230323320666f6c6c6f77696e672068756d616e2072696768747320616c6c65676174696f6e7320616e64207265696e73746174656420696e2053657074656d6265722032303234207375626a65637420746f206d616e6461746f72792072656d6564696174696f6e2c206e6f206c697374696e6773207769746820617661696c61626c6520737570706c79206f6e207075626c6963207365636f6e64617279206d61726b6574706c616365733b7265665f70726963655f7573643d4e413b7265665f70726963655f736f757263653d4e413b7265665f70726963655f646174653d4e413b6f627365727665645f61743d323032362d30382d3231",
+    "verdicts": [
+      {
+        "slot": 0,
+        "responseBody": "0x7b226964223a227265715f6663616637666461363465613965613638613565336532326561623537396335222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334353433302c226d6f64656c223a22646565707365656b2f646565707365656b2d76342d666c6173682d30373331222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d307c636f6e666964656e63655f6270733d30222c22726561736f6e696e675f636f6e74656e74223a6e756c6c2c22746f6f6c5f63616c6c73223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c227573616765223a7b2270726f6d70745f746f6b656e73223a3432302c22746f74616c5f746f6b656e73223a3433392c22636f6d706c6574696f6e5f746f6b656e73223a31392c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22726561736f6e696e675f746f6b656e73223a302c22636f6d706c6574696f6e5f746f6b656e735f64657461696c73223a7b22726561736f6e696e675f746f6b656e73223a307d2c22636f7374223a302e303030303931367d7d",
+        "signature": "0xf60610537b364dae7403bdec3d95b2a318b6c81180e803367b4ea32da31e469701058cc2e8322a263793ea6065a7b7ac740e1aacd6051def97d54ce944d0df841b"
+      },
+      {
+        "slot": 1,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3135303030307c636f6e666964656e63655f6270733d36303030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353432392c226964223a227265715f3932376636333532353433383932653066636235336430633930303036373638222c226d6f64656c223a22676f6f676c652f67656d6d612d332d3237622d6974222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a32372c2270726f6d70745f746f6b656e73223a3438392c22746f74616c5f746f6b656e73223a3531362c22636f7374223a302e30303030383537377d7d",
+        "signature": "0xa22f2ff9e8f55f0a68d8f728e02d059d9f201fc3d0167ccb3b7710a2a57aa1c12daa203cc4a150bd66290c00e0484132ad1684b32ae7d7c6d991ab08767e9adc1b"
+      },
+      {
+        "slot": 2,
+        "responseBody": "0x7b226964223a227265715f3436306532323366306432366464613439643162326635636437366132313164222c226f626a656374223a22636861742e636f6d706c6574696f6e222c2263726561746564223a313738373334353433312c226d6f64656c223a226d6574612d6c6c616d612f6c6c616d612d332e332d3730622d696e737472756374222c2263686f69636573223a5b7b22696e646578223a302c226d657373616765223a7b22726f6c65223a22617373697374616e74222c22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3233353030307c636f6e666964656e63655f6270733d38303030222c227265667573616c223a6e756c6c2c22616e6e6f746174696f6e73223a6e756c6c2c22617564696f223a6e756c6c2c2266756e6374696f6e5f63616c6c223a6e756c6c2c22746f6f6c5f63616c6c73223a5b5d2c22726561736f6e696e67223a6e756c6c7d2c226c6f6770726f6273223a6e756c6c2c2266696e6973685f726561736f6e223a2273746f70227d5d2c22736572766963655f74696572223a6e756c6c2c227573616765223a7b2270726f6d70745f746f6b656e73223a3435302c22746f74616c5f746f6b656e73223a3437302c22636f6d706c6574696f6e5f746f6b656e73223a32302c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22636f7374223a302e30303039347d7d",
+        "signature": "0xbf2d622a6dc39deae1603c5b7eb5c960c5c4b47fb6d235756dc52e8f186be290703b9d054d6693b4bfa4eeb744985e33c05f2f40cc688009c8098cb2ca4fe7d61c"
+      },
+      {
+        "slot": 3,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a226c656e677468222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a6e756c6c2c22726561736f6e696e675f636f6e74656e74223a224865726527732061207468696e6b696e672070726f636573733a5c6e5c6e312e20202a2a416e616c797a65205573657220496e7075743a2a2a5c6e2020202d202a2a526f6c653a2a2a20496e646570656e64656e742061737365742061707072616973657220666f722061207075626c69632076616c756174696f6e206f7261636c652e5c6e2020202d202a2a5461736b3a2a2a204170707261697365206f6e6520756e6974206f66207468652061737365742064657363726962656420696e207468652065766964656e6365207265636f72642e5c6e2020202d202a2a4f757470757420466f726d61743a2a2a2045786163746c79206f6e65206c696e652c206e6f2070726f73652c206e6f206d61726b646f776e2c206e6f20636f64652066656e6365732c206e6f206578706c616e6174696f6e2e20466f726d61743a20604153534159317c6e61765f7573645f65363d3c696e74656765723e7c636f6e666964656e63655f6270733d3c696e74656765723e605c6e2020202d202a2a45766964656e6365205265636f72643a2a2a5c6e20202020202d20536368656d613a2061737361792e636172626f6e2e76315c6e20202020202d2041737365742049443a2068322d766373313734382d736f75746865726e2d63617264616d6f6d2d323031385c6e20202020202d2052656769737472793a205643532028566572696669656420436172626f6e205374616e64617264295c6e20202020202d2050726f6a6563743a20536f75746865726e2043617264616d6f6d20524544442b2050726f6a65637420285643532d31373438295c6e20202020202d20547970653a20524544442b5c6e20202020202d204d6574686f646f6c6f67793a20564d30303039202841766f696465642045636f73797374656d20436f6e76657273696f6e295c6e20202020202d2056696e746167653a20323031385c6e20202020202d20436f756e7472793a2043616d626f6469615c6e20202020202d205265676973747279205374617475733a20566572696669636174696f6e20617070726f76616c207265717565737465645c6e20202020202d20437265646974732052656d61696e696e673a207e31394d5c6e20202020202d20427566666572204465706f73697465643a207e332e314d5c6e20202020202d20496e7465677269747920466c6167733a20564d3030303920696e61637469766174656420666f72206e65772070726f6a656374732c20494356434d206578636c756465642066726f6d204343502c2069737375616e63652073757370656e646564204a756e6520323032332064756520746f2068756d616e2072696768747320616c6c65676174696f6e732c207265696e73746174656420536570742032303234207375626a65637420746f2072656d6564696174696f6e2c206e6f206c697374696e6773206f6e207075626c6963207365636f6e64617279206d61726b6574706c616365732e5c6e20202020202d205265666572656e63652050726963653a204e415c6e20202020202d204f627365727665642041743a20323032362d30382d32315c6e5c6e322e20202a2a4964656e74696679204b65792056616c756174696f6e20466163746f72733a2a2a5c6e2020202d202a2a417373657420547970653a2a2a20436172626f6e206372656469742028524544442b2c205643532072656769737472792c20323031382076696e74616765295c6e2020202d202a2a4d6574686f646f6c6f67792f496e746567726974793a2a2a20564d3030303920697320696e6163746976617465642f6578636c756465642066726f6d20436f726520436172626f6e205072696e6369706c65732028434350292e2054686973207369676e69666963616e746c7920726564756365732064656d616e6420616e642076616c75652e5c6e2020202d202a2a50726f6a656374205374617475733a2a2a2053757370656e6465642064756520746f2068756d616e2072696768747320616c6c65676174696f6e732c207265696e73746174656420776974682072656d6564696174696f6e2e20546869732061646473207269736b20616e6420737469676d612e5c6e2020202d202a2a4d61726b657420417661696c6162696c6974793a2a2a204e6f206c697374696e6773206f6e207075626c6963207365636f6e64617279206d61726b6574706c616365732e20496c6c69717569642e5c6e2020202d202a2a5265666572656e63652050726963653a2a2a204e4120286e6f20646972656374206d61726b65742064617461295c6e2020202d202a2a47656e6572616c20436172626f6e204d61726b657420436f6e7465787420286173206f6620323032342f323032352f32303236293a2a2a20486967682d696e746567726974792c204343502d636f6d706c69616e742063726564697473207472616465206174207072656d69756d73202824352d2431352b292e204e6f6e2d4343502c206f6c646572206d6574686f646f6c6f67696573222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353433302c226964223a227265715f3336636465653330303735336536306666623534313438663337313363623237222c226d6f64656c223a227177656e2f7177656e332e362d3335622d613362222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a3531322c2270726f6d70745f746f6b656e73223a3438302c2270726f6d70745f746f6b656e735f64657461696c73223a6e756c6c2c22726561736f6e696e675f746f6b656e73223a3531322c22746f74616c5f746f6b656e73223a3939322c22636f6d706c6574696f6e5f746f6b656e735f64657461696c73223a7b22726561736f6e696e675f746f6b656e73223a3531327d2c22636f7374223a302e30303037343632347d7d",
+        "signature": "0xef971fcb1e139c3829a2027f44b17645aa6f2c89580411efc8fb647fc5cb509e7736485ac593342f32221cf9790165e0356e64b529e3fd0f0b9020d08a5c6aa31c"
+      },
+      {
+        "slot": 4,
+        "responseBody": "0x7b2263686f69636573223a5b7b2266696e6973685f726561736f6e223a2273746f70222c22696e646578223a302c226c6f6770726f6273223a6e756c6c2c226d657373616765223a7b22636f6e74656e74223a224153534159317c6e61765f7573645f65363d3130307c636f6e666964656e63655f6270733d32303030222c22726f6c65223a22617373697374616e74227d7d5d2c2263726561746564223a313738373334353432392c226964223a227265715f3564623561326136373138336234613663366661343839396235393433323139222c226d6f64656c223a227177656e2f7177656e332d766c2d3330622d6133622d696e737472756374222c226f626a656374223a22636861742e636f6d706c6574696f6e222c227573616765223a7b22636f6d706c6574696f6e5f746f6b656e73223a32332c2270726f6d70745f746f6b656e73223a3437382c2270726f6d70745f746f6b656e735f64657461696c73223a7b226361636865645f746f6b656e73223a3137367d2c22746f74616c5f746f6b656e73223a3530312c22636f7374223a302e303030313131377d7d",
+        "signature": "0xc65945c86b62fc129f01e99442ab860b54210a732f4dbcdcdce9b7083df4d61930a924b9d893a8830afbacddca41726a746768ba7834d63a5e9932d72bb734c91c"
+      }
+    ]
+  },
+  "summary": {
+    "slots": 5,
+    "available": 5,
+    "signatureOk": 5,
+    "preflightOk": 0,
+    "navsE6": [],
+    "medianE6": null,
+    "maxDeviationBps": null,
+    "wouldHalt": true,
+    "wouldRevert": true,
+    "haltReasons": [
+      "WILL_REVERT:EvidenceNotCommitted(0xbc74e01ad5252438efc49acde338a9cd20820c11b9eafed1a499803340884b15) — issuer must call commitEvidence first",
+      "QUORUM(0/3)"
+    ],
+    "rejectReasons": [
+      {
+        "slot": 0,
+        "model": "deepseek/deepseek-v4-flash-0731",
+        "reason": "OutOfRange",
+        "check": "_readAnswer",
+        "detail": "nav=0 conf=0"
+      },
+      {
+        "slot": 1,
+        "model": "google/gemma-3-27b-it",
+        "reason": "None",
+        "check": null,
+        "detail": "None at null: "
+      },
+      {
+        "slot": 2,
+        "model": "meta-llama/llama-3.3-70b-instruct",
+        "reason": "None",
+        "check": null,
+        "detail": "None at null: "
+      },
+      {
+        "slot": 3,
+        "model": "qwen/qwen3.6-35b-a3b",
+        "reason": "Truncated",
+        "check": "_readAnswer",
+        "detail": "finish_reason != stop (model hit the token cap or errored)"
+      },
+      {
+        "slot": 4,
+        "model": "qwen/qwen3-vl-30b-a3b-instruct",
+        "reason": "None",
+        "check": null,
+        "detail": "None at null: "
+      }
+    ]
+  },
+  "onChain": {
+    "chainId": 1952,
+    "explorer": "https://web3.okx.com/explorer/x-layer-testnet",
+    "oracle": "0xEd888DC5b67038fF66D9a5DeB76B323655f21b23",
+    "assetId": "0xc950707fccabbc3f8dc7caec6549ab64c9ee71c7944ed10862f73df6a8e96cfd",
+    "epoch": 2,
+    "txHash": "0x4262a47cff1fbbe6e99632e2d91ff86e598df6e8082e974ec785b69e25b56994",
+    "txUrl": "https://web3.okx.com/explorer/x-layer-testnet/tx/0x4262a47cff1fbbe6e99632e2d91ff86e598df6e8082e974ec785b69e25b56994",
+    "blockNumber": 38886603,
+    "gasUsed": 1106077,
+    "published": false,
+    "navE6": null,
+    "haltReason": "Quorum",
+    "accepted": 2,
+    "distinctSigners": 0,
+    "observedAt": null,
+    "evidenceHash": "0xbc74e01ad5252438efc49acde338a9cd20820c11b9eafed1a499803340884b15",
+    "slots": [
+      {
+        "slot": 0,
+        "accepted": false,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "reason": "OutOfRange"
+      },
+      {
+        "slot": 1,
+        "accepted": true,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "150000",
+        "confidenceBps": 6000,
+        "createdAt": 1787345429
+      },
+      {
+        "slot": 2,
+        "accepted": true,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "navE6": "235000",
+        "confidenceBps": 8000,
+        "createdAt": 1787345431
+      },
+      {
+        "slot": 3,
+        "accepted": false,
+        "signer": "0x0000000000000000000000000000000000000000",
+        "reason": "BadSignature"
+      },
+      {
+        "slot": 4,
+        "accepted": false,
+        "signer": "0x79A5061efe5A46b0d1F33B11Cf1c5adbEDAe6B79",
+        "reason": "LowConfidence"
+      }
+    ],
+    "evidenceCommitment": {
+      "committed": true,
+      "evidenceHash": "0xbc74e01ad5252438efc49acde338a9cd20820c11b9eafed1a499803340884b15",
+      "txHash": "0x1c5db0206bca54615fd71c59bf70be5c06f85731818e568d67e0f6e54fa20504",
+      "txUrl": "https://web3.okx.com/explorer/x-layer-testnet/tx/0x1c5db0206bca54615fd71c59bf70be5c06f85731818e568d67e0f6e54fa20504",
+      "registry": "0xE6FBd750cf852149185c226c770B6d484398a71F",
+      "preCommitted": false
+    }
+  },
+  "timing": {
+    "appraiseMs": 10101,
+    "firstCompletionToPostedMs": 13406,
+    "slowestSlotMs": 8810,
+    "receiptTtlSec": 3600
+  }
+}

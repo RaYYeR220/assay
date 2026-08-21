@@ -1,0 +1,63 @@
+{
+  "assetId": "h2-vcs1748-southern-cardamom-2018",
+  "caseId": "H2",
+  "fields": {
+    "registry": "VCS",
+    "project_id": "VCS-1748",
+    "project_name": "Southern Cardamom REDD+ Project",
+    "project_type": "REDD+",
+    "methodology": "VM0009 Methodology for Avoided Ecosystem Conversion",
+    "vintage": "2018",
+    "country": "Cambodia",
+    "region": "South-Eastern Asia",
+    "registry_status": "Verification approval requested",
+    "credits_issued": "27627237",
+    "credits_retired": "8580848",
+    "credits_remaining": "19046389",
+    "buffer_deposited": "3093780",
+    "first_vintage": "2015",
+    "durability": "avoided conversion, reversal risk covered by a registry buffer pool",
+    "integrity_flags": "methodology VM0009 has been inactivated by the registry for new projects; ICVCM excluded VM0009 from Core Carbon Principles assessment, so credits are CCP-ineligible; project issuance was suspended in June 2023 following human rights allegations and reinstated in September 2024 subject to mandatory remediation; no listings with available supply on public secondary marketplaces",
+    "ref_price_usd": "NA",
+    "ref_price_source": "NA",
+    "ref_price_date": "NA",
+    "observed_at": "2026-08-21"
+  },
+  "sources": [
+    {
+      "label": "Berkeley Voluntary Registry Offsets Database v2026-06 (CC BY 4.0)",
+      "url": "https://gspp.berkeley.edu/faculty-and-impact/centers/cepp/projects/berkeley-carbon-trading-project/offsets-database"
+    },
+    {
+      "label": "Verra registry project page (VCS 1748)",
+      "url": "https://registry.verra.org/app/projectDetail/VCS/1748"
+    },
+    {
+      "label": "Human Rights Watch, Carbon Offsetting's Casualties (Feb 2024)",
+      "url": "https://www.hrw.org/report/2024/02/28/carbon-offsettings-casualties/violations-chong-indigenous-peoples-rights"
+    },
+    {
+      "label": "ICVCM Core Carbon Principles assessment decisions",
+      "url": "https://icvcm.org/assessment-status-of-methodologies/"
+    }
+  ],
+  "provenance": {
+    "verified": [
+      "registry",
+      "project_id",
+      "project_name",
+      "project_type",
+      "methodology",
+      "country",
+      "region",
+      "registry_status",
+      "credits_issued",
+      "credits_retired",
+      "credits_remaining",
+      "buffer_deposited",
+      "first_vintage"
+    ],
+    "illustrative": [],
+    "notes": "No reference band: this asset is the one we assert is NOT priceable. 68.9 percent of issued credits remain outstanding (19,046,389 of 27,627,237) and there is no live secondary supply, so there is no defensible market anchor. The evidence states registry facts only — if the committee converges anyway, that is the result and we report it."
+  }
+}

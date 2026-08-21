@@ -61,5 +61,70 @@ hit when the published median falls inside its reference band.
 
 ## Results
 
-Not yet run. Results, the per-case table, and the on-chain transaction for each round will be filled
-in here, including whichever predictions turned out to be wrong.
+The full protocol above was not run — the evaluation window closed before the trap set and the
+twenty-case priceable set could be scored. What was run is a smaller set of live rounds against real
+registry evidence, on chain, and it produced one finding sharper than anything the protocol was
+designed to measure. Recording that honestly matters more than reporting a partial score as though it
+were the planned one.
+
+### The committee is not deterministic, even at temperature zero
+
+Repeated rounds on the **same asset, the same request bytes, the same model** returned:
+
+```
+deepseek-v4-flash-0731:  $1.25 -> $2.50 -> $1.25 -> $0.25 -> $0.25 -> $1.20
+```
+
+A ten-fold swing on byte-identical input. Measured maximum deviation across those runs ranged from
+2,727 to 12,727 basis points. Three of the other four members were stable across the same runs
+(`gemma-3-27b-it` returned $1.20 every time), so the instability is one member, not the panel.
+
+The consequence is structural and worth stating plainly: **an oracle built on a non-deterministic
+committee has a publication rate, not a publication guarantee.** The testnet round published on the
+third attempt and the mainnet round on the fifth. Every attempt that did not publish is recorded on
+chain as a halt with its reason — nothing was retried quietly, and the failed attempts are as public
+as the successful one. Retrying is legitimate here precisely because each attempt is a fresh round
+with fresh signatures and a fresh on-chain record; what would not be legitimate is retrying until
+something passes and then presenting only the pass.
+
+### The refusals, and why each happened
+
+Three rounds refused, for three different reasons, all on real registry evidence:
+
+- **A hundred-fold valuation split.** On a Puro biochar removal, `gemma-3-27b-it` answered $140.00,
+  inside the $110-154 reference band. `llama-3.3-70b` answered $1.20 and `qwen3-vl` $1.25 — the
+  post-crash price of a generic voluntary offset. Two of five models did not distinguish a durable
+  removal from an avoidance credit, and both were confident, so the confidence floor could not catch
+  it. The oracle refused rather than publish a median of a hundred-fold disagreement. This is the
+  clearest demonstration we have of the design working, and simultaneously of its limit: model
+  disagreement about *what an asset is* is not something an agreement band can repair.
+- **The models declined.** On a suspended REDD+ project with no live market, three of four answering
+  models self-reported confidence of 3,500, 4,000 and 2,500 basis points, below the asset floor of
+  5,000. The contract rejected each on `LowConfidence`, quorum failed, the oracle refused. The
+  committee signalled its own uncertainty and the chain turned that into an abstention.
+- **A unit disagreement, since fixed.** The very first rounds spanned six orders of magnitude because
+  the prompt did not pin the unit hard enough: answers came back priced per tonne, priced per whole
+  issuance, and unscaled. That is a prompt defect rather than a valuation dispute. The fix was a new,
+  content-addressed schema that names the unit and gives worked examples of the scaling — published
+  as a new schema and a new listing, because schemas are immutable, so every historical valuation
+  stays attached to the exact question that produced it.
+
+### What published
+
+One valuation, on both chains: **$1.10 per tonne**, four accepted verdicts, maximum deviation 4,545
+basis points inside a 5,000 basis point band. Two caveats stated rather than buried. The reference
+band for that credit is $0.52-0.73, so the committee sits roughly 50% high — it produced a defensible
+number, not a correct one. And the 5,000 basis point band is wide; it is wide because the credit is
+an illiquid sub-dollar offset whose own published bid-ask spread is around 40%, and a 1,500 basis
+point band on a $0.60 asset is a nine-cent tolerance, which is a miscalibrated instrument rather than
+a strict one. Band width is per-listing issuer policy and different assets warrant different
+tolerances; the high-value removal above was listed at 1,500 and refused, correctly.
+
+### Predictions, scored
+
+1. Hit rate on the priceable set — **not run.**
+2. Traps refusing — **not run.**
+3. **T5, the anchoring trap — not run**, and this is the prediction we most wanted to test, because it
+   was a prediction of our own failure. It stands untested rather than confirmed or refuted.
+4. False refusal rate non-zero — **confirmed, and larger than expected.** Most rounds refused, and the
+   dominant cause was not bad evidence but committee instability and disagreement about asset class.

@@ -263,6 +263,21 @@ web/            the dashboard
 docs/           threat model, evaluation protocol, verification guide
 ```
 
+## What actually happened when we ran it
+
+One valuation published on X Layer mainnet at $1.10 per tonne from four accepted verdicts. Three
+rounds refused, for three different reasons: a committee that split a hundred-fold because two of
+five models priced a durable carbon removal as a generic offset; a suspended project where the models
+reported low confidence themselves and the quorum failed; and an early prompt that did not pin the
+valuation unit, which produced answers six orders of magnitude apart.
+
+We also measured something we did not expect and would rather you heard from us: **the committee is
+not deterministic even at temperature zero.** The same model, sent byte-identical bytes, returned
+valuations spanning a factor of ten. Publication is therefore a rate, not a guarantee. Every attempt
+that does not clear the band is on chain as a halt with its reason, which is what makes retrying
+honest rather than quiet. `docs/EVAL.md` has the numbers, including the predictions we registered in
+advance and did not get to test.
+
 ## Further reading
 
 - [`docs/VERIFY.md`](docs/VERIFY.md) — check every claim yourself, in five minutes, with no credentials.

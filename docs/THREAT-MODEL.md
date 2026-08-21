@@ -122,6 +122,13 @@ awkward address. The vault is `nonReentrant` on both value-moving entry points.
 
 ## Open, and why
 
+**The committee is not deterministic.** Measured, not theorised: the same model, sent byte-identical
+request bytes at temperature zero, returned valuations spanning a factor of ten across repeated
+rounds. One member drove almost all of it; the others were stable. So publication is a *rate* rather
+than a guarantee, and a caller may have to run several rounds before one clears the band. Every
+attempt that does not clear is recorded on chain as a halt with its reason, which is what keeps
+retrying honest — the failures are as public as the successes. `docs/EVAL.md` has the numbers.
+
 **Agreement is not accuracy.** This is the honest limit of the design and no amount of cryptography
 fixes it. Five models can agree tightly and all be wrong, particularly when the evidence contains a
 number that invites anchoring. The agreement band measures consensus, not truth. Committee diversity

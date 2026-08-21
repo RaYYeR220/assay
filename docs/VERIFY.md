@@ -46,6 +46,20 @@ Filled in from the live deployment. Every link goes to the explorer.
 | A challenge freezes consumers before anyone adjudicates | *(pending deployment)* |
 | A junk round changes nothing and is recorded as ignored | *(pending deployment)* |
 
+## Checking the foundation
+
+On-chain attestation verification here rests on X Layer exposing the secp256r1 precompile from
+RIP-7212 at `0x100`. That is not an assumption you have to take on trust:
+
+```bash
+# a valid P-256 signature returns 1, a corrupted one returns nothing
+cast call 0x0000000000000000000000000000000000000100 <hash||r||s||x||y> \
+  --rpc-url https://rpc.xlayer.tech
+```
+
+It answers on both X Layer mainnet and testnet, which is what makes a full quote verification cost
+around 4.6M gas instead of being priced out entirely.
+
 ## Reading a round by hand
 
 If you would rather not trust our tooling either:

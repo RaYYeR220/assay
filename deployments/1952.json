@@ -10,5 +10,8 @@
  "quoteAdapter": "0x8902b08b0BCB906239772Fde394b5048d3f92180",
  "startBlock": 38884350,
  "dcapAttestation": "0x286f9b75Ab771C533Ba832Ce72b00518D941bb0F",
- "explorer": "https://web3.okx.com/explorer/x-layer-testnet"
+ "explorer": "https://web3.okx.com/explorer/x-layer-testnet",
+ "assetIdV2": "0xc52284d7d0a577d60e0793938419de18c4821659029579d20b083cc1fdad5266",
+ "assetKeyV2": "assay.carbon.v2",
+ "assayVaultV2": "0x9b06dEea180aE5e52d624fB6bc393E1fa95AF816"
 }

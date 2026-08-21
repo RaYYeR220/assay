@@ -215,14 +215,18 @@ On X Layer mainnet, `CURRENCY` should be the canonical USDC at
 
 ## Deployments
 
-| | X Layer mainnet (196) | X Layer testnet (1952) |
-| --- | --- | --- |
-| `AutomataDcapAttestation` | *pending* | *pending* |
-| `AutomataTdxAdapter` | *pending* | *pending* |
-| `AttestationRegistry` | *pending* | *pending* |
-| `AssetRegistry` | *pending* | *pending* |
-| `AssayOracle` | *pending* | *pending* |
-| `AssayVault` | *pending* | *pending* |
+**X Layer testnet (chainId 1952)** — [explorer](https://web3.okx.com/explorer/x-layer-testnet)
+
+| Contract | Address |
+| --- | --- |
+| `AutomataDcapAttestation` | `0x286f9b75Ab771C533Ba832Ce72b00518D941bb0F` |
+| `AutomataTdxAdapter` | `0x8902b08b0BCB906239772Fde394b5048d3f92180` |
+| `AttestationRegistry` | `0x1f2E8DA086fF0919C3efbf3D952a65a820D857a4` |
+| `AssetRegistry` | `0xE6FBd750cf852149185c226c770B6d484398a71F` |
+| `AssayOracle` | `0xEd888DC5b67038fF66D9a5DeB76B323655f21b23` |
+| `AssayVault` | `0x9b06dEea180aE5e52d624fB6bc393E1fa95AF816` |
+
+X Layer mainnet addresses are in `deployments/196.json`.
 
 X Layer had no on-chain Intel DCAP verifier before this, so `assay/dcap` deploys one: the Automata
 verifier stack with its on-chain collateral store, wired to the RIP-7212 P-256 precompile that X

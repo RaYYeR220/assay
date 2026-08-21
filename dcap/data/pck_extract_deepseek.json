@@ -1,0 +1,32 @@
+{
+  "fmspc": "20a06f000000",
+  "pceid": "0000",
+  "cpusvn_official_2_18": "0505020205ff00020000000000000000",
+  "pcesvn_official_2_17": "0d",
+  "cpusvn_task_claim_2_1": "05",
+  "pcesvn_task_claim_2_2": "05",
+  "tcb_comps": {
+    "sgxtcbcomp01svn": "05",
+    "sgxtcbcomp02svn": "05",
+    "sgxtcbcomp03svn": "02",
+    "sgxtcbcomp04svn": "02",
+    "sgxtcbcomp05svn": "05",
+    "sgxtcbcomp06svn": "00ff",
+    "sgxtcbcomp07svn": "00",
+    "sgxtcbcomp08svn": "02",
+    "sgxtcbcomp09svn": "00",
+    "sgxtcbcomp10svn": "00",
+    "sgxtcbcomp11svn": "00",
+    "sgxtcbcomp12svn": "00",
+    "sgxtcbcomp13svn": "00",
+    "sgxtcbcomp14svn": "00",
+    "sgxtcbcomp15svn": "00",
+    "sgxtcbcomp16svn": "00"
+  },
+  "leaf_subject_cn": "Intel SGX PCK Certificate",
+  "leaf_issuer_cn": "Intel SGX PCK Platform CA",
+  "leaf_public_key_uncompressed_64": "61a201f137bcb4c240f8a74e984f1a25d34257581de3a87ab59098a7ed400c72f4395ce7888390a4b14719f3f063b31687a2917352f83ec4b851dd7e41a3b8dc",
+  "intermediate_ca_cn": "Intel SGX PCK Platform CA",
+  "intermediate_ca_kind": "Intel SGX PCK Platform CA",
+  "root_ca_subject_cn": "Intel SGX Root CA"
+}

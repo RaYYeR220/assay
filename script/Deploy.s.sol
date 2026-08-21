@@ -6,6 +6,7 @@ import {AssayOracle} from "../src/AssayOracle.sol";
 import {AssayVault} from "../src/AssayVault.sol";
 import {AssetRegistry} from "../src/AssetRegistry.sol";
 import {AttestationRegistry} from "../src/AttestationRegistry.sol";
+import {AutomataTdxAdapter, IDcapAttestation} from "../src/adapters/AutomataTdxAdapter.sol";
 import {UnverifiedQuoteAdapter} from "../src/adapters/UnverifiedQuoteAdapter.sol";
 import {DemoUSD} from "../src/demo/DemoUSD.sol";
 import {IAggregatorV3} from "../src/interfaces/IAggregatorV3.sol";
@@ -18,9 +19,12 @@ import {Schema} from "./Schema.sol";
 /// @notice Deploys the protocol and lists the first carbon-credit asset.
 /// @dev Environment:
 ///      PRIVATE_KEY      deployer key
-///      QUOTE_ADAPTER    on-chain DCAP verifier adapter; when unset a clearly-labelled
-///                       non-verifying stand-in is deployed instead, which is only acceptable on a
-///                       throwaway network
+///      DCAP_ATTESTATION address of the on-chain Intel DCAP verifier; an adapter is deployed for it
+///      QUOTE_ADAPTER    an already-deployed adapter, if you have one, taking precedence over the above
+///      TCB_EVAL         Intel TCB evaluation number the collateral was uploaded under (default 20)
+///
+///      With neither DCAP_ATTESTATION nor QUOTE_ADAPTER set, a clearly-labelled non-verifying
+///      stand-in is deployed, which is only ever acceptable on a throwaway network.
 ///      CURRENCY         settlement token; when unset a six-decimal demo token is deployed
 ///      SEQUENCER_FEED   Chainlink L2 uptime feed; skipped when unset
 ///      ASSET_KEY        string identifying the listed asset, hashed into the asset id
@@ -34,9 +38,16 @@ contract Deploy is Script {
         address sequencerFeed = vm.envOr("SEQUENCER_FEED", address(0));
         string memory assetKey = vm.envOr("ASSET_KEY", string("assay.carbon.demo.v1"));
         bytes32 assetId = keccak256(bytes(assetKey));
+        bytes32 fleetAssetId;
 
         vm.startBroadcast(pk);
 
+        address dcap = vm.envOr("DCAP_ATTESTATION", address(0));
+        if (adapterAddr == address(0) && dcap != address(0)) {
+            adapterAddr = address(
+                new AutomataTdxAdapter(IDcapAttestation(dcap), uint8(vm.envOr("TCB_EVAL", uint256(20))))
+            );
+        }
         if (adapterAddr == address(0)) {
             adapterAddr = address(new UnverifiedQuoteAdapter(deployer));
             console2.log("WARNING: deployed a non-verifying quote adapter stand-in");
@@ -55,13 +66,15 @@ contract Deploy is Script {
 
         bytes32 schemaId = assets.registerSchema(Schema.HEAD, Schema.MID, Schema.TAIL);
 
-        string[] memory committee = _committee();
+        // One attested gateway enclave fronts all five models, so only one distinct signer is
+        // available on this committee. The threshold is set to what is actually true rather than to
+        // what sounds better; the second listing below is where the signer axis is exercised.
         assets.registerAsset(
             assetId,
             AssetConfig({
                 issuer: deployer,
                 quorum: 3,
-                minDistinctSigners: 2,
+                minDistinctSigners: 1,
                 bandBps: 1000,
                 minConfidenceBps: 5000,
                 maxAgeSec: 3600,
@@ -71,8 +84,28 @@ contract Deploy is Script {
                 active: true,
                 requireAllowedEvidence: false
             }),
-            committee,
+            _modelDiverseCommittee(),
             "ipfs://assay/carbon/demo"
+        );
+
+        fleetAssetId = keccak256(bytes(string.concat(assetKey, ".fleet")));
+        assets.registerAsset(
+            fleetAssetId,
+            AssetConfig({
+                issuer: deployer,
+                quorum: 3,
+                minDistinctSigners: 3,
+                bandBps: 1000,
+                minConfidenceBps: 5000,
+                maxAgeSec: 3600,
+                disputeBandBps: 500,
+                disputeBond: 0.01 ether,
+                schemaId: schemaId,
+                active: true,
+                requireAllowedEvidence: false
+            }),
+            _enclaveDiverseCommittee(),
+            "ipfs://assay/carbon/fleet"
         );
 
         AssayVault vault = new AssayVault(
@@ -97,19 +130,33 @@ contract Deploy is Script {
         console2.log("assayVault        ", address(vault));
         console2.log("currency          ", currencyAddr);
         console2.logBytes32(assetId);
+        console2.logBytes32(fleetAssetId);
 
         _writeDeployment(adapterAddr, address(attestations), address(assets), address(oracle), address(vault), currencyAddr, assetId, assetKey);
     }
 
-    /// @dev Committee membership is intentionally spread across distinct model families so that a
-    ///      shared failure mode in one of them cannot carry a round on its own.
-    function _committee() internal pure returns (string[] memory c) {
+    /// @dev Five model families from five different vendors, so a shared failure mode in any one of
+    ///      them cannot carry a round on its own. Model identity is bound into the signed request,
+    ///      because the contract rebuilds that request with the slot model id before checking the
+    ///      signature, so this diversity is enforced rather than advertised.
+    function _modelDiverseCommittee() internal pure returns (string[] memory c) {
         c = new string[](5);
         c[0] = "deepseek/deepseek-v4-flash-0731";
-        c[1] = "openai/gpt-oss-20b";
+        c[1] = "openai/gpt-oss-120b";
         c[2] = "meta-llama/llama-3.3-70b-instruct";
-        c[3] = "phala/qwen-2.5-7b-instruct";
-        c[4] = "deepseek/deepseek-chat-v3-0324";
+        c[3] = "qwen/qwen3.6-27b";
+        c[4] = "z-ai/glm-5.2";
+    }
+
+    /// @dev The other axis. Every slot is the same model, served by a fleet of separate trust
+    ///      domains, each with its own attested key. Diversity here is in the enclaves rather than
+    ///      the models, and `minDistinctSigners` is what forces it: three slots filled from one
+    ///      enclave will not reach the threshold no matter how well the answers agree.
+    function _enclaveDiverseCommittee() internal pure returns (string[] memory c) {
+        c = new string[](5);
+        for (uint256 i = 0; i < 5; ++i) {
+            c[i] = "moonshotai/kimi-k2.6";
+        }
     }
 
     function _writeDeployment(

@@ -94,11 +94,24 @@ care should set `requireAllowedEvidence`, which forces the issuer to commit to a
 advance and splits the roles apart: the issuer commits to what the evidence is, the committee decides
 what it is worth, and the chain checks both.
 
-**The model provider is a single point of failure for liveness.** Committee members hosted by the same
-confidential-inference provider share an operator even when the models differ. That is a liveness
-concern rather than a soundness one, since a provider cannot forge a signature, but a provider outage
-halts the oracle. Spreading committee slots across providers is the mitigation, and the registry
-already supports it.
+**On the deployed committee, the five models share one enclave.** This is the sharpest limitation of
+the live configuration and it deserves to be stated plainly rather than buried. The confidential
+inference provider fronts every model through a single attested gateway trust domain, so all five
+committee members sign with the same key. Model diversity is real and it is enforced — the contract
+rebuilds each request with that slot's model identifier before checking the signature, so a verdict
+cannot be moved between slots — but *enclave* diversity on that committee is one, and
+`minDistinctSigners` is therefore set to 1 rather than to a number that would sound better.
+
+What that costs: a compromise of the gateway image, or a gateway that lies about which model it
+routed to, would not be caught by the committee, only by the measurement allowlist. What it does not
+cost: nobody outside that enclave can forge a verdict, and the measurement of the gateway software is
+verified against Intel's root of trust on every registration.
+
+The mechanism to do better exists and is demonstrated rather than asserted. A second asset is listed
+against a fleet of eleven separate trust domains running the same model, each with its own attested
+key, configured with `minDistinctSigners` of 3. Three slots filled from one enclave will not reach
+that threshold however well the answers agree. A production committee should span both axes: several
+models, served by several enclaves, ideally by several providers.
 
 **Governance can widen the response grammar.** The owner can change which byte patterns count as a
 well-formed answer. That cannot manufacture a signature, so the worst case is denial of service or an

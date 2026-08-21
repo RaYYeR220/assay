@@ -14,7 +14,7 @@ import {IQuoteAdapter} from "./interfaces/IQuoteAdapter.sol";
 ///      vouches for. Registrations expire, so an operator has to keep proving the enclave is alive.
 contract AttestationRegistry {
     struct Signer {
-        bytes32 mrTd;
+        bytes32 measurement;
         uint64 attestedAt;
         uint8 tcbStatus;
         bool revoked;
@@ -33,8 +33,10 @@ contract AttestationRegistry {
     /// @notice Byte offset of the signer address inside the 64-byte report data.
     uint8 public signerOffset;
 
-    /// @notice Measurements the registry accepts, i.e. approved enclave images.
-    mapping(bytes32 mrTd => bool) public allowedImage;
+    /// @notice Measurements the registry accepts, i.e. approved enclave images. A measurement is a
+    ///         digest over the trust domain measurement and all four runtime measurement registers,
+    ///         so it pins the whole boot chain rather than just the base image.
+    mapping(bytes32 measurement => bool) public allowedImage;
 
     /// @notice Intel TCB statuses the registry tolerates (0 is normally UpToDate).
     mapping(uint8 tcbStatus => bool) public allowedTcbStatus;
@@ -46,17 +48,17 @@ contract AttestationRegistry {
 
     event AdapterSet(address indexed adapter);
     event OwnerSet(address indexed owner);
-    event ImageAllowed(bytes32 indexed mrTd, bool allowed);
+    event ImageAllowed(bytes32 indexed measurement, bool allowed);
     event TcbStatusAllowed(uint8 indexed status, bool allowed);
     event AttestationTtlSet(uint64 ttl);
     event SignerAttested(
-        address indexed signer, bytes32 indexed mrTd, bytes32 indexed modelIdHash, uint8 tcbStatus
+        address indexed signer, bytes32 indexed measurement, bytes32 indexed modelIdHash, uint8 tcbStatus
     );
     event SignerRevoked(address indexed signer);
 
     error NotOwner();
     error QuoteRejected();
-    error ImageNotAllowed(bytes32 mrTd);
+    error ImageNotAllowed(bytes32 measurement);
     error TcbNotAllowed(uint8 status);
     error ReportDataTooShort();
     error SignerIsRevoked(address signer);
@@ -85,10 +87,10 @@ contract AttestationRegistry {
         external
         returns (address signer)
     {
-        (bool ok, bytes32 mrTd, bytes memory reportData, uint8 tcbStatus) =
+        (bool ok, bytes32 measurement, bytes memory reportData, uint8 tcbStatus) =
             adapter.verifyQuote(rawQuote);
         if (!ok) revert QuoteRejected();
-        if (!allowedImage[mrTd]) revert ImageNotAllowed(mrTd);
+        if (!allowedImage[measurement]) revert ImageNotAllowed(measurement);
         if (!allowedTcbStatus[tcbStatus]) revert TcbNotAllowed(tcbStatus);
 
         signer = _readSigner(reportData);
@@ -99,7 +101,7 @@ contract AttestationRegistry {
         // by re-submitting the very quote it was withdrawn for. A revoked enclave derives a new
         // key instead.
         if (s.revoked) revert SignerIsRevoked(signer);
-        s.mrTd = mrTd;
+        s.measurement = measurement;
         s.attestedAt = uint64(block.timestamp);
         s.tcbStatus = tcbStatus;
         s.known = true;
@@ -107,7 +109,7 @@ contract AttestationRegistry {
         bytes32 modelIdHash = keccak256(bytes(modelId));
         servesModel[signer][modelIdHash] = true;
 
-        emit SignerAttested(signer, mrTd, modelIdHash, tcbStatus);
+        emit SignerAttested(signer, measurement, modelIdHash, tcbStatus);
     }
 
     /// @notice Whether `signer` currently counts as a live attested enclave key for `modelIdHash`.
@@ -136,9 +138,9 @@ contract AttestationRegistry {
         emit SignerRevoked(signer);
     }
 
-    function setAllowedImage(bytes32 mrTd, bool allowed) external onlyOwner {
-        allowedImage[mrTd] = allowed;
-        emit ImageAllowed(mrTd, allowed);
+    function setAllowedImage(bytes32 measurement, bool allowed) external onlyOwner {
+        allowedImage[measurement] = allowed;
+        emit ImageAllowed(measurement, allowed);
     }
 
     function setAllowedTcbStatus(uint8 tcbStatus, bool allowed) external onlyOwner {

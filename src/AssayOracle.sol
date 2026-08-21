@@ -319,8 +319,12 @@ contract AssayOracle is IAssayOracle {
         view
         returns (address signer, uint256 navE6, uint256 confBps, uint64 createdAt, RejectReason reason)
     {
+        // Reported as a signature failure rather than a malformed answer, because no signature was
+        // checked at all: nothing here came from the committee. Calling it malformed would put it
+        // on the authenticated side of the round and hand anyone a free halt, since a round of
+        // empty bodies costs nothing to assemble.
         if (v.responseBody.length == 0 || v.responseBody.length > MAX_RESPONSE) {
-            return (address(0), 0, 0, 0, RejectReason.Malformed);
+            return (address(0), 0, 0, 0, RejectReason.BadSignature);
         }
 
         {

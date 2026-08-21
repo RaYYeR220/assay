@@ -20,6 +20,15 @@ appraisal, by someone forming a judgement about evidence. That judgement is exac
 smart contract cannot verify, which is why long-tail real-world assets end up either unpriceable or
 priced by a trusted party with a private spreadsheet.
 
+Carbon credits are the sharpest version of this. There is no single carbon spot price to read.
+The exchange-traded avoidance benchmarks have effectively died: the CBL Nature-Based Global
+Emissions Offset future went from around $15 in early 2022 to $0.22 on five contracts of daily
+volume, the C-GEO contract was permanently delisted on 2 January 2025 with zero open interest,
+Climate Impact X cut its Nature X benchmark from daily to monthly publication in May 2026, and ACX
+wound down its ADGM exchange. Meanwhile durable removals decoupled upward, with the Puro biochar
+index at EUR 129.21 in July 2026. Two credits can differ by two orders of magnitude and no feed
+will tell you which one you are holding. Verra publishes no price index at all.
+
 Language models can form that judgement. The obvious thing to do with them, and the thing most
 attempts do, is to put a model behind an API and have it post a number. That replaces a trusted
 spreadsheet with a trusted API. The chain still has no way to know which model answered, what it was
@@ -31,8 +40,13 @@ its peers, or hallucinating.
 Assay treats an appraisal as a claim that has to survive verification, and treats the absence of a
 verified appraisal as a first-class state rather than an outage.
 
-- **Five independent models, each inside a TEE.** Every committee member runs in a confidential
-  environment that signs its own output with a key it derived inside the enclave.
+- **Five different models, answering inside a TEE.** Every committee member runs in a confidential
+  environment that signs its own output with a key derived inside the enclave. Which model answered
+  is not a label: the contract rebuilds each request with that slot's model identifier before it
+  checks the signature, so a verdict cannot be moved between slots. On the deployed committee those
+  five models are fronted by a single attested gateway enclave, so they share one signing key —
+  `docs/THREAT-MODEL.md` says what that costs and what it does not, and a second asset is listed
+  against a fleet of eleven separate trust domains to show the other axis working.
 - **The attestation is re-verified on chain.** An Intel TDX quote is checked by a contract on X
   Layer, and the signing address is read *out of the verified quote*. No operator gets to nominate a
   signer; the registry's contents are a consequence of Intel's root of trust.
